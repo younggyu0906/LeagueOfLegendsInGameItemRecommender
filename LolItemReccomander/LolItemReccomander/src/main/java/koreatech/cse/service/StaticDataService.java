@@ -35,12 +35,12 @@ public class StaticDataService {
                     championDAO.setName(e.getValue().getName());
                     championDAO.setId(e.getValue().getKey());
                     //Tags .3항연산. Tags에 해당 문자열이 포함되면 boolean true 세팅
-                    championDAO.setMage(e.getValue().getTags().contains("Mage") ? true : false);
-                    championDAO.setAssassin(e.getValue().getTags().contains("Assassin") ? true : false);
-                    championDAO.setFighter(e.getValue().getTags().contains("Fighter") ? true : false);
-                    championDAO.setMarksman(e.getValue().getTags().contains("Marksman") ? true : false);
-                    championDAO.setTank(e.getValue().getTags().contains("Tank") ? true : false);
-                    championDAO.setSupport(e.getValue().getTags().contains("Support") ? true : false);
+                    championDAO.setMage(e.getValue().getTags().contains("Mage"));
+                    championDAO.setAssassin(e.getValue().getTags().contains("Assassin"));
+                    championDAO.setFighter(e.getValue().getTags().contains("Fighter"));
+                    championDAO.setMarksman(e.getValue().getTags().contains("Marksman"));
+                    championDAO.setTank(e.getValue().getTags().contains("Tank"));
+                    championDAO.setSupport(e.getValue().getTags().contains("Support"));
                     //info설정
                     championDAO.setAttack(e.getValue().getInfo().getAttack());
                     championDAO.setDefense(e.getValue().getInfo().getDefense());
@@ -98,6 +98,9 @@ public class StaticDataService {
 
                     itemDAO.setMagicDamage(e.getValue().getStats().getFlatMagicDamageMod() != null
                             ? e.getValue().getStats().getFlatMagicDamageMod() : 0);
+
+                    //완제품인지 into(업그레이드 할 수 있는 아이템) 이 없으면 true
+                    itemDAO.setFinished(e.getValue().getInto().isEmpty());
 
                     //세팅된 itemDAO를 DAOS리스트에 삽입.
                     itemDAOS.add(itemDAO);

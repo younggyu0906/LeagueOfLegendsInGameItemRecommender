@@ -12,6 +12,15 @@ public class ItemDAO {
     private long physicalDamage;
     private double critChance;
     private long magicDamage;
+    private boolean finished;
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 
     public int getId() {
         return id;
@@ -106,6 +115,7 @@ public class ItemDAO {
                 ", physicalDamage=" + physicalDamage +
                 ", critChance=" + critChance +
                 ", magicDamage=" + magicDamage +
+                ", finished=" + finished +
                 '}';
     }
 }
