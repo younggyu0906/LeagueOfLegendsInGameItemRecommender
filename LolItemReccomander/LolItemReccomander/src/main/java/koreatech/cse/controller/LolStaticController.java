@@ -7,6 +7,7 @@ import koreatech.cse.domain.staticData.ChampionDAO;
 import koreatech.cse.service.StaticDataService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpClientErrorException;
@@ -23,6 +24,7 @@ public class LolStaticController {
     @Inject
     private StaticDataService staticDataService;
 
+    @Transactional
     @RequestMapping("/championUpdate")
     public String championStaticLoad(Model model) {
         RestTemplate restTemplate = new RestTemplate();

@@ -18,7 +18,7 @@ CREATE TABLE `champions` (
   `marksman` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='riot league of legends champion information'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='riot league of legends champion information';
 
 LOCK TABLES `champions` WRITE;
 UNLOCK TABLES;

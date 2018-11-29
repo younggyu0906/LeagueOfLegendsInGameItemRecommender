@@ -1,6 +1,5 @@
 package koreatech.cse.domain;
 
-
 public class Searchable {
     private String name;
     private String email;
