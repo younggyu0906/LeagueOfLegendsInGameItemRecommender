@@ -51,6 +51,7 @@ public class LolStaticController {
     }
 
     //아이템 기본 정보 업데이트
+    @Transactional
     @RequestMapping("/itemUpdate")
     public String itemStaticLoad(Model model) {
         RestTemplate restTemplate = new RestTemplate();

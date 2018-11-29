@@ -3,6 +3,7 @@ package koreatech.cse.service;
 import koreatech.cse.domain.champion.Data;
 import koreatech.cse.domain.staticData.ChampionDAO;
 import koreatech.cse.repository.ChampionMapper;
+import koreatech.cse.repository.ItemMapper;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -16,8 +17,10 @@ public class StaticDataService {
     @Inject
     private ChampionMapper championMapper;
     private ArrayList<ChampionDAO> championDAOS = new ArrayList<>();
-    //DB에 업로드 하기 전 itemDAO들이 저장될 리스트.
-    private ArrayList<ItemDAO> itemDAOS = new ArrayList<>();
+
+    @Inject
+    private ItemMapper itemMapper;
+    private ArrayList<ItemDAO> itemDAOS = new ArrayList<>();    //DB에 업로드 하기 전 itemDAO들이 저장될 리스트.
 
     public ArrayList<ChampionDAO> getChampionDAOS() {
         return championDAOS;
@@ -101,6 +104,7 @@ public class StaticDataService {
 
                     //세팅된 itemDAO를 DAOS리스트에 삽입.
                     itemDAOS.add(itemDAO);
+                    itemMapper.insert(itemDAO);
 
                     //print log
                     System.out.println(itemDAO);
