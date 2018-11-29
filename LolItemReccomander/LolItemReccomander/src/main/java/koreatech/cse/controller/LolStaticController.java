@@ -23,6 +23,7 @@ public class LolStaticController {
     @Inject
     private StaticDataService staticDataService;
 
+    //챔피언 기본 정보 업데이트.
     @RequestMapping("/championUpdate")
     public String championStaticLoad(Model model) {
         RestTemplate restTemplate = new RestTemplate();
@@ -34,8 +35,10 @@ public class LolStaticController {
                     "http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion.json", Champions.class);
             Map<String, Data> champions = championResponseEntity.getBody().getData();
 
+            //staticDataService의 ChampionDAO를 초기화한다.
             staticDataService.setChampionDAOS(champions);
 
+            //jsp에 전송
             model.addAttribute("champions",staticDataService.getChampionDAOS());
 
         } catch (HttpClientErrorException e) {
@@ -45,7 +48,8 @@ public class LolStaticController {
         return "lolStaticTest";
     }
 
-    @RequestMapping("/Item")
+    //아이템 기본 정보 업데이트
+    @RequestMapping("/itemUpdate")
     public String itemStaticLoad(Model model) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -55,9 +59,12 @@ public class LolStaticController {
             ResponseEntity<Items> itemResponseEntity = restTemplate.getForEntity(
                     "http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/item.json", Items.class);
             Map<Integer, koreatech.cse.domain.item.Data> items = itemResponseEntity.getBody().getData();
-            model.addAttribute("items",items);
 
-            System.out.println(items.entrySet());
+            //staticDataService의 ItemDaos초기화.
+            staticDataService.setItemDAOS(items);
+
+            model.addAttribute("items",staticDataService.getItemDAOS());
+
 
         } catch (HttpClientErrorException e) {
             System.out.println(e.getStatusCode() + ": " + e.getStatusText());

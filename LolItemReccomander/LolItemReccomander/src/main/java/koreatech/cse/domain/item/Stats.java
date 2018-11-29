@@ -139,9 +139,9 @@ public class Stats {
     @JsonProperty("rPercentMovementSpeedModPerLevel")
     private Long rPercentMovementSpeedModPerLevel;
     @JsonProperty("FlatAttackSpeedMod")
-    private Long flatAttackSpeedMod;
+    private Double flatAttackSpeedMod;
     @JsonProperty("PercentAttackSpeedMod")
-    private Long percentAttackSpeedMod;
+    private Double percentAttackSpeedMod;
     @JsonProperty("rPercentAttackSpeedModPerLevel")
     private Long rPercentAttackSpeedModPerLevel;
     @JsonProperty("rFlatDodgeMod")
@@ -151,7 +151,7 @@ public class Stats {
     @JsonProperty("PercentDodgeMod")
     private Long percentDodgeMod;
     @JsonProperty("FlatCritChanceMod")
-    private Long flatCritChanceMod;
+    private Double flatCritChanceMod;
     @JsonProperty("rFlatCritChanceModPerLevel")
     private Long rFlatCritChanceModPerLevel;
     @JsonProperty("PercentCritChanceMod")
@@ -649,31 +649,31 @@ public class Stats {
     }
 
     @JsonProperty("FlatAttackSpeedMod")
-    public Long getFlatAttackSpeedMod() {
+    public double getFlatAttackSpeedMod() {
         return flatAttackSpeedMod;
     }
 
     @JsonProperty("FlatAttackSpeedMod")
-    public void setFlatAttackSpeedMod(Long flatAttackSpeedMod) {
+    public void setFlatAttackSpeedMod(double flatAttackSpeedMod) {
         this.flatAttackSpeedMod = flatAttackSpeedMod;
     }
 
-    public Stats withFlatAttackSpeedMod(Long flatAttackSpeedMod) {
+    public Stats withFlatAttackSpeedMod(double flatAttackSpeedMod) {
         this.flatAttackSpeedMod = flatAttackSpeedMod;
         return this;
     }
 
     @JsonProperty("PercentAttackSpeedMod")
-    public Long getPercentAttackSpeedMod() {
+    public Double getPercentAttackSpeedMod() {
         return percentAttackSpeedMod;
     }
 
     @JsonProperty("PercentAttackSpeedMod")
-    public void setPercentAttackSpeedMod(Long percentAttackSpeedMod) {
+    public void setPercentAttackSpeedMod(Double percentAttackSpeedMod) {
         this.percentAttackSpeedMod = percentAttackSpeedMod;
     }
 
-    public Stats withPercentAttackSpeedMod(Long percentAttackSpeedMod) {
+    public Stats withPercentAttackSpeedMod(Double percentAttackSpeedMod) {
         this.percentAttackSpeedMod = percentAttackSpeedMod;
         return this;
     }
@@ -739,16 +739,16 @@ public class Stats {
     }
 
     @JsonProperty("FlatCritChanceMod")
-    public Long getFlatCritChanceMod() {
+    public Double getFlatCritChanceMod() {
         return flatCritChanceMod;
     }
 
     @JsonProperty("FlatCritChanceMod")
-    public void setFlatCritChanceMod(Long flatCritChanceMod) {
+    public void setFlatCritChanceMod(Double flatCritChanceMod) {
         this.flatCritChanceMod = flatCritChanceMod;
     }
 
-    public Stats withFlatCritChanceMod(Long flatCritChanceMod) {
+    public Stats withFlatCritChanceMod(Double flatCritChanceMod) {
         this.flatCritChanceMod = flatCritChanceMod;
         return this;
     }

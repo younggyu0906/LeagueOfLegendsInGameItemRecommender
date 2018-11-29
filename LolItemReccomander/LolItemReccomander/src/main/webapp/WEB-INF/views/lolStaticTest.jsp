@@ -24,8 +24,11 @@
     Fighter: ${champion.fighter}
     Support: ${champion.support}
     Marksman: ${champion.marksman}<br/>
+    -------------------------<br/>
+</c:forEach>
 
-
+<c:forEach var="item" items="${items}">
+    ${item.toString()}<br/>
     -------------------------<br/>
 </c:forEach>
 
