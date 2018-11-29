@@ -8,24 +8,26 @@ import java.util.List;
 
 @Repository
 public interface ChampionMapper {
-    @Insert("INSERT INTO LEAGUEOFLEGENDS.CHAMPIONS (" +
-            "ID, NAME, ATTACK, MAGIC, DEFENSE, DIFFICULTY, ASSASSIN, FIGHTER, MAGE, SUPPORT, TANK, MARKSMAN" +
-            ")" +
-            "VALUES (" +
-            "#{id}, #{name}, " +
-            "#{attack}, #{magic}, #{defense}, #{difficulty}, " +
-            "#{assassin}, #{fighter}, #{mage}, #{support}, #{tank}, #{marksman}" +
-            ")"
-    )
+    @Insert(
+                "INSERT INTO LEAGUEOFLEGENDS.CHAMPIONS (" +
+                "ID, NAME, ATTACK, MAGIC, DEFENSE, DIFFICULTY, ASSASSIN, FIGHTER, MAGE, SUPPORT, TANK, MARKSMAN" +
+                ")" +
+                "VALUES (" +
+                "#{id}, #{name}, " +
+                "#{attack}, #{magic}, #{defense}, #{difficulty}, " +
+                "#{assassin}, #{fighter}, #{mage}, #{support}, #{tank}, #{marksman}" +
+                ")"
+            )
     void insert(ChampionDAO champion);
 
-    @Update("UPDATE LEAGUEOFLEGENDS.CHAMPIONS SET " +
-            "NAME = #{name}, " +
-            "ATTACK = #{attack}, MAGIC = #{magic}, DEFENSE = #{defense}, DIFFICULTY = #{difficulty}, " +
-            "ASSASSIN = #{assassin}, FIGHTER = #{fighter}, MAGE = #{mage}, " +
-            "SUPPORT = #{support}, TANK = #{tank}, MARKSMAN = #{marksman} " +
-            "WHERE ID = #{id}"
-    )
+    @Update(
+                "UPDATE LEAGUEOFLEGENDS.CHAMPIONS SET " +
+                "NAME = #{name}, " +
+                "ATTACK = #{attack}, MAGIC = #{magic}, DEFENSE = #{defense}, DIFFICULTY = #{difficulty}, " +
+                "ASSASSIN = #{assassin}, FIGHTER = #{fighter}, MAGE = #{mage}, " +
+                "SUPPORT = #{support}, TANK = #{tank}, MARKSMAN = #{marksman} " +
+                "WHERE ID = #{id}"
+            )
     void update(ChampionDAO champion);
 
     @Select("SELECT * FROM LEAGUEOFLEGENDS.CHAMPIONS WHERE ID = #{id}")

@@ -51,10 +51,22 @@ UNLOCK TABLES;
 CREATE TABLE `leagueoflegends`.`finishedmatch` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `championId` INT NULL,
-  `itemId` INT NULL,
+  `item0Id` INT NULL,
+  `item1Id` INT NULL,
+  `item2Id` INT NULL,
+  `item3Id` INT NULL,
+  `item4Id` INT NULL,
+  `item5Id` INT NULL,
+  `item6Id` INT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`championId`) REFERENCES `champions`(`id`),
-  FOREIGN KEY (`itemId`) REFERENCES `items`(`id`),
+  FOREIGN KEY (`item0Id`) REFERENCES `items`(`id`),
+  FOREIGN KEY (`item1Id`) REFERENCES `items`(`id`),
+  FOREIGN KEY (`item2Id`) REFERENCES `items`(`id`),
+  FOREIGN KEY (`item3Id`) REFERENCES `items`(`id`),
+  FOREIGN KEY (`item4Id`) REFERENCES `items`(`id`),
+  FOREIGN KEY (`item5Id`) REFERENCES `items`(`id`),
+  FOREIGN KEY (`item6Id`) REFERENCES `items`(`id`),
   UNIQUE INDEX `id_UNIQUE` (`id`)
   )
 ENGINE = InnoDB
@@ -64,3 +76,7 @@ COMMENT = 'riot league of legends finished match information';
 
 LOCK TABLES `finishedmatch` WRITE;
 UNLOCK TABLES;
+
+
+insert into items (ID, NAME, HEALTH, MANA, ARMOR, SPELLBLOCK, ATTACKSPEED, PHYSICALDAMAGE, CRITCHANCE, MAGICDAMAGE, FINISHED)
+ VALUES (0, "None", 0, 0, 0, 0, 0, 0, 0, 0, 0);

@@ -1,6 +1,7 @@
 package koreatech.cse.service;
 
 import koreatech.cse.domain.match.FinishedMatch;
+import koreatech.cse.repository.FinishedMatchMapper;
 import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.RiotApiException;
@@ -10,11 +11,15 @@ import net.rithms.riot.api.endpoints.match.dto.MatchReference;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
 import java.util.ArrayList;
 
 //라이엇 게임즈 api사용하여 끝난 게임 저장.
 @Service
 public class RiotApiService {
+    @Inject
+    private FinishedMatchMapper finishedMatchMapper;
 
     public void getMatchList() {
         //API키
@@ -55,7 +60,7 @@ public class RiotApiService {
                             System.out.println(finishedMatch);
 
                             //DB에 업로드하는 코드.
-
+                            finishedMatchMapper.insert(finishedMatch);
                         }
 
                     }
@@ -64,7 +69,5 @@ public class RiotApiService {
                 e1.printStackTrace();
             }
         });
-
     }
-
 }
