@@ -17,8 +17,33 @@ CREATE TABLE `champions` (
   `tank` tinyint(4) DEFAULT NULL,
   `marksman` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='riot league of legends champion information';
+  UNIQUE KEY `id_UNIQUE` (`id`))
+ENGINE=InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin
+COMMENT='riot league of legends champion information';
 
 LOCK TABLES `champions` WRITE;
+UNLOCK TABLES;
+
+CREATE TABLE `leagueoflegends`.`items` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `health` INT NULL,
+  `mana` INT NULL,
+  `armor` INT NULL,
+  `spellBlock` INT NULL,
+  `attackSpeed` DOUBLE NULL,
+  `physicalDamage` INT NULL,
+  `critChance` DOUBLE NULL,
+  `magicDamage` INT NULL,
+  `finished` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin
+COMMENT = 'riot league of legends item information';
+
+LOCK TABLES `items` WRITE;
 UNLOCK TABLES;
