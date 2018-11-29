@@ -47,3 +47,20 @@ COMMENT = 'riot league of legends item information';
 
 LOCK TABLES `items` WRITE;
 UNLOCK TABLES;
+
+CREATE TABLE `leagueoflegends`.`finishedmatch` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `championId` INT NULL,
+  `itemId` INT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`championId`) REFERENCES `champions`(`id`),
+  FOREIGN KEY (`itemId`) REFERENCES `items`(`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id`)
+  )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin
+COMMENT = 'riot league of legends finished match information';
+
+LOCK TABLES `finishedmatch` WRITE;
+UNLOCK TABLES;

@@ -1,6 +1,6 @@
 package koreatech.cse.domain.match;
 
-public class finishedMatch {
+public class FinishedMatch {
     int id;
     int championId;
     int itemId;
@@ -31,7 +31,7 @@ public class finishedMatch {
 
     @Override
     public String toString() {
-        return "finishedMatch{" +
+        return "FinishedMatch{" +
                 "id=" + id +
                 ", championId=" + championId +
                 ", itemId=" + itemId +

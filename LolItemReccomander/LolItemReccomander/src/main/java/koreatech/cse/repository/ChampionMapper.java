@@ -1,8 +1,6 @@
 package koreatech.cse.repository;
 
-import koreatech.cse.domain.ChampionSearchable;
 import koreatech.cse.domain.staticData.ChampionDAO;
-import koreatech.cse.repository.provider.UserSqlProvider;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
