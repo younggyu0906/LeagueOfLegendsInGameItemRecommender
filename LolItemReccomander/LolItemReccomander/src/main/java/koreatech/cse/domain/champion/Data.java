@@ -46,7 +46,7 @@ public class Data {
     @JsonProperty("id")
     private String id;
     @JsonProperty("key")
-    private String key;
+    private int key;
     @JsonProperty("name")
     private String name;
     @JsonProperty("title")
@@ -87,12 +87,12 @@ public class Data {
     }
 
     @JsonProperty("key")
-    public String getKey() {
+    public int getKey() {
         return key;
     }
 
     @JsonProperty("key")
-    public void setKey(String key) {
+    public void setKey(int key) {
         this.key = key;
     }
 

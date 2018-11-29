@@ -3,6 +3,8 @@ package koreatech.cse.controller;
 import koreatech.cse.domain.champion.Champions;
 import koreatech.cse.domain.champion.Data;
 import koreatech.cse.domain.item.Items;
+import koreatech.cse.domain.staticData.ChampionDAO;
+import koreatech.cse.service.StaticDataService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/")
 public class LolStaticController {
+    @Inject
+    private StaticDataService staticDataService;
 
-    @RequestMapping("/Champion")
+    @RequestMapping("/championUpdate")
     public String championStaticLoad(Model model) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -26,9 +33,10 @@ public class LolStaticController {
             ResponseEntity<Champions> championResponseEntity = restTemplate.getForEntity(
                     "http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion.json", Champions.class);
             Map<String, Data> champions = championResponseEntity.getBody().getData();
-            model.addAttribute("champions",champions);
 
-            System.out.println(champions.entrySet());
+            staticDataService.setChampionDAOS(champions);
+
+            model.addAttribute("champions",staticDataService.getChampionDAOS());
 
         } catch (HttpClientErrorException e) {
             System.out.println(e.getStatusCode() + ": " + e.getStatusText());

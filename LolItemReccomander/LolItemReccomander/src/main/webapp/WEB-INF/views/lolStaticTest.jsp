@@ -10,9 +10,24 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%--ChampionDAO 테스트 페이지--%>
+<c:forEach var="champion" items="${champions}">
+    이름: ${champion.name}
+    id: ${champion.id}<br/>
+    attack: ${champion.attack}
+    magic: ${champion.magic}
+    defense: ${champion.defense}
+    difficulty: ${champion.difficulty}<br/>
+    Mage: ${champion.mage}
+    Tank: ${champion.tank}
+    Assassin: ${champion.assassin}
+    Fighter: ${champion.fighter}
+    Support: ${champion.support}
+    Marksman: ${champion.marksman}<br/>
 
-${champions.entrySet()}
-${items.entrySet()}
+
+    -------------------------<br/>
+</c:forEach>
 
 
 </body>
