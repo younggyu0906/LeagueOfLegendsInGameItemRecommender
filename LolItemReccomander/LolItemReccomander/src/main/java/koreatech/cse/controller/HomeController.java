@@ -23,21 +23,6 @@ public class HomeController {
         return "IamHomeControllerModelAttribute";
     }
 
-    @RequestMapping("/riotUser")
-    @ResponseBody
-    public String getRiotUser(@RequestParam String name) throws RiotApiException {
-        ApiConfig config = new ApiConfig().setKey("RGAPI-b404e049-9c57-439a-a5b1-68743855ee04");
-        RiotApi api = new RiotApi(config);
-
-        Summoner summoner = api.getSummonerByName(Platform.KR, name);
-        System.out.println("Name: " + summoner.getName());
-        System.out.println("Summoner ID: " + summoner.getId());
-        System.out.println("Account ID: " + summoner.getAccountId());
-        System.out.println("Summoner Level: " + summoner.getSummonerLevel());
-        System.out.println("Profile Icon ID: " + summoner.getProfileIconId());
-        return summoner.getName();
-    }
-
     @RequestMapping
     public String home() {
         return "hello";

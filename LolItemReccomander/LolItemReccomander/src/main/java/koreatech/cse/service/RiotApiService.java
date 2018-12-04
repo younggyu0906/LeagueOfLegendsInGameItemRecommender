@@ -8,8 +8,10 @@ import net.rithms.riot.api.RiotApiException;
 import net.rithms.riot.api.endpoints.match.dto.Match;
 import net.rithms.riot.api.endpoints.match.dto.MatchList;
 import net.rithms.riot.api.endpoints.match.dto.MatchReference;
+import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
+import org.omg.CORBA.Current;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,7 @@ public class RiotApiService {
     private FinishedMatchMapper finishedMatchMapper;
 
 //    //config파일에서 가져온 api키
-//    @Value("#{config['riot.apikey']}")
+//    @Value("${riot.apikey}")
 //    private String apiKey;
 
     private ApiConfig config = new ApiConfig().setKey("RGAPI-3209559f-3607-400a-9fc6-4539b9d02435");
@@ -84,8 +86,23 @@ public class RiotApiService {
         });
     }
 
-
-    public void findDuringMatchBySummonerName(String summonerName) {
-
+//사용자 이름을 통해 CurrentGameInfo 가져오는 함수.
+    public CurrentGameInfo findCurrentGameInfoBySummonerName(String summonerName) {
+        Summoner summoner = null;
+        CurrentGameInfo currentGameInfo = null;
+        try {
+            summoner = api.getSummonerByName(Platform.KR,summonerName);
+            //여기서 진행중이 아니면 오류 발생 체크할것
+            currentGameInfo = api.getActiveGameBySummoner(Platform.KR,summoner.getId());
+        } catch (RiotApiException e) {
+            e.printStackTrace();
+        }
+        return currentGameInfo;
+    }
+    //currentGameInfo 테스트~~
+    public String testPrintCurrentGameInfo (String summonerName) {
+        CurrentGameInfo currentGameInfo = findCurrentGameInfoBySummonerName(summonerName);
+        return currentGameInfo.getPlatformId() +
+                currentGameInfo.getParticipants().toString();
     }
 }
