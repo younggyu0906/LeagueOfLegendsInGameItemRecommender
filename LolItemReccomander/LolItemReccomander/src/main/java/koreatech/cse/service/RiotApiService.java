@@ -53,14 +53,22 @@ public class RiotApiService {
                         thisMatch = api.getMatch(Platform.KR,match.getGameId());
                         //소환사 10명에 대한 아이템들을 DB에 저장한다.
                         for(int i = 0 ; i < 10 ; i++){
-                            finishedMatch.setChampionId(thisMatch.getParticipants().get(i).getChampionId());
-                            finishedMatch.setItem0Id(thisMatch.getParticipants().get(i).getStats().getItem0());
-                            finishedMatch.setItem1Id(thisMatch.getParticipants().get(i).getStats().getItem1());
-                            finishedMatch.setItem2Id(thisMatch.getParticipants().get(i).getStats().getItem2());
-                            finishedMatch.setItem3Id(thisMatch.getParticipants().get(i).getStats().getItem3());
-                            finishedMatch.setItem4Id(thisMatch.getParticipants().get(i).getStats().getItem4());
-                            finishedMatch.setItem5Id(thisMatch.getParticipants().get(i).getStats().getItem5());
-                            finishedMatch.setItem6Id(thisMatch.getParticipants().get(i).getStats().getItem6());
+//                            finishedMatch.setChampionId(thisMatch.getParticipants().get(i).getChampionId());
+//                            finishedMatch.setItem0Id(thisMatch.getParticipants().get(i).getStats().getItem0());
+//                            finishedMatch.setItem1Id(thisMatch.getParticipants().get(i).getStats().getItem1());
+//                            finishedMatch.setItem2Id(thisMatch.getParticipants().get(i).getStats().getItem2());
+//                            finishedMatch.setItem3Id(thisMatch.getParticipants().get(i).getStats().getItem3());
+//                            finishedMatch.setItem4Id(thisMatch.getParticipants().get(i).getStats().getItem4());
+//                            finishedMatch.setItem5Id(thisMatch.getParticipants().get(i).getStats().getItem5());
+//                            finishedMatch.setItem6Id(thisMatch.getParticipants().get(i).getStats().getItem6());
+
+                            finishedMatch.setItem0Id(0);
+                            finishedMatch.setItem1Id(0);
+                            finishedMatch.setItem2Id(0);
+                            finishedMatch.setItem3Id(0);
+                            finishedMatch.setItem4Id(0);
+                            finishedMatch.setItem5Id(0);
+                            finishedMatch.setItem6Id(0);
 
                             System.out.println(finishedMatch);
 
