@@ -29,7 +29,7 @@ public interface ItemMapper {
     void update(ItemDAO item);
 
     @Select("SELECT * FROM LEAGUEOFLEGENDS.ITEMS WHERE ID = #{id}")
-    ItemDAO findChampionById(@Param("id") int id);
+    ItemDAO findItemById(@Param("id") int id);
 
     @Delete("DELETE FROM LEAGUEOFLEGENDS.ITEMS WHERE ID = #{id}")
     void delete(@Param("id") int id);

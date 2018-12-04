@@ -80,4 +80,5 @@ public class LolStaticController {
         return "lolStaticTest";
     }
 
+
 }
