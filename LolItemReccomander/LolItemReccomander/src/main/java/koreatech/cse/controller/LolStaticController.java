@@ -34,7 +34,7 @@ public class LolStaticController {
         //키값은 Champion의 이름이다.
         try {
             ResponseEntity<Champions> championResponseEntity = restTemplate.getForEntity(
-                    "http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion.json", Champions.class);
+                    "http://ddragon.leagueoflegends.com/cdn/8.23.1/data/en_US/champion.json", Champions.class);
             Map<String, Data> champions = championResponseEntity.getBody().getData();
 
             //staticDataService의 ChampionDAO를 초기화한다.
@@ -60,7 +60,7 @@ public class LolStaticController {
         //키값은 Item code.
         try {
             ResponseEntity<Items> itemResponseEntity = restTemplate.getForEntity(
-                    "http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/item.json", Items.class);
+                    "http://ddragon.leagueoflegends.com/cdn/8.23.1/data/en_US/item.json", Items.class);
             Map<Integer, koreatech.cse.domain.item.Data> items = itemResponseEntity.getBody().getData();
 
             //staticDataService의 ItemDaos초기화.
