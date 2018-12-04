@@ -10,6 +10,7 @@ import net.rithms.riot.api.endpoints.match.dto.MatchList;
 import net.rithms.riot.api.endpoints.match.dto.MatchReference;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -21,10 +22,14 @@ public class RiotApiService {
     @Inject
     private FinishedMatchMapper finishedMatchMapper;
 
+//    //config파일에서 가져온 api키
+//    @Value("#{config['riot.apikey']}")
+//    private String apiKey;
+
+    private ApiConfig config = new ApiConfig().setKey("RGAPI-3209559f-3607-400a-9fc6-4539b9d02435");
+    private RiotApi api = new RiotApi(config);
+
     public void getMatchList() {
-        //API키
-        ApiConfig config = new ApiConfig().setKey("RGAPI-7d329056-bb35-4c5f-b6bd-aafe27f5a25a");
-        RiotApi api = new RiotApi(config);
 
         //매치 검색의 대상이 될 소환사 이름들
         ArrayList<String> summonerName = new ArrayList<>();
@@ -62,12 +67,16 @@ public class RiotApiService {
                             //DB에 업로드하는 코드.
                             finishedMatchMapper.insert(finishedMatch);
                         }
-
                     }
                 }
             } catch (RiotApiException e1) {
                 e1.printStackTrace();
             }
         });
+    }
+
+
+    public void findDuringMatchBySummonerName(String summonerName) {
+
     }
 }
