@@ -39,6 +39,8 @@ public class LolStaticController {
 
             //staticDataService의 ChampionDAO를 초기화한다.
             staticDataService.setChampionDAOS(champions);
+            //후 DB에 업로드
+            staticDataService.insertChampionDAOS();
 
             //jsp에 전송
             model.addAttribute("champions",staticDataService.getChampionDAOS());
@@ -65,6 +67,8 @@ public class LolStaticController {
 
             //staticDataService의 ItemDaos초기화.
             staticDataService.setItemDAOS(items);
+            //후 DB에 업로드
+            staticDataService.insertItemDAOS();
 
             model.addAttribute("items",staticDataService.getItemDAOS());
 

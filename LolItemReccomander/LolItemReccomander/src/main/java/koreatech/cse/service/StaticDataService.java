@@ -52,11 +52,14 @@ public class StaticDataService {
 
                     //세팅된 championDAO를 DAOS리스트에 삽입.
                     championDAOS.add(championDAO);
-                    championMapper.insert(championDAO);
 
                     //print log
                     System.out.println(championDAO);
                 });
+    }
+    //DB에 챔피언 정보 업데이트
+    public void insertChampionDAOS() {
+        championDAOS.stream().forEach(e->championMapper.insert(e));
     }
 
     public ArrayList<ItemDAO> getItemDAOS() {
@@ -102,15 +105,19 @@ public class StaticDataService {
                     itemDAO.setMagicDamage(e.getValue().getStats().getFlatMagicDamageMod() != null
                             ? e.getValue().getStats().getFlatMagicDamageMod() : 0);
 
-                    //완제품인지 into(업그레이드 할 수 있는 아이템) 이 없으면 true
-                    itemDAO.setFinished(e.getValue().getInto().isEmpty());
+                    //완제품인지 into(다음 갈 수 있는 아이템)가 null이면 완제품
+                    itemDAO.setFinished(e.getValue().getInto() == null);
 
                     //세팅된 itemDAO를 DAOS리스트에 삽입.
                     itemDAOS.add(itemDAO);
-                    itemMapper.insert(itemDAO);
 
                     //print log
                     System.out.println(itemDAO);
                 });
+    }
+
+//    DB에 itemDAOS 업데이트
+    public void insertItemDAOS() {
+        itemDAOS.stream().forEach(e-> itemMapper.insert(e));
     }
 }
