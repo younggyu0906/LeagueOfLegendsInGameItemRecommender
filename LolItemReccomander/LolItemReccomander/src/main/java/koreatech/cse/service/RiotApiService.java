@@ -92,8 +92,10 @@ public class RiotApiService {
         CurrentGameInfo currentGameInfo = null;
         try {
             summoner = api.getSummonerByName(Platform.KR,summonerName);
+            System.out.println(summoner);
             //여기서 진행중이 아니면 오류 발생 체크할것
             currentGameInfo = api.getActiveGameBySummoner(Platform.KR,summoner.getId());
+            System.out.println(currentGameInfo);
         } catch (RiotApiException e) {
             e.printStackTrace();
         }
