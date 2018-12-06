@@ -91,7 +91,7 @@ public class RiotApiService {
     }
 
 //사용자 이름을 통해 CurrentGameInfo 가져오는 함수.
-    public CurrentGameInfo findCurrentGameInfoBySummonerName(String summonerName) {
+    private CurrentGameInfo findCurrentGameInfoBySummonerName(String summonerName) {
         Summoner summoner = null;
         CurrentGameInfo currentGameInfo = null;
         try {
