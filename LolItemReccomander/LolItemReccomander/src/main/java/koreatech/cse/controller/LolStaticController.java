@@ -5,6 +5,7 @@ import koreatech.cse.domain.champion.Data;
 import koreatech.cse.domain.item.Items;
 import koreatech.cse.domain.staticData.ChampionDAO;
 import koreatech.cse.service.StaticDataService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +15,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.stream.Stream;
+
 
 @Controller
 @RequestMapping("/")
@@ -24,6 +24,8 @@ public class LolStaticController {
     @Inject
     private StaticDataService staticDataService;
 
+    @Value("${riot.version}")
+    private String version;
 
     @Transactional
     @RequestMapping("/championUpdate")
@@ -34,7 +36,7 @@ public class LolStaticController {
         //키값은 Champion의 이름이다.
         try {
             ResponseEntity<Champions> championResponseEntity = restTemplate.getForEntity(
-                    "http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion.json", Champions.class);
+                    "http://ddragon.leagueoflegends.com/cdn/" + version + ".1/data/en_US/champion.json", Champions.class);
             Map<String, Data> champions = championResponseEntity.getBody().getData();
 
             //staticDataService의 ChampionDAO를 초기화한다.
@@ -62,7 +64,7 @@ public class LolStaticController {
         //키값은 Item code.
         try {
             ResponseEntity<Items> itemResponseEntity = restTemplate.getForEntity(
-                    "http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/item.json", Items.class);
+                    "http://ddragon.leagueoflegends.com/cdn/" + version + ".1/data/en_US/item.json", Items.class);
             Map<Integer, koreatech.cse.domain.item.Data> items = itemResponseEntity.getBody().getData();
 
             //staticDataService의 ItemDaos초기화.

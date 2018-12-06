@@ -32,4 +32,6 @@ public class DaoController {
         daoService.getItemDAO(Integer.parseInt(id));
         return "lolStaticTest"; // 수정하도록!!***************************************
     }
+
+
 }

@@ -12,6 +12,7 @@ import net.rithms.riot.api.endpoints.match.dto.MatchReference;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,20 +29,24 @@ public class RiotApiService {
     @Inject
     private ItemAnalysisService itemAnalysisService;
 
-//    //config파일에서 가져온 api키
-//    @Value("${riot.apikey}")
-//    private String apiKey;
+    // api key
+    @Value("${riot.apikey.jy}")
+    private String apiKeyJY;
 
-    //내꺼
-    private ApiConfig config = new ApiConfig().setKey("RGAPI-6228d5ab-afc0-449f-a1ab-3cd1085cb96c");
-    private RiotApi api = new RiotApi(config);
+    @Value("${riot.apikey.yg}")
+    private String apiKeyYG;
 
-    //영규꺼
-    private  ApiConfig config2 = new ApiConfig().setKey("RGAPI-d5178ef2-b54c-47a1-944c-a5a95b4cdcda");
-    private RiotApi api2 = new RiotApi(config2);
+    @Value("${riot.version}")
+    private String version;
+
+//    //기존 방식
+//    private ApiConfig config = new ApiConfig().setKey("RGAPI-6228d5ab-afc0-449f-a1ab-3cd1085cb96c");
+//    private RiotApi api = new RiotApi(config);
 
     @Transactional
     public void getMatchList() {
+        ApiConfig config = new ApiConfig().setKey(apiKeyJY);
+        RiotApi api = new RiotApi(config);
 
         //매치 검색의 대상이 될 소환사 이름들
         ArrayList<String> summonerName = new ArrayList<>();
@@ -66,7 +71,7 @@ public class RiotApiService {
                         //소환사 10명에 대한 아이템들을 DB에 저장한다.
                         for(int i = 0 ; i < 10 ; i++){
                             //게임 버전이 8.24이었던 게임만 DB에 추가한다.(버전 때문에 왜래 키 걸림)
-                            if(thisMatch.getGameVersion().contains("8.24")) {
+                            if(thisMatch.getGameVersion().contains(version)) {
                                 finishedMatch.setChampionId(thisMatch.getParticipants().get(i).getChampionId());
                                 finishedMatch.setItem0Id(thisMatch.getParticipants().get(i).getStats().getItem0());
                                 finishedMatch.setItem1Id(thisMatch.getParticipants().get(i).getStats().getItem1());
@@ -76,7 +81,7 @@ public class RiotApiService {
                                 finishedMatch.setItem5Id(thisMatch.getParticipants().get(i).getStats().getItem5());
                                 finishedMatch.setItem6Id(thisMatch.getParticipants().get(i).getStats().getItem6());
 
-                                System.out.println(finishedMatch);
+//                                System.out.println(finishedMatch);
 
                                 //DB에 업로드하는 코드.
                                 finishedMatchMapper.insert(finishedMatch);
@@ -92,13 +97,16 @@ public class RiotApiService {
 
 //사용자 이름을 통해 CurrentGameInfo 가져오는 함수.
     public CurrentGameInfo findCurrentGameInfoBySummonerName(String summonerName) {
+        ApiConfig config = new ApiConfig().setKey(apiKeyYG);
+        RiotApi api = new RiotApi(config);
+
         Summoner summoner = null;
         CurrentGameInfo currentGameInfo = null;
         try {
-            summoner = api2.getSummonerByName(Platform.KR,summonerName);
+            summoner = api.getSummonerByName(Platform.KR,summonerName);
             System.out.println(summoner);
             //여기서 진행중이 아니면 오류 발생 체크할것
-            currentGameInfo = api2.getActiveGameBySummoner(Platform.KR,summoner.getId());
+            currentGameInfo = api.getActiveGameBySummoner(Platform.KR,summoner.getId());
 
         } catch (RiotApiException e) {
             e.printStackTrace();
