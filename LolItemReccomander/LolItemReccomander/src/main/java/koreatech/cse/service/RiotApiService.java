@@ -11,8 +11,6 @@ import net.rithms.riot.api.endpoints.match.dto.MatchReference;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
-import org.omg.CORBA.Current;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -28,7 +26,7 @@ public class RiotApiService {
 //    @Value("${riot.apikey}")
 //    private String apiKey;
 
-    private ApiConfig config = new ApiConfig().setKey("RGAPI-3209559f-3607-400a-9fc6-4539b9d02435");
+    private ApiConfig config = new ApiConfig().setKey("RGAPI-6228d5ab-afc0-449f-a1ab-3cd1085cb96c");
     private RiotApi api = new RiotApi(config);
 
     public void getMatchList() {
