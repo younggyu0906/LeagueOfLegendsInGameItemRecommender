@@ -1,6 +1,7 @@
 package koreatech.cse.controller;
 
 
+import koreatech.cse.service.ItemAnalysisService;
 import koreatech.cse.service.RiotApiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,6 @@ public class MatchController {
     @Inject
     private RiotApiService riotApiService;
 
-    @Transactional
     @RequestMapping("/matchList")
     public String matchList(Model model) {
         riotApiService.getMatchList();

@@ -116,16 +116,6 @@ public class ChampionDAO {
         return "ChampionDAO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", attack=" + attack +
-                ", defense=" + defense +
-                ", magic=" + magic +
-                ", difficulty=" + difficulty +
-                ", tank=" + tank +
-                ", support=" + support +
-                ", mage=" + mage +
-                ", marksman=" + marksman +
-                ", fighter=" + fighter +
-                ", assassin=" + assassin +
                 '}';
     }
 }

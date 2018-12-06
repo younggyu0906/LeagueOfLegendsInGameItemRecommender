@@ -1,5 +1,6 @@
 package koreatech.cse.service;
 
+import koreatech.cse.domain.match.CurrentMatch;
 import koreatech.cse.domain.match.FinishedMatch;
 import koreatech.cse.repository.FinishedMatchMapper;
 import net.rithms.riot.api.ApiConfig;
@@ -12,6 +13,7 @@ import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -21,19 +23,29 @@ import java.util.ArrayList;
 public class RiotApiService {
     @Inject
     private FinishedMatchMapper finishedMatchMapper;
+    @Inject
+    private DaoService daoService;
+    @Inject
+    private ItemAnalysisService itemAnalysisService;
 
 //    //config파일에서 가져온 api키
 //    @Value("${riot.apikey}")
 //    private String apiKey;
 
+    //내꺼
     private ApiConfig config = new ApiConfig().setKey("RGAPI-6228d5ab-afc0-449f-a1ab-3cd1085cb96c");
     private RiotApi api = new RiotApi(config);
 
+    //영규꺼
+    private  ApiConfig config2 = new ApiConfig().setKey("RGAPI-d5178ef2-b54c-47a1-944c-a5a95b4cdcda");
+    private RiotApi api2 = new RiotApi(config2);
+
+    @Transactional
     public void getMatchList() {
 
         //매치 검색의 대상이 될 소환사 이름들
         ArrayList<String> summonerName = new ArrayList<>();
-        summonerName.add("hide on bush");
+        summonerName.add("망고링고망");
 
         summonerName.stream().forEach(e->{
             Summoner summoner = null;
@@ -53,28 +65,22 @@ public class RiotApiService {
                         thisMatch = api.getMatch(Platform.KR,match.getGameId());
                         //소환사 10명에 대한 아이템들을 DB에 저장한다.
                         for(int i = 0 ; i < 10 ; i++){
-                            finishedMatch.setChampionId(thisMatch.getParticipants().get(i).getChampionId());
-                            finishedMatch.setItem0Id(thisMatch.getParticipants().get(i).getStats().getItem0());
-                            finishedMatch.setItem1Id(thisMatch.getParticipants().get(i).getStats().getItem1());
-                            finishedMatch.setItem2Id(thisMatch.getParticipants().get(i).getStats().getItem2());
-                            finishedMatch.setItem3Id(thisMatch.getParticipants().get(i).getStats().getItem3());
-                            finishedMatch.setItem4Id(thisMatch.getParticipants().get(i).getStats().getItem4());
-                            finishedMatch.setItem5Id(thisMatch.getParticipants().get(i).getStats().getItem5());
-                            finishedMatch.setItem6Id(thisMatch.getParticipants().get(i).getStats().getItem6());
+                            //게임 버전이 8.24이었던 게임만 DB에 추가한다.(버전 때문에 왜래 키 걸림)
+                            if(thisMatch.getGameVersion().contains("8.24")) {
+                                finishedMatch.setChampionId(thisMatch.getParticipants().get(i).getChampionId());
+                                finishedMatch.setItem0Id(thisMatch.getParticipants().get(i).getStats().getItem0());
+                                finishedMatch.setItem1Id(thisMatch.getParticipants().get(i).getStats().getItem1());
+                                finishedMatch.setItem2Id(thisMatch.getParticipants().get(i).getStats().getItem2());
+                                finishedMatch.setItem3Id(thisMatch.getParticipants().get(i).getStats().getItem3());
+                                finishedMatch.setItem4Id(thisMatch.getParticipants().get(i).getStats().getItem4());
+                                finishedMatch.setItem5Id(thisMatch.getParticipants().get(i).getStats().getItem5());
+                                finishedMatch.setItem6Id(thisMatch.getParticipants().get(i).getStats().getItem6());
 
-//                            finishedMatch.setChampionId(1);
-//                            finishedMatch.setItem0Id(0);
-//                            finishedMatch.setItem1Id(0);
-//                            finishedMatch.setItem2Id(0);
-//                            finishedMatch.setItem3Id(0);
-//                            finishedMatch.setItem4Id(0);
-//                            finishedMatch.setItem5Id(0);
-//                            finishedMatch.setItem6Id(0);
+                                System.out.println(finishedMatch);
 
-                            System.out.println(finishedMatch);
-
-                            //DB에 업로드하는 코드.
-                            finishedMatchMapper.insert(finishedMatch);
+                                //DB에 업로드하는 코드.
+                                finishedMatchMapper.insert(finishedMatch);
+                            }
                         }
                     }
                 }
@@ -89,20 +95,55 @@ public class RiotApiService {
         Summoner summoner = null;
         CurrentGameInfo currentGameInfo = null;
         try {
-            summoner = api.getSummonerByName(Platform.KR,summonerName);
+            summoner = api2.getSummonerByName(Platform.KR,summonerName);
             System.out.println(summoner);
             //여기서 진행중이 아니면 오류 발생 체크할것
-            currentGameInfo = api.getActiveGameBySummoner(Platform.KR,summoner.getId());
-            System.out.println(currentGameInfo);
+            currentGameInfo = api2.getActiveGameBySummoner(Platform.KR,summoner.getId());
+
         } catch (RiotApiException e) {
             e.printStackTrace();
         }
+        //만약 게임중이 아니라면 null이 반환되어요
         return currentGameInfo;
     }
+    //currentGame을 받아 와서 새로운 CurrentGame정보를 세팅하는 함수.
+
+    public CurrentMatch getCurrentMatchBySummonerName(String summonerName) {
+        //summonerName으로 일단 currentGameInfo받아옴.
+        CurrentGameInfo currentGameInfo = findCurrentGameInfoBySummonerName(summonerName);
+        //null이면 현재 게임 진행중이 아님.
+        if(currentGameInfo == null) return null;
+
+        CurrentMatch currentMatch = new CurrentMatch();
+
+        //이름 세팅
+        currentMatch.setSummonerName(summonerName);
+
+        //전체 참여 정보를 삭 훑어본 후 소환사 이름이 현재 내 사용자라면 내 챔피언에 추가.
+        currentGameInfo.getParticipants().stream().forEach(e->{
+            if (e.getSummonerName().equals(summonerName)) {
+                currentMatch.setMyChampion(daoService.getChampionDAO(e.getChampionId()));
+                currentMatch.setMyTeamId(e.getTeamId());
+            }
+        });
+
+        currentGameInfo.getParticipants().stream().forEach(e->{
+            //팀 아이디가 내 팀 아이디와 같으면 아군
+            if (e.getTeamId() == currentMatch.getMyTeamId()) {
+                currentMatch.addTeamChampions(daoService.getChampionDAO(e.getChampionId()));
+            }
+            //아니면 적군
+            else {
+                currentMatch.addEnemyChampions(daoService.getChampionDAO(e.getChampionId()));
+            }
+        });
+
+        return currentMatch;
+    }
+
     //currentGameInfo 테스트~~
     public String testPrintCurrentGameInfo (String summonerName) {
-        CurrentGameInfo currentGameInfo = findCurrentGameInfoBySummonerName(summonerName);
-        return currentGameInfo.getPlatformId() +
-                currentGameInfo.getParticipants().toString();
+        itemAnalysisService.getItemsFromCurrentMatch(getCurrentMatchBySummonerName(summonerName));
+        return "DONE";
     }
 }

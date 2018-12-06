@@ -78,15 +78,12 @@ LOCK TABLES `finishedmatch` WRITE;
 UNLOCK TABLES;
 
 
--- 아이템에 0넣어놓는 것
-insert into items (ID, NAME, HEALTH, MANA, ARMOR, SPELLBLOCK, ATTACKSPEED, PHYSICALDAMAGE, CRITCHANCE, MAGICDAMAGE, FINISHED)
- VALUES (0, "None", 0, 0, 0, 0, 0, 0, 0, 0, 0);
-
--- 테이블 초기화
+-- 테이블 초기화 후  아이템에 0넣어놓는 것
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE `finishedmatch`;
 TRUNCATE `champions`;
 TRUNCATE `items`;
 SET FOREIGN_KEY_CHECKS = 1;
 
-
+insert into items (ID, NAME, HEALTH, MANA, ARMOR, SPELLBLOCK, ATTACKSPEED, PHYSICALDAMAGE, CRITCHANCE, MAGICDAMAGE, FINISHED)
+ VALUES (0, "None", 0, 0, 0, 0, 0, 0, 0, 0, 0);
