@@ -31,6 +31,7 @@ public class MatchController {
     @RequestMapping("/currentGameTest")
     @ResponseBody
     public String currentGameInfo(@RequestParam String summonerName) {
+        System.out.println(riotApiService.testPrintCurrentGameInfo(summonerName));
         return riotApiService.testPrintCurrentGameInfo(summonerName);
     }
 }
