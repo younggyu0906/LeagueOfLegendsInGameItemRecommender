@@ -1,5 +1,5 @@
 
-package koreatech.cse.domain.ChampionNormalized;
+package koreatech.cse.domain.championInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "banRate",
     "role"
 })
-public class ChampionNormalized {
+public class ChampionInfo {
 
     @JsonProperty("_id")
     private Id id;

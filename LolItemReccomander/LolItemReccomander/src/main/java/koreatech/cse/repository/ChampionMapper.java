@@ -4,8 +4,6 @@ import koreatech.cse.domain.staticData.ChampionDAO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface ChampionMapper {
     @Insert(

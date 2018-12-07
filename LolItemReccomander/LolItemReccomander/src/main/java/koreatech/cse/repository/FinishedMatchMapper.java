@@ -1,6 +1,5 @@
 package koreatech.cse.repository;
 
-
 import koreatech.cse.domain.match.FinishedMatch;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
