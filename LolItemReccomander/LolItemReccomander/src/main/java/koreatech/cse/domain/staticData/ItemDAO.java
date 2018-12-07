@@ -1,6 +1,6 @@
 package koreatech.cse.domain.staticData;
 
-//DB에 넣고 빼고 할 아이템 정보. 필요하고 얻을 수 있는 정보만 취급.
+// Item information to save and receive in DB. Use only the necessary information.
 public class ItemDAO {
     private int id;
     private String name;

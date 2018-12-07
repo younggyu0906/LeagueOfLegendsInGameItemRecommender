@@ -1,6 +1,5 @@
 package koreatech.cse.controller;
 
-
 import koreatech.cse.domain.championInfo.ChampionInfo;
 import koreatech.cse.service.DaoService;
 import koreatech.cse.service.NormalizedService;
@@ -17,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 
-
 @Controller
 @RequestMapping("/")
 public class DaoController {
@@ -25,11 +23,11 @@ public class DaoController {
     @Value("${champion.gg.apikey}")
     private String apikey;
 
-    @Inject
-    private DaoService daoService;
-
     @Value("${riot.version}")
     private String version;
+
+    @Inject
+    private DaoService daoService;
 
     @Inject
     private NormalizedService normalizedService;
@@ -38,14 +36,14 @@ public class DaoController {
     @RequestMapping(value = "/getChampion", method = RequestMethod.GET)
     public String getChampion(Model model, @RequestParam(required = false) String id) {
         daoService.getChampionDAO(Integer.parseInt(id));
-        return "lolStaticTest"; // 수정하도록!!***************************************
+        return "lolStaticTest";
     }
 
     @Transactional
     @RequestMapping(value = "/getItem", method = RequestMethod.GET)
     public String getItem(Model model, @RequestParam(required = false) String id) {
         daoService.getItemDAO(Integer.parseInt(id));
-        return "lolStaticTest"; // 수정하도록!!***************************************
+        return "lolStaticTest";
     }
 
     @RequestMapping(value = "/normalized", method = RequestMethod.GET)
@@ -59,12 +57,12 @@ public class DaoController {
             );
             ChampionInfo[] championInfo = championNormalizedResponseEntity.getBody();
 
-            normalizedService.getNormalizedInfo(id, elo, championInfo[0]);  // service???
+            normalizedService.getNormalizedInfo(id, elo, championInfo[0]);
 
         } catch (HttpClientErrorException e) {
             System.out.println(e.getStatusCode() + ": " + e.getStatusText());
         }
 
-        return "lolStaticTest"; // 수정하도록!!***************************************
+        return "lolStaticTest";
     }
 }

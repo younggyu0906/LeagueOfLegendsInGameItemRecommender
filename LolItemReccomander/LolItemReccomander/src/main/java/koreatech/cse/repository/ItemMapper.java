@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemMapper {
+    // Insert item information into DB
     @Insert(
                 "INSERT INTO LEAGUEOFLEGENDS.ITEMS (" +
                 "ID, NAME, " +
@@ -18,6 +19,7 @@ public interface ItemMapper {
             )
     void insert(ItemDAO item);
 
+    // Update item information in DB
     @Update(
                 "UPDATE LEAGUEOFLEGENDS.ITEMS SET " +
                 "NAME = #{name}, " +
@@ -28,9 +30,11 @@ public interface ItemMapper {
             )
     void update(ItemDAO item);
 
+    // Search by item id.
     @Select("SELECT * FROM LEAGUEOFLEGENDS.ITEMS WHERE ID = #{id}")
     ItemDAO findItemById(@Param("id") int id);
 
+    // delete
     @Delete("DELETE FROM LEAGUEOFLEGENDS.ITEMS WHERE ID = #{id}")
     void delete(@Param("id") int id);
 }

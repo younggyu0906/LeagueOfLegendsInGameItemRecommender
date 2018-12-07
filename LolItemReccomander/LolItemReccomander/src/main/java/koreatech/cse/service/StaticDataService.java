@@ -53,7 +53,7 @@ public class StaticDataService {
                     //세팅된 championDAO를 DAOS리스트에 삽입.
                     championDAOS.add(championDAO);
 
-                    //print log
+                    // print log
                     System.out.println(championDAO);
                 });
     }
