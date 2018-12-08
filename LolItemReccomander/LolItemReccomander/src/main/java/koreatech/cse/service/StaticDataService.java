@@ -16,48 +16,47 @@ public class StaticDataService {
 
     @Inject
     private ChampionMapper championMapper;
-    private ArrayList<ChampionDAO> championDAOS = new ArrayList<>();
+    private ArrayList<ChampionDAO> championDAOS = new ArrayList<>();    // List where daos will be saved
 
     @Inject
     private ItemMapper itemMapper;
-    private ArrayList<ItemDAO> itemDAOS = new ArrayList<>();    //DB에 업로드 하기 전 itemDAO들이 저장될 리스트.
+    private ArrayList<ItemDAO> itemDAOS = new ArrayList<>();            // List where daos will be saved
 
     public ArrayList<ChampionDAO> getChampionDAOS() {
         return championDAOS;
     }
 
-    //champions맵을 가져와 championDAO를 초기화한다.
+    // Get the champions map and set the championDAO.
     public void setChampionDAOS( Map<String, Data> champions) {
-        //초기화
+        // clear
         championDAOS.clear();
-        //stream을 통해 반복하면서 championDAO설정 후 DAOS에 반복하여 넣는다.
-        champions.entrySet().stream()
-                .forEach(e-> {
-                    //저장할 DAO하나 생성
-                    ChampionDAO championDAO = new ChampionDAO();
-                    championDAO.setName(e.getValue().getName());
-                    championDAO.setId(e.getValue().getKey());
-                    //Tags .3항연산. Tags에 해당 문자열이 포함되면 boolean true 세팅
-                    championDAO.setMage(e.getValue().getTags().contains("Mage"));
-                    championDAO.setAssassin(e.getValue().getTags().contains("Assassin"));
-                    championDAO.setFighter(e.getValue().getTags().contains("Fighter"));
-                    championDAO.setMarksman(e.getValue().getTags().contains("Marksman"));
-                    championDAO.setTank(e.getValue().getTags().contains("Tank"));
-                    championDAO.setSupport(e.getValue().getTags().contains("Support"));
-                    //info설정
-                    championDAO.setAttack(e.getValue().getInfo().getAttack());
-                    championDAO.setDefense(e.getValue().getInfo().getDefense());
-                    championDAO.setMagic(e.getValue().getInfo().getMagic());
-                    championDAO.setDifficulty(e.getValue().getInfo().getDifficulty());
+        // Loop using stream. After setting championDAO, append it repeatedly in DAOS.
+        champions.entrySet().stream().forEach(e-> {
+            // Declare DAO to save
+            ChampionDAO championDAO = new ChampionDAO();
+            championDAO.setName(e.getValue().getName());
+            championDAO.setId(e.getValue().getKey());
+            // Set true if the string corresponding to the tag is included
+            championDAO.setMage(e.getValue().getTags().contains("Mage"));
+            championDAO.setAssassin(e.getValue().getTags().contains("Assassin"));
+            championDAO.setFighter(e.getValue().getTags().contains("Fighter"));
+            championDAO.setMarksman(e.getValue().getTags().contains("Marksman"));
+            championDAO.setTank(e.getValue().getTags().contains("Tank"));
+            championDAO.setSupport(e.getValue().getTags().contains("Support"));
+            // Setting info
+            championDAO.setAttack(e.getValue().getInfo().getAttack());
+            championDAO.setDefense(e.getValue().getInfo().getDefense());
+            championDAO.setMagic(e.getValue().getInfo().getMagic());
+            championDAO.setDifficulty(e.getValue().getInfo().getDifficulty());
 
-                    //세팅된 championDAO를 DAOS리스트에 삽입.
-                    championDAOS.add(championDAO);
+            // Append the set champion DAO into the DAOS list.
+            championDAOS.add(championDAO);
 
-                    // print log
-                    System.out.println(championDAO);
-                });
+            // print log
+            System.out.println(championDAO);
+        });
     }
-    //DB에 챔피언 정보 업데이트
+    // Insert champion information into DB.
     public void insertChampionDAOS() {
         championDAOS.stream().forEach(e->championMapper.insert(e));
     }
@@ -65,58 +64,73 @@ public class StaticDataService {
     public ArrayList<ItemDAO> getItemDAOS() {
         return itemDAOS;
     }
-    //item맵을 가져와 itemDAO를 초기화한다.
+
+    // Get the items map and set the itemDAO.
     public void setItemDAOS(Map<Integer, koreatech.cse.domain.item.Data> items) {
-        //초기화
+        // clear
         itemDAOS.clear();
-        //stream을 통해 반복하면서 itemDao설정 후 DAOS에 반복하여 넣는다.
-        items.entrySet().stream()
-                .forEach(e-> {
-                    //저장할 DAO하나 생성
-                    ItemDAO itemDAO = new ItemDAO();
-                    itemDAO.setId(e.getKey());
-                    itemDAO.setName(e.getValue().getName());
+        // Loop using stream. After setting itemDao, append it repeatedly in DAOS.
+        items.entrySet().stream().forEach(e-> {
+            // Declare the dao object to save
+            ItemDAO itemDAO = new ItemDAO();
+            itemDAO.setId(e.getKey());
+            itemDAO.setName(e.getValue().getName());
 
-                    //getValue안에 Stat안에 정보를 빼서 저장하는 문장들.
-                    //아주 간단한 3항 연산
-                    //null일수도 있어서 null이면 0 넣게 하는 것임.
-                    itemDAO.setArmor(
-                            e.getValue().getStats().getFlatArmorMod() != null
-                                    ? e.getValue().getStats().getFlatArmorMod() : 0);
-                    itemDAO.setSpellBlock(
-                            e.getValue().getStats().getFlatSpellBlockMod() != null
-                                    ? e.getValue().getStats().getFlatSpellBlockMod() : 0);
+            // Save the item's stats in itemDAO
+            // If the stat is not null, get the value. If it is null, 0 is saved.
+            // ternary operator (3항 연산자)
+            itemDAO.setArmor(
+                    e.getValue().getStats().getFlatArmorMod() != null
+                    ? e.getValue().getStats().getFlatArmorMod() : 0
+            );
 
-                    itemDAO.setHealth(e.getValue().getStats().getFlatHPPoolMod() != null
-                            ? e.getValue().getStats().getFlatHPPoolMod() : 0);
+            itemDAO.setSpellBlock(
+                    e.getValue().getStats().getFlatSpellBlockMod() != null
+                    ? e.getValue().getStats().getFlatSpellBlockMod() : 0
+            );
 
-                    itemDAO.setMana(e.getValue().getStats().getFlatMPPoolMod() != null
-                            ? e.getValue().getStats().getFlatMPPoolMod() : 0);
+            itemDAO.setHealth(
+                    e.getValue().getStats().getFlatHPPoolMod() != null
+                    ? e.getValue().getStats().getFlatHPPoolMod() : 0
+            );
 
-                    itemDAO.setPhysicalDamage(e.getValue().getStats().getFlatPhysicalDamageMod() != null
-                            ? e.getValue().getStats().getFlatPhysicalDamageMod() : 0);
+            itemDAO.setMana(
+                    e.getValue().getStats().getFlatMPPoolMod() != null
+                    ? e.getValue().getStats().getFlatMPPoolMod() : 0
+            );
 
-                    itemDAO.setAttackSpeed(e.getValue().getStats().getPercentAttackSpeedMod() != null
-                            ? e.getValue().getStats().getPercentAttackSpeedMod() : 0);
+            itemDAO.setPhysicalDamage(
+                    e.getValue().getStats().getFlatPhysicalDamageMod() != null
+                    ? e.getValue().getStats().getFlatPhysicalDamageMod() : 0
+            );
 
-                    itemDAO.setCritChance(e.getValue().getStats().getFlatCritChanceMod() != null
-                            ? e.getValue().getStats().getFlatCritChanceMod() : 0);
+            itemDAO.setAttackSpeed(
+                    e.getValue().getStats().getPercentAttackSpeedMod() != null
+                    ? e.getValue().getStats().getPercentAttackSpeedMod() : 0
+            );
 
-                    itemDAO.setMagicDamage(e.getValue().getStats().getFlatMagicDamageMod() != null
-                            ? e.getValue().getStats().getFlatMagicDamageMod() : 0);
+            itemDAO.setCritChance(
+                    e.getValue().getStats().getFlatCritChanceMod() != null
+                    ? e.getValue().getStats().getFlatCritChanceMod() : 0
+            );
 
-                    //완제품인지 into(다음 갈 수 있는 아이템)가 null이면 완제품
-                    itemDAO.setFinished(e.getValue().getInto() == null);
+            itemDAO.setMagicDamage(
+                    e.getValue().getStats().getFlatMagicDamageMod() != null
+                    ? e.getValue().getStats().getFlatMagicDamageMod() : 0
+            );
 
-                    //세팅된 itemDAO를 DAOS리스트에 삽입.
-                    itemDAOS.add(itemDAO);
+            // If into is null, it is finished item. into is the top item list of the current item.
+            itemDAO.setFinished(e.getValue().getInto() == null);
 
-                    //print log
-                    System.out.println(itemDAO);
-                });
+            // Insert itemDAO into itemDAOS list.
+            itemDAOS.add(itemDAO);
+
+            // print log
+            System.out.println(itemDAO);
+        });
     }
 
-//    DB에 itemDAOS 업데이트
+    // insert itemDAOS into DB
     public void insertItemDAOS() {
         itemDAOS.stream().forEach(e-> itemMapper.insert(e));
     }
