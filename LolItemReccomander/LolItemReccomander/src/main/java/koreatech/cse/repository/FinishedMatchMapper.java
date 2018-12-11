@@ -3,6 +3,8 @@ package koreatech.cse.repository;
 import koreatech.cse.domain.match.FinishedMatch;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -32,7 +34,7 @@ public interface FinishedMatchMapper {
 
     // Search by champion id.
     @Select("SELECT * FROM LEAGUEOFLEGENDS.FINISHEDMATCH WHERE CHAMPIONID = #{championId}")
-    List<FinishedMatch> findFinishedMatchByChampionId(@Param("championId") int championId);
+    ArrayList<FinishedMatch> findFinishedMatchByChampionId(@Param("championId") int championId);
 
     // delete
     @Delete("DELETE FROM WSC.USERS WHERE ID = #{id}")
