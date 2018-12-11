@@ -13,9 +13,7 @@ public class CurrentGameRestOut {
         return currentMatch;
     }
 
-    public void setCurrentMatch(CurrentMatch currentMatch) {
-        this.currentMatch = currentMatch;
-    }
+    public void setCurrentMatch(CurrentMatch currentMatch) { this.currentMatch = currentMatch; }
 
     public HashMap<Integer, Integer> getItemFeq() {
         return itemFeq;
