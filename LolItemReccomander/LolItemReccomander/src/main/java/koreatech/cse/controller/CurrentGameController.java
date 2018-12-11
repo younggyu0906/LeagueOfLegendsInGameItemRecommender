@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.inject.Inject;
 
 @Controller
-@RequestMapping("/CurrentGame")
+@RequestMapping("/currentGame")
 public class CurrentGameController {
     // league of legends patch version. Declared in config.properties
     @Value("${riot.version}")
@@ -39,13 +39,16 @@ public class CurrentGameController {
 //    아군팀, 적군팀 챔피언, 챔피언 태그, 팀 별 ad ap 수치
     public ResponseEntity<RestOutMatch> CurrentGameInformation(@PathVariable("summonerName") String summoerName) {
         CurrentGameService currentGameService = new CurrentGameService();
+        System.out.println(summoerName);
         RestOutMatch restOutMatch = currentGameService.setRestOutMatch(summoerName);
-
+        System.out.println("2");
         if (restOutMatch.isProgress()) {
+            System.out.println("ok");
             return new ResponseEntity<RestOutMatch>(restOutMatch, HttpStatus.OK);
         }
 
         else {
+            System.out.println("notfound");
             System.out.println("\"" + summoerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
             return new ResponseEntity<RestOutMatch>(HttpStatus.NOT_FOUND);
         }
