@@ -5,11 +5,14 @@ import koreatech.cse.domain.rest.RestOutMatch;
 import koreatech.cse.domain.staticData.ChampionDAO;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 @Service
 public class CurrentGameService {
+    @Inject
+    RiotApiService riotApiService;
 
     // 챔피언정보를 해쉬맵에 넣는 함수, 중복
     private HashMap<String, ArrayList<String>> IntoHashMap(ChampionDAO championDAO) {
@@ -29,7 +32,6 @@ public class CurrentGameService {
 
     // return to json
     public RestOutMatch setRestOutMatch(String summoerName) {
-        RiotApiService riotApiService = new RiotApiService();
         RestOutMatch restOutMatch = new RestOutMatch();
         CurrentMatch currentMatch = new CurrentMatch();
 
