@@ -4,10 +4,9 @@ import koreatech.cse.domain.staticData.ChampionDAO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface ChampionMapper {
+    // Insert champion information into DB
     @Insert(
                 "INSERT INTO LEAGUEOFLEGENDS.CHAMPIONS (" +
                 "ID, NAME, ATTACK, MAGIC, DEFENSE, DIFFICULTY, ASSASSIN, FIGHTER, MAGE, SUPPORT, TANK, MARKSMAN" +
@@ -20,6 +19,7 @@ public interface ChampionMapper {
             )
     void insert(ChampionDAO champion);
 
+    // Ubdata champion information in DB
     @Update(
                 "UPDATE LEAGUEOFLEGENDS.CHAMPIONS SET " +
                 "NAME = #{name}, " +
@@ -30,9 +30,11 @@ public interface ChampionMapper {
             )
     void update(ChampionDAO champion);
 
+    // Search by champion id.
     @Select("SELECT * FROM LEAGUEOFLEGENDS.CHAMPIONS WHERE ID = #{id}")
     ChampionDAO findChampionById(@Param("id") int id);
 
+    // Delete
     @Delete("DELETE FROM LEAGUEOFLEGENDS.CHAMPIONS WHERE ID = #{id}")
     void delete(@Param("id") int id);
 }

@@ -1,6 +1,5 @@
 package koreatech.cse.repository;
 
-
 import koreatech.cse.domain.match.FinishedMatch;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -8,6 +7,7 @@ import java.util.List;
 
 @Repository
 public interface FinishedMatchMapper {
+    // Insert the finished game information into db.
     @Insert(
                 "INSERT INTO LEAGUEOFLEGENDS.FINISHEDMATCH " +
                 "(CHAMPIONID, ITEM0ID, ITEM1ID, ITEM2ID, ITEM3ID, ITEM4ID, ITEM5ID, ITEM6ID) " +
@@ -17,6 +17,7 @@ public interface FinishedMatchMapper {
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = int.class)
     void insert(FinishedMatch finishedMatch);
 
+    // Update the finished game information in db.
     @Update(
                 "UPDATE LEAGUEOFLEGENDS.FINISHEDMATCH " +
                 "SET CHAMPIONID = #{championId}, " +
@@ -25,12 +26,15 @@ public interface FinishedMatchMapper {
             )
     void update(FinishedMatch finishedMatch);
 
+    // Search by finished match id.
     @Select("SELECT * FROM LEAGUEOFLEGENDS.FINISHEDMATCH WHERE ID = #{id}")
     FinishedMatch findFinishedMatchById(@Param("id") int id);
 
+    // Search by champion id.
     @Select("SELECT * FROM LEAGUEOFLEGENDS.FINISHEDMATCH WHERE CHAMPIONID = #{championId}")
     List<FinishedMatch> findFinishedMatchByChampionId(@Param("championId") int championId);
 
+    // delete
     @Delete("DELETE FROM WSC.USERS WHERE ID = #{id}")
     void delete(@Param("id") int id);
 }

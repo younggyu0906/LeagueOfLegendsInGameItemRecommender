@@ -1,8 +1,7 @@
 
-package koreatech.cse.domain.oauth2.kakao.book;
+package koreatech.cse.domain.championInfo;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -13,36 +12,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "documents",
-    "meta"
+    "championId",
+    "role"
 })
-public class KakaoBook {
+public class Id {
 
-    @JsonProperty("documents")
-    private List<Document> documents = null;
-    @JsonProperty("meta")
-    private Meta meta;
+    @JsonProperty("championId")
+    private Long championId;
+    @JsonProperty("role")
+    private String role;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("documents")
-    public List<Document> getDocuments() {
-        return documents;
+    @JsonProperty("championId")
+    public Long getChampionId() {
+        return championId;
     }
 
-    @JsonProperty("documents")
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
+    @JsonProperty("championId")
+    public void setChampionId(Long championId) {
+        this.championId = championId;
     }
 
-    @JsonProperty("meta")
-    public Meta getMeta() {
-        return meta;
+    @JsonProperty("role")
+    public String getRole() {
+        return role;
     }
 
-    @JsonProperty("meta")
-    public void setMeta(Meta meta) {
-        this.meta = meta;
+    @JsonProperty("role")
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @JsonAnyGetter

@@ -1,5 +1,5 @@
 
-package koreatech.cse.domain.ChampionNormalized;
+package koreatech.cse.domain.championInfo;
 
 import java.util.HashMap;
 import java.util.Map;

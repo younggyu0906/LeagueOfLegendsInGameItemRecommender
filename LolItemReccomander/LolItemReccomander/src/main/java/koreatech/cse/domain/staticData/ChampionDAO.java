@@ -1,19 +1,19 @@
 package koreatech.cse.domain.staticData;
 
-//DB에 저장하고 불러올 챔피언 정보.
+// Champion information to save and receive in DB.
 public class ChampionDAO {
     private int id;
     private String name;
-    private int attack;      //info -> attack
-    private int defense;     //info -> defence
-    private int magic;       //info -> magic
-    private int difficulty;  //info -> difficulty
-    private boolean tank;    //tags ->
-    private boolean support;     //tags ->
-    private boolean mage;        //tags ->
-    private boolean marksman;    //tags ->
-    private boolean fighter;     //tags ->
-    private boolean assassin;    //tags ->
+    private int attack;         //info -> attack
+    private int defense;        //info -> defence
+    private int magic;          //info -> magic
+    private int difficulty;     //info -> difficulty
+    private boolean tank;       //tags -> tank
+    private boolean support;    //tags -> support
+    private boolean mage;       //tags -> mage
+    private boolean marksman;   //tags -> marksman
+    private boolean fighter;    //tags -> fighter
+    private boolean assassin;   //tags -> assassin
 
     public int getId() {
         return id;

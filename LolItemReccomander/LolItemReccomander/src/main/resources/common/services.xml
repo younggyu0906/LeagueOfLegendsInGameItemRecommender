@@ -43,15 +43,6 @@
         <property name="password" value="${jdbc.password}" />
     </bean>
 
-    <bean id="myProperties"
-          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="locations">
-            <list>
-                <value>classpath*:*.properties</value>
-            </list>
-        </property>
-    </bean>
-
     <!-- MyBatis -->
     <mybatis:scan base-package="koreatech.cse.repository" />
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -64,6 +55,4 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <aop:aspectj-autoproxy />
-    <bean id="userServiceAspect" class="koreatech.cse.aop.AopTester" />
 </beans>

@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.util.ArrayList;
 
-//라이엇 게임즈 api사용하여 끝난 게임 저장.
+// Save finished game information using riot api
 @Service
 public class RiotApiService {
     @Inject
@@ -55,22 +55,22 @@ public class RiotApiService {
         summonerName.stream().forEach(e->{
             Summoner summoner = null;
             try {
-                //소환사 이름으로 정보를 가져옴
+                // Get information to the summoner name.
                 summoner = api.getSummonerByName(Platform.KR, e);
-                //매치 리스트를 가져옴
+                // Get match list
                 MatchList matchList = api.getMatchListByAccountId(Platform.KR, summoner.getAccountId());
 
-                //아래 for문에서 사용될 변수들.
+                // Variable to be used in for loop.
                 Match thisMatch = null;
                 FinishedMatch finishedMatch = new FinishedMatch();
 
-                //matchlist가 null이 아니면 매치들을 가져와서 DB에 저장
+                // if MatchList is not null, get match and insert into DB.
                 if (matchList.getMatches() != null) {
                     for (MatchReference match : matchList.getMatches()) {
                         thisMatch = api.getMatch(Platform.KR,match.getGameId());
-                        //소환사 10명에 대한 아이템들을 DB에 저장한다.
+                        // Save items for 10 Summoners to DB.
                         for(int i = 0 ; i < 10 ; i++){
-                            //게임 버전이 8.24이었던 게임만 DB에 추가한다.(버전 때문에 왜래 키 걸림)
+                            // Only save match information for game version 8.24 because of the foreign key.
                             if(thisMatch.getGameVersion().contains(version)) {
                                 finishedMatch.setChampionId(thisMatch.getParticipants().get(i).getChampionId());
                                 finishedMatch.setItem0Id(thisMatch.getParticipants().get(i).getStats().getItem0());
@@ -83,7 +83,7 @@ public class RiotApiService {
 
 //                                System.out.println(finishedMatch);
 
-                                //DB에 업로드하는 코드.
+                                // insert into DB.
                                 finishedMatchMapper.insert(finishedMatch);
                             }
                         }
@@ -95,8 +95,10 @@ public class RiotApiService {
         });
     }
 
-//사용자 이름을 통해 CurrentGameInfo 가져오는 함수.
-    private CurrentGameInfo findCurrentGameInfoBySummonerName(String summonerName) {
+
+    // Get the current game information to the summoner name.
+    public CurrentGameInfo findCurrentGameInfoBySummonerName(String summonerName) {
+
         ApiConfig config = new ApiConfig().setKey(apiKeyYG);
         RiotApi api = new RiotApi(config);
 
@@ -105,29 +107,31 @@ public class RiotApiService {
         try {
             summoner = api.getSummonerByName(Platform.KR,summonerName);
             System.out.println(summoner);
-            //여기서 진행중이 아니면 오류 발생 체크할것
+            // 여기서 진행중이 아니면 오류 발생 체크할것
             currentGameInfo = api.getActiveGameBySummoner(Platform.KR,summoner.getId());
 
         } catch (RiotApiException e) {
             e.printStackTrace();
         }
-        //만약 게임중이 아니라면 null이 반환되어요
+        // If the game is not progress, return null.
         return currentGameInfo;
     }
-    //currentGame을 받아 와서 새로운 CurrentGame정보를 세팅하는 함수.
 
+    // The current game information received from api is processed with necessary information only.
+    // class 이름 변경?? CurrentMatch? CurrentGameInfo? 헷갈려요ㅠ
+//    -> currentGameInfo는 riotApi자체에 소속된 것입니다. currentMatch는 우리가 만든것입니다.
     public CurrentMatch getCurrentMatchBySummonerName(String summonerName) {
-        //summonerName으로 일단 currentGameInfo받아옴.
+        // Get currentGameInfo with summonerName.
         CurrentGameInfo currentGameInfo = findCurrentGameInfoBySummonerName(summonerName);
-        //null이면 현재 게임 진행중이 아님.
+        // If null, the game is not in progress.
         if(currentGameInfo == null) return null;
 
         CurrentMatch currentMatch = new CurrentMatch();
 
-        //이름 세팅
+        // set summoner name
         currentMatch.setSummonerName(summonerName);
 
-        //전체 참여 정보를 삭 훑어본 후 소환사 이름이 현재 내 사용자라면 내 챔피언에 추가.
+        // If the summoner name is my name, add it to my champion.
         currentGameInfo.getParticipants().stream().forEach(e->{
             if (e.getSummonerName().equals(summonerName)) {
                 currentMatch.setMyChampion(daoService.getChampionDAO(e.getChampionId()));
@@ -136,11 +140,11 @@ public class RiotApiService {
         });
 
         currentGameInfo.getParticipants().stream().forEach(e->{
-            //팀 아이디가 내 팀 아이디와 같으면 아군
+            // If the participant's team ID and my team ID are the same, it is a ally.
             if (e.getTeamId() == currentMatch.getMyTeamId()) {
                 currentMatch.addTeamChampions(daoService.getChampionDAO(e.getChampionId()));
             }
-            //아니면 적군
+            // else enemy
             else {
                 currentMatch.addEnemyChampions(daoService.getChampionDAO(e.getChampionId()));
             }
@@ -149,7 +153,7 @@ public class RiotApiService {
         return currentMatch;
     }
 
-    //currentGameInfo 테스트~~
+    // currentGameInfo test
     public String testPrintCurrentGameInfo (String summonerName) {
         itemAnalysisService.getItemsFromCurrentMatch(getCurrentMatchBySummonerName(summonerName));
         return "DONE";

@@ -9,7 +9,6 @@ import koreatech.cse.repository.ItemMapper;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,11 +16,9 @@ public class DaoService {
 
     @Inject
     private ChampionMapper championMapper;
-    private ArrayList<ChampionDAO> championDAOS = new ArrayList<>();
 
     @Inject
     private ItemMapper itemMapper;
-    private ArrayList<ItemDAO> itemDAOS = new ArrayList<>();    //DB에 업로드 하기 전 itemDAO들이 저장될 리스트.
 
     @Inject
     private FinishedMatchMapper finishedMatchMapper;
