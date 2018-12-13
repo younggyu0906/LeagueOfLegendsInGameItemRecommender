@@ -8,7 +8,7 @@ public class MatchInfoRestOut {
     ArrayList<HashMap<String, ArrayList<String>>> allyChampions = new ArrayList<>();
     HashMap<String, Integer> allyStats = new HashMap<>();
     ArrayList<HashMap<String, ArrayList<String>>> enemyChampions = new ArrayList<>();
-    HashMap<String, Integer> enemyStats = new HashMap<>();;
+    HashMap<String, Integer> enemyStats = new HashMap<>();
 
     public MatchInfoRestOut() {
         isProgress = false;
