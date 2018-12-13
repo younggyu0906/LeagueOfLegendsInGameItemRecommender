@@ -186,9 +186,9 @@ public class ItemAnalysisService {
         weight += (myChampion.getMagic() / myStatRate + enemyStats.get("Defense") / enemyStatRate)
                 * calcWeight(item, ItemClass.MAGIC_ATTACK);
         weight += (myChampion.getDefense() / myStatRate + enemyStats.get("Attack") / enemyStatRate)
-                * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
+                * calcWeight(item, ItemClass.PHYSICAL_DEFENSE);
         weight += (myChampion.getDefense() / myStatRate + enemyStats.get("Magic") / enemyStatRate)
-                * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+                * calcWeight(item, ItemClass.MAGIC_DEFENSE);
 
         System.out.println("calc stats(my, enemy) : " + weight);
 
@@ -200,13 +200,13 @@ public class ItemAnalysisService {
         }
 
         if (myChampion.isTank()) {
-            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
-            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENSE);
+            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENSE);
         }
 
         if (myChampion.isSupport()) {
-            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
-            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENSE);
+            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENSE);
         }
 
         if (myChampion.isMarksman())
@@ -218,8 +218,8 @@ public class ItemAnalysisService {
         if (myChampion.isFighter()) {
             weight += myTagRate/2 * myChampion.getAttack() * calcWeight(item, ItemClass.PHYSICAL_ATTACK);
             weight += myTagRate/2 * myChampion.getMagic() * calcWeight(item, ItemClass.MAGIC_ATTACK);
-            weight += myTagRate/2 * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
-            weight += myTagRate/2 * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+            weight += myTagRate/2 * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENSE);
+            weight += myTagRate/2 * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENSE);
         }
 
         System.out.println("calc my tag : " + weight);
@@ -227,16 +227,16 @@ public class ItemAnalysisService {
         // enemy team tag
         double enemyTagRate = 10.0;
         if (enemyStats.get("Assassin") > 2) {
-            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
-            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENSE);
+            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENSE);
         }
 
         if (enemyStats.get("Mage") > 2) {
-            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENSE);
         }
 
         if (enemyStats.get("Marksman") > 2) {
-            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
+            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENSE);
         }
 
         if (enemyStats.get("Tank") > 2) {
@@ -263,19 +263,20 @@ public class ItemAnalysisService {
         else if (itemClass == ItemClass.MAGIC_ATTACK) {
             weight += 1*item.getMagicDamage();  //AP
         }
-        else if (itemClass == ItemClass.PHYSICAL_DEFENCE) {
+        else if (itemClass == ItemClass.PHYSICAL_DEFENSE) {
             weight += 0.2*item.getHealth(); //체력
             weight += 0.7*item.getArmor();    //방어력
         }
-        else if (itemClass == ItemClass.MAGIC_DEFENCE) {
+        else if (itemClass == ItemClass.MAGIC_DEFENSE) {
             weight += 0.2*item.getHealth();
             weight += 0.7*item.getSpellBlock();
+
         }
         return weight;
     }
 
     //
     private enum ItemClass {
-        PHYSICAL_ATTACK, MAGIC_ATTACK, PHYSICAL_DEFENCE, MAGIC_DEFENCE
+        PHYSICAL_ATTACK, MAGIC_ATTACK, PHYSICAL_DEFENSE, MAGIC_DEFENSE
     }
 }

@@ -3,6 +3,7 @@ package koreatech.cse.controller;
 import koreatech.cse.domain.rest.ChampionInfoRestOut;
 import koreatech.cse.domain.rest.CurrentGameRestOut;
 import koreatech.cse.domain.rest.MatchInfoRestOut;
+import koreatech.cse.domain.rest.RecommendedItemRestOut;
 import koreatech.cse.service.CurrentGameService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -64,8 +65,18 @@ public class CurrentGameController {
 
     @Transactional
     @RequestMapping(value="ItemRecommendation/{summonerName}", method= RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<CurrentGameRestOut> CurrentGameItemRec(@PathVariable("summonerName") String summoerName) {
+    public ResponseEntity<RecommendedItemRestOut> CurrentGameItemRec(@PathVariable("summonerName") String summoerName) {
 //        아이템 추천
-        return null;
+        RecommendedItemRestOut recommendedItemRestOut = currentGameService.setRecommendedItemRestOut(summoerName);
+
+        if (recommendedItemRestOut.getIsProgress()) {
+            System.out.println("ok");
+            return new ResponseEntity<RecommendedItemRestOut>(recommendedItemRestOut, HttpStatus.OK);
+        }
+
+        else {
+            System.out.println("\"" + summoerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
+            return new ResponseEntity<RecommendedItemRestOut>(HttpStatus.NOT_FOUND);
+        }
     }
 }
