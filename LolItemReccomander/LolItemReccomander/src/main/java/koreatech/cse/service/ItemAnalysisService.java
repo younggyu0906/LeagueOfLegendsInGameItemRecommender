@@ -169,14 +169,86 @@ public class ItemAnalysisService {
 
     //**************************************************************************************************************
     //아이템이 적팀, 우리팀 상황에 지금 적절한지를 판단한다. 추추추추추천하는 알고리즘이 여기
-    private Integer judgeItem(ItemDAO item, ChampionDAO myChampion, HashMap<String, Integer> teamStats, HashMap<String,Integer> enemyStats) {
+    private double judgeItem(ItemDAO item, ChampionDAO myChampion, HashMap<String, Integer> teamStats, HashMap<String,Integer> enemyStats) {
+        double weight = 0;
 
+        System.out.println("init : " + weight);
 
-        return 1;
+        // my champion stat and enemy team stat
+        // stat maximum value is 10
+        double myStatRate = 2.0;
+        double enemyStatRate = 5.0;
+        weight += (myChampion.getAttack() / myStatRate + enemyStats.get("Defence") / enemyStatRate)
+                * calcWeight(item, ItemClass.PHYSICAL_ATTACK);
+        weight += (myChampion.getMagic() / myStatRate + enemyStats.get("Defence") / enemyStatRate)
+                * calcWeight(item, ItemClass.MAGIC_ATTACK);
+        weight += (myChampion.getDefense() / myStatRate + enemyStats.get("Attack") / enemyStatRate)
+                * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
+        weight += (myChampion.getDefense() / myStatRate + enemyStats.get("Magic") / enemyStatRate)
+                * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+
+        System.out.println("calc stats(my, enemy) : " + weight);
+
+        // my champion tag
+        double myTagRate = 5.0;
+        if (myChampion.isAssassin()) {
+            weight += myTagRate * myChampion.getAttack() * calcWeight(item, ItemClass.PHYSICAL_ATTACK);
+            weight += myTagRate * myChampion.getMagic() * calcWeight(item, ItemClass.MAGIC_ATTACK);
+        }
+
+        if (myChampion.isTank()) {
+            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
+            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+        }
+
+        if (myChampion.isSupport()) {
+            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
+            weight += myTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+        }
+
+        if (myChampion.isMarksman())
+            weight += myTagRate * myChampion.getAttack() * calcWeight(item, ItemClass.PHYSICAL_ATTACK);
+
+        if (myChampion.isMage())
+            weight += myTagRate * myChampion.getMagic() * calcWeight(item, ItemClass.MAGIC_ATTACK);
+
+        if (myChampion.isFighter()) {
+            weight += myTagRate/2 * myChampion.getAttack() * calcWeight(item, ItemClass.PHYSICAL_ATTACK);
+            weight += myTagRate/2 * myChampion.getMagic() * calcWeight(item, ItemClass.MAGIC_ATTACK);
+            weight += myTagRate/2 * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
+            weight += myTagRate/2 * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+        }
+
+        System.out.println("calc my tag : " + weight);
+
+        // enemy team tag
+        double enemyTagRate = 10.0;
+        if (enemyStats.get("Assassin") > 2) {
+            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
+            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+        }
+
+        if (enemyStats.get("Mage") > 2) {
+            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENCE);
+        }
+
+        if (enemyStats.get("Marksman") > 2) {
+            weight += enemyTagRate * myChampion.getDefense() * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
+        }
+
+        if (enemyStats.get("Tank") > 2) {
+            weight += enemyTagRate * myChampion.getAttack() * calcWeight(item, ItemClass.PHYSICAL_ATTACK);
+            weight += enemyTagRate * myChampion.getMagic() * calcWeight(item, ItemClass.MAGIC_ATTACK);
+        }
+
+        System.out.println("return : " + weight);
+
+        // return weight
+        return weight;
     }
 
     //아이템의 가중치계산
-    private Integer calcWeight(ItemDAO item, ItemClass itemClass ) {
+    private Integer calcWeight(ItemDAO item, ItemClass itemClass) {
         //ex
         if (itemClass == ItemClass.MAGIC_ATTACK) {
 
