@@ -27,7 +27,7 @@ public class CurrentGameController {
 
     // The method that returns the value of rest for the current game
     @Transactional
-    @RequestMapping(value="/teamInformation", method= RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value="/matchInformation", method= RequestMethod.GET, produces = "application/json")
     public ResponseEntity<MatchInformationDTO> currentGameInformation(@RequestParam String summonerName) {
         // return information :
         // ally champions, ally champions tag, ally champions stats
@@ -45,7 +45,7 @@ public class CurrentGameController {
     }
 
     @Transactional
-    @RequestMapping(value="myChampionInformation", method= RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value="championInformation", method= RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ChampionInformationDTO> currentGameMyChampion(@RequestParam String summonerName) {
         // return information :
         // my champion name, my champion tag, my champion stat
