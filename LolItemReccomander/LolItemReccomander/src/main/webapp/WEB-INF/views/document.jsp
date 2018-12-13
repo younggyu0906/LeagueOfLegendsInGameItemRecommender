@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <div class="jumbotron text-center">
     <h1>ironGG Public API Document</h1>
@@ -24,6 +25,7 @@
 <div class="container">
     <h2>Current game</h2>
     <p>You can get progressing "League of Legends" match information through our public api.</p>
+    <p>Game patch version is Korea, ${riot.version}.</p>
 
     </br></br>
     <h2>Match Information</h2>
@@ -79,17 +81,26 @@
     </table>
 
     <h3>Example Response</h3>
-    <p>결과 예시</p>
+    <div class="panel panel-default">
+        <div class="panel-body">결과 예시</div>
+    </div>
 
     <h3>Execute Request</h3>
-    <p>이곳에 요청 실행하는 부분을 추가하여라.</p>
+    <form>
+        <div class="form-group">
+            <label for="usr">summonerName:</label>
+            <input type="text" class="form-control" id="usr">
+        </div>
+    </form>
+    <button type="button" class="btn btn-danger">Execute Request</button>
+    <p>이곳에 요청 실행하는 부분을 추가하여라. 어떻게 사용하는진 모르겠어. 틀만 만들어봤어</p>
 
     </br></br>
-    <h2>Match Information</h2>
+    <h2>Champion Information</h2>
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
     <h3>URL</h3>
-    <p>http://localhost:8080/currentGame/matchInformation?summonerName={summonerName}</p>
+    <p>http://localhost:8080/currentGame/championInformation?summonerName={summonerName}</p>
 
     <h3>Parameter</h3>
     <table class="table table-hover">
@@ -138,17 +149,26 @@
     </table>
 
     <h3>Example Response</h3>
-    <p>결과 예시</p>
+    <div class="panel panel-default">
+        <div class="panel-body">결과 예시</div>
+    </div>
 
     <h3>Execute Request</h3>
-    <p>이곳에 요청 실행하는 부분을 추가하여라.</p>
+    <form>
+        <div class="form-group">
+            <label for="usr">summonerName:</label>
+            <input type="text" class="form-control" id="usr2">
+        </div>
+    </form>
+    <button type="button" class="btn btn-danger">Execute Request</button>
+    <p>이곳에 요청 실행하는 부분을 추가하여라. 어떻게 사용하는진 모르겠어. 틀만 만들어봤어</p>
 
     </br></br>
-    <h2>Match Information</h2>
+    <h2>Recommended Items</h2>
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
     <h3>URL</h3>
-    <p>http://localhost:8080/currentGame/matchInformation?summonerName={summonerName}</p>
+    <p>http://localhost:8080/currentGame/recommendedItem?summonerName={summonerName}</p>
 
     <h3>Parameter</h3>
     <table class="table table-hover">
@@ -197,10 +217,20 @@
     </table>
 
     <h3>Example Response</h3>
-    <p>결과 예시</p>
+    <div class="panel panel-default">
+        <div class="panel-body">결과 예시</div>
+    </div>
 
     <h3>Execute Request</h3>
-    <p>이곳에 요청 실행하는 부분을 추가하여라.</p>
+    <form>
+        <div class="form-group">
+            <label for="usr">summonerName:</label>
+            <input type="text" class="form-control" id="usr3">
+        </div>
+    </form>
+    <button type="button" class="btn btn-danger">Execute Request</button>
+    <p>이곳에 요청 실행하는 부분을 추가하여라. 어떻게 사용하는진 모르겠어. 틀만 만들어봤어</p>
+
 
     </br></br></br></br>
     <h4>Source Code</h4>
