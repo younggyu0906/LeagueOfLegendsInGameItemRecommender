@@ -2,7 +2,7 @@ package koreatech.cse.domain.rest;
 
 import java.util.ArrayList;
 
-public class RecommendedItemRestOut {
+public class RecommendedItemDTO {
     Boolean isProgress;
     String championName;
     ArrayList<String> recommendedItems;

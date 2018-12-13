@@ -73,4 +73,9 @@ public class HomeController {
 
         return "jstlTest";
     }
+
+    @RequestMapping("/document")
+    public String document() {
+        return "document";
+    }
 }

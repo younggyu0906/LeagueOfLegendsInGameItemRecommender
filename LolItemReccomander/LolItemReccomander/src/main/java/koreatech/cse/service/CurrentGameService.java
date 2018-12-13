@@ -2,9 +2,9 @@ package koreatech.cse.service;
 
 import koreatech.cse.domain.championInfo.ChampionInfo;
 import koreatech.cse.domain.match.CurrentMatch;
-import koreatech.cse.domain.rest.ChampionInfoRestOut;
-import koreatech.cse.domain.rest.MatchInfoRestOut;
-import koreatech.cse.domain.rest.RecommendedItemRestOut;
+import koreatech.cse.domain.rest.ChampionInformationDTO;
+import koreatech.cse.domain.rest.MatchInformationDTO;
+import koreatech.cse.domain.rest.RecommendedItemDTO;
 import koreatech.cse.domain.staticData.ChampionDAO;
 import koreatech.cse.domain.staticData.ItemDAO;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,48 +46,48 @@ public class CurrentGameService {
         return championInfo;
     }
 
-    // return MatchInfoRestOut object to return to json
-    public MatchInfoRestOut setMatchInfoRestOut(String summoerName) {
-        MatchInfoRestOut matchInfoRestOut = new MatchInfoRestOut();
+    // return MatchInformationDTO object to return to json
+    public MatchInformationDTO setMatchInfoRestOut(String summoerName) {
+        MatchInformationDTO matchInformationDTO = new MatchInformationDTO();
         ArrayList<ChampionDAO> championDAOS;
 
         // get current game information by summoerName.
         CurrentMatch currentMatch = riotApiService.getCurrentMatchBySummonerName(summoerName);
 
         // if the game is not progress
-        if (currentMatch == null) matchInfoRestOut.setIsProgress(false);
+        if (currentMatch == null) matchInformationDTO.setIsProgress(false);
 
         // if the game is progress
         else {
-            matchInfoRestOut.setIsProgress(true);
+            matchInformationDTO.setIsProgress(true);
 
             // get ally champions
             championDAOS = currentMatch.getTeamChampions();
             championDAOS.stream().forEach(e -> {
                 // add ally champions tag hash map to ArrayList
-                matchInfoRestOut.addAllyChampions(championTagsIntoHashMap(e));
+                matchInformationDTO.addAllyChampions(championTagsIntoHashMap(e));
                 // add ally champions stats to ArrayList
-                matchInfoRestOut.addAndPutAllyStats("attack", e.getAttack());
-                matchInfoRestOut.addAndPutAllyStats("defense", e.getDefense());
-                matchInfoRestOut.addAndPutAllyStats("magic", e.getMagic());
+                matchInformationDTO.addAndPutAllyStats("attack", e.getAttack());
+                matchInformationDTO.addAndPutAllyStats("defense", e.getDefense());
+                matchInformationDTO.addAndPutAllyStats("magic", e.getMagic());
             });
 
             // get enemy champions
             championDAOS = currentMatch.getEnemyChampions();
             championDAOS.stream().forEach(e -> {
                 // add enemy champions tag hash map to ArrayList
-                matchInfoRestOut.addEnemyChmapions(championTagsIntoHashMap(e));
+                matchInformationDTO.addEnemyChmapions(championTagsIntoHashMap(e));
                 // add enemy champions stats to ArrayList
-                matchInfoRestOut.addAndPutEnemyStats("attack", e.getAttack());
-                matchInfoRestOut.addAndPutEnemyStats("defense", e.getDefense());
-                matchInfoRestOut.addAndPutEnemyStats("magic", e.getMagic());
+                matchInformationDTO.addAndPutEnemyStats("attack", e.getAttack());
+                matchInformationDTO.addAndPutEnemyStats("defense", e.getDefense());
+                matchInformationDTO.addAndPutEnemyStats("magic", e.getMagic());
             });
         }
-        return matchInfoRestOut;
+        return matchInformationDTO;
     }
 
-    // get champion information by champion.gg api. return championInfoRestOut object
-    public ChampionInfoRestOut getChampionGg(ChampionInfoRestOut championInfoRestOut, String url) {
+    // get champion information by champion.gg api. return championInformationDTO object
+    public ChampionInformationDTO getChampionGg(ChampionInformationDTO championInformationDTO, String url) {
         RestTemplate restTemplate = new RestTemplate();
         try {
             ResponseEntity<ChampionInfo[]> championNormalizedResponseEntity = restTemplate.getForEntity(
@@ -96,21 +96,21 @@ public class CurrentGameService {
             ChampionInfo[] championInfo = championNormalizedResponseEntity.getBody();
 
             // put rates
-            championInfoRestOut.putWinRate(championInfo[0].getElo(), championInfo[0].getWinRate());
-            championInfoRestOut.putPlayRate(championInfo[0].getElo(), championInfo[0].getPlayRate());
-            championInfoRestOut.putBanRate(championInfo[0].getElo(), championInfo[0].getBanRate());
+            championInformationDTO.putWinRate(championInfo[0].getElo(), championInfo[0].getWinRate());
+            championInformationDTO.putPlayRate(championInfo[0].getElo(), championInfo[0].getPlayRate());
+            championInformationDTO.putBanRate(championInfo[0].getElo(), championInfo[0].getBanRate());
         } catch (HttpClientErrorException e) {
             System.out.println(e.getStatusCode() + ": " + e.getStatusText());
-            championInfoRestOut.putWinRate("error", 0);
-            championInfoRestOut.putPlayRate("error", 0);
-            championInfoRestOut.putBanRate("error", 0);
+            championInformationDTO.putWinRate("error", 0);
+            championInformationDTO.putPlayRate("error", 0);
+            championInformationDTO.putBanRate("error", 0);
         }
-        return championInfoRestOut;
+        return championInformationDTO;
     }
 
-    // return ChampionInfoRestOut object to return to json
-    public ChampionInfoRestOut setChampionInfoRestOut(String summoerName) {
-        ChampionInfoRestOut championInfoRestOut = new ChampionInfoRestOut();
+    // return ChampionInformationDTO object to return to json
+    public ChampionInformationDTO setChampionInfoRestOut(String summoerName) {
+        ChampionInformationDTO championInformationDTO = new ChampionInformationDTO();
         ChampionDAO championDAO;
 
         String[] eloList = {"BRONZE", "SILVER", "GOLD", "PLATINUM"};
@@ -119,27 +119,27 @@ public class CurrentGameService {
         CurrentMatch currentMatch = riotApiService.getCurrentMatchBySummonerName(summoerName);
 
         // if the game is not progress
-        if (currentMatch == null) championInfoRestOut.setIsProgress(false);
+        if (currentMatch == null) championInformationDTO.setIsProgress(false);
 
         // if the game is progress
         else {
-            championInfoRestOut.setIsProgress(true);
+            championInformationDTO.setIsProgress(true);
 
             championDAO = currentMatch.getMyChampion();
             String id = String.valueOf(championDAO.getId());
 
             // set champion name
-            championInfoRestOut.setChampionName(championDAO.getName());
+            championInformationDTO.setChampionName(championDAO.getName());
 
             // set champion tags
             HashMap<String, ArrayList<String>> championTags = championTagsIntoHashMap(championDAO);
-            championInfoRestOut.setTag(championTags.get(championDAO.getName()));
+            championInformationDTO.setTag(championTags.get(championDAO.getName()));
 
             // set champion stats
-            championInfoRestOut.putStats("attack", championDAO.getAttack());
-            championInfoRestOut.putStats("defense", championDAO.getDefense());
-            championInfoRestOut.putStats("magic", championDAO.getMagic());
-            championInfoRestOut.putStats("difficulty", championDAO.getDifficulty());
+            championInformationDTO.putStats("attack", championDAO.getAttack());
+            championInformationDTO.putStats("defense", championDAO.getDefense());
+            championInformationDTO.putStats("magic", championDAO.getMagic());
+            championInformationDTO.putStats("difficulty", championDAO.getDifficulty());
 
             // get champion information by champion.gg api.
             // elo = "BRONZE", "SILVER", "GOLD", "PLATINUM"
@@ -147,28 +147,29 @@ public class CurrentGameService {
 
                 String url = "http://api.champion.gg/v2/champions/" + id +
                         "?elo=" + elo + "&limit=1&champData=normalized&api_key=" + championGgApiKey;
-                getChampionGg(championInfoRestOut, url);
+                getChampionGg(championInformationDTO, url);
             }
 
             // elo = "PLATINUM,DIAMOND,MASTER,CHALLENGER" default value.
             String url = "http://api.champion.gg/v2/champions/" + id +
                     "?limit=1&champData=normalized&api_key=" + championGgApiKey;
-            getChampionGg(championInfoRestOut, url);
+            getChampionGg(championInformationDTO, url);
         }
-        return championInfoRestOut;
+        System.out.println(championInformationDTO.getWinRate().toString());
+        return championInformationDTO;
     }
 
     //RecommendedItemREstOut클래스 세팅.
-    public RecommendedItemRestOut setRecommendedItemRestOut(String summoerName) {
-        RecommendedItemRestOut recommendedItemRestOut = new RecommendedItemRestOut();
+    public RecommendedItemDTO setRecommendedItemRestOut(String summoerName) {
+        RecommendedItemDTO recommendedItemDTO = new RecommendedItemDTO();
 
         // get current game information by summoerName.
         CurrentMatch currentMatch = riotApiService.getCurrentMatchBySummonerName(summoerName);
 
         // if the game is not progress
-        if (currentMatch == null) recommendedItemRestOut.setIsProgress(false);
+        if (currentMatch == null) recommendedItemDTO.setIsProgress(false);
         else {
-            recommendedItemRestOut.setIsProgress(true);
+            recommendedItemDTO.setIsProgress(true);
             HashMap<ItemDAO,Double> recedItem = itemAnalysisService.recommendItemCurrentMatch(currentMatch);
 
             ItemDAO maxItemDAO = null;
@@ -184,13 +185,13 @@ public class CurrentGameService {
                     }
                 }
                 //가장 추천도가 높은 것 add한다.
-                recommendedItemRestOut.addItemNames(maxItemDAO.getName());
+                recommendedItemDTO.addItemNames(maxItemDAO.getName());
                 //추천된 아이템이 5개가 넘어가면 break한다.
-                if (recommendedItemRestOut.getRecommendedItems().size()>5) break;
+                if (recommendedItemDTO.getRecommendedItems().size()>5) break;
                 recedItem.remove(maxItemDAO);
                 maxItemDAO = null;
             }
         }
-        return recommendedItemRestOut;
+        return recommendedItemDTO;
     }
 }

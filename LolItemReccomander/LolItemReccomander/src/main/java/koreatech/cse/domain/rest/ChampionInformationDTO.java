@@ -3,7 +3,7 @@ package koreatech.cse.domain.rest;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ChampionInfoRestOut {
+public class ChampionInformationDTO {
 
     boolean isProgress;
     String championName;
@@ -13,7 +13,7 @@ public class ChampionInfoRestOut {
     HashMap<String, Double> playRate = new HashMap<>();
     HashMap<String, Double> banRate = new HashMap<>();
 
-    public ChampionInfoRestOut() {
+    public ChampionInformationDTO() {
         isProgress = false;
     }
 

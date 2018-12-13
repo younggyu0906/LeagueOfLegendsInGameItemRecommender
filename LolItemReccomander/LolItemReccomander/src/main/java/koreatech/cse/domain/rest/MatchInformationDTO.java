@@ -3,14 +3,14 @@ package koreatech.cse.domain.rest;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MatchInfoRestOut {
+public class MatchInformationDTO {
     boolean isProgress;
     ArrayList<HashMap<String, ArrayList<String>>> allyChampions = new ArrayList<>();
     HashMap<String, Integer> allyStats = new HashMap<>();
     ArrayList<HashMap<String, ArrayList<String>>> enemyChampions = new ArrayList<>();
     HashMap<String, Integer> enemyStats = new HashMap<>();
 
-    public MatchInfoRestOut() {
+    public MatchInformationDTO() {
         isProgress = false;
         allyStats.put("attack", 0);
         allyStats.put("defense", 0);
