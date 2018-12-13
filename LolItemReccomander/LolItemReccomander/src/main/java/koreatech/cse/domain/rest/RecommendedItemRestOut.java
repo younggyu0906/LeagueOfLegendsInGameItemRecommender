@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RecommendedItemRestOut {
     Boolean isProgress;
     String championName;
-    ArrayList<String> recommendedItems;
+    ArrayList<String> recommendedItems = new ArrayList<>();
 
     public Boolean getIsProgress() {
         return isProgress;

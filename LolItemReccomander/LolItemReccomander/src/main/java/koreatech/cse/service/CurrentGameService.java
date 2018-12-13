@@ -169,11 +169,13 @@ public class CurrentGameService {
         if (currentMatch == null) recommendedItemRestOut.setIsProgress(false);
         else {
             recommendedItemRestOut.setIsProgress(true);
+            recommendedItemRestOut.setChampionName(currentMatch.getMyChampion().getName());
             HashMap<ItemDAO,Double> recedItem = itemAnalysisService.recommendItemCurrentMatch(currentMatch);
 
-            ItemDAO maxItemDAO = null;
+            ItemDAO maxItemDAO;
             //recedItem이 빌 때 까지
-            while(recedItem.isEmpty()) {
+            while(!recedItem.isEmpty()) {
+                maxItemDAO = null;
                 //제일 가중치가 높은 것일 maxItemDAO에 저장.
                 for (ItemDAO e : recedItem.keySet()) {
                     if (maxItemDAO == null) {
@@ -188,7 +190,6 @@ public class CurrentGameService {
                 //추천된 아이템이 5개가 넘어가면 break한다.
                 if (recommendedItemRestOut.getRecommendedItems().size()>5) break;
                 recedItem.remove(maxItemDAO);
-                maxItemDAO = null;
             }
         }
         return recommendedItemRestOut;

@@ -71,7 +71,7 @@ public class CurrentGameController {
         RecommendedItemRestOut recommendedItemRestOut = currentGameService.setRecommendedItemRestOut(summonerName);
 
         if (recommendedItemRestOut.getIsProgress()) {
-            System.out.println("ok");
+            System.out.println("ok" + " " + summonerName);
             return new ResponseEntity<RecommendedItemRestOut>(recommendedItemRestOut, HttpStatus.OK);
         }
 
