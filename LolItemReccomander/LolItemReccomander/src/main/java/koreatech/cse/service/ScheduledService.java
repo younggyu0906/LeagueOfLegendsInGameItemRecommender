@@ -39,14 +39,15 @@ public class ScheduledService {
     }
 
     //일정 초 마다 일정 주기로 실행되는 함수. (DB에 데이터 넣기)
-    @Scheduled(fixedDelay = 60*(1000))
+    @Scheduled(fixedDelay = 5*(1000))
     private void getFinishedMatch() {
         try {
             //riotApiService의 matchId로 매치 정보를 가져온 후 끝나면 1 증가.
             Match match = apiJY.getMatch(Platform.KR,matchId++);
             riotApiService.insertFinishedMatch(match);
         } catch (RiotApiException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("매치 정보가 없음.");
         }
     }
 

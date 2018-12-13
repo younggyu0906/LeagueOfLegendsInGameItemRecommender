@@ -89,6 +89,14 @@ public class RiotApiService {
         for(int i = 0 ; i < 10 ; i++){
             // Only save match information for game version 8.24 because of the foreign key.
             if(match.getGameVersion().contains(version)) {
+
+                //matchid에 i를 붙인후 id로 설정
+                finishedMatch.setId(
+                        Long.parseLong(
+                                Long.toString(
+                                        match.getGameId()) + Integer.toString(i)
+                        )
+                );
                 finishedMatch.setChampionId(match.getParticipants().get(i).getChampionId());
                 finishedMatch.setItem0Id(match.getParticipants().get(i).getStats().getItem0());
                 finishedMatch.setItem1Id(match.getParticipants().get(i).getStats().getItem1());

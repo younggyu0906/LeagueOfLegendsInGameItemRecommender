@@ -49,7 +49,7 @@ LOCK TABLES `items` WRITE;
 UNLOCK TABLES;
 
 CREATE TABLE `leagueoflegends`.`finishedmatch` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL,
   `championId` INT NULL,
   `item0Id` INT NULL,
   `item1Id` INT NULL,

@@ -5,18 +5,27 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public interface FinishedMatchMapper {
     // Insert the finished game information into db.
+    //키를 AI했을 때
+//    @Insert(
+//                "INSERT INTO LEAGUEOFLEGENDS.FINISHEDMATCH " +
+//                "(CHAMPIONID, ITEM0ID, ITEM1ID, ITEM2ID, ITEM3ID, ITEM4ID, ITEM5ID, ITEM6ID) " +
+//                "VALUES " +
+//                "(#{championId}, #{item0Id}, #{item1Id}, #{item2Id}, #{item3Id}, #{item4Id}, #{item5Id}, #{item6Id})"
+//            )
+//    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = int.class)
+//    void insert(FinishedMatch finishedMatch);
+
+    //키를 MatchId로 할때.
     @Insert(
-                "INSERT INTO LEAGUEOFLEGENDS.FINISHEDMATCH " +
-                "(CHAMPIONID, ITEM0ID, ITEM1ID, ITEM2ID, ITEM3ID, ITEM4ID, ITEM5ID, ITEM6ID) " +
-                "VALUES " +
-                "(#{championId}, #{item0Id}, #{item1Id}, #{item2Id}, #{item3Id}, #{item4Id}, #{item5Id}, #{item6Id})"
-            )
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = int.class)
+            "INSERT INTO LEAGUEOFLEGENDS.FINISHEDMATCH " +
+                    "(ID, CHAMPIONID, ITEM0ID, ITEM1ID, ITEM2ID, ITEM3ID, ITEM4ID, ITEM5ID, ITEM6ID) " +
+                    "VALUES " +
+                    "(#{id}, #{championId}, #{item0Id}, #{item1Id}, #{item2Id}, #{item3Id}, #{item4Id}, #{item5Id}, #{item6Id})"
+    )
     void insert(FinishedMatch finishedMatch);
 
     // Update the finished game information in db.
