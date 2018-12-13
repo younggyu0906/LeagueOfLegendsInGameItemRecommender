@@ -1,5 +1,7 @@
 package koreatech.cse.controller;
 
+import koreatech.cse.service.ItemAnalysisService;
+import koreatech.cse.service.RiotApiService;
 import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.RiotApiException;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +20,19 @@ import java.util.Map;
 @Controller
 @RequestMapping("/")
 public class HomeController {
+
+    @Inject
+    ItemAnalysisService itemAnalysisService;
+
+    @Inject
+    RiotApiService riotApiService;
+
+    @ResponseBody
+    @RequestMapping(value="recItem/{summonerName}", method= RequestMethod.GET)
+    public String recItemTest(@PathVariable("summonerName") String summoerName) {
+        return itemAnalysisService.recommendItemCurrentMatch(riotApiService.getCurrentMatchBySummonerName(summoerName)).toString();
+    }
+
     @ModelAttribute("name")
     private String getName() {
         return "IamHomeControllerModelAttribute";
