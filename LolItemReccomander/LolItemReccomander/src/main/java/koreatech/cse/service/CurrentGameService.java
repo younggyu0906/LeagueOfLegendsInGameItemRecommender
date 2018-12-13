@@ -168,6 +168,7 @@ public class CurrentGameService {
         // if the game is not progress
         if (currentMatch == null) recommendedItemRestOut.setIsProgress(false);
         else {
+            recommendedItemRestOut.setIsProgress(true);
             HashMap<ItemDAO,Double> recedItem = itemAnalysisService.recommendItemCurrentMatch(currentMatch);
 
             ItemDAO maxItemDAO = null;
