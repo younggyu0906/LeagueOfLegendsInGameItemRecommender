@@ -4,6 +4,7 @@ import koreatech.cse.domain.championInfo.ChampionInfo;
 import koreatech.cse.domain.match.CurrentMatch;
 import koreatech.cse.domain.rest.ChampionInfoRestOut;
 import koreatech.cse.domain.rest.MatchInfoRestOut;
+import koreatech.cse.domain.rest.RecommendedItemRestOut;
 import koreatech.cse.domain.staticData.ChampionDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -151,5 +152,11 @@ public class CurrentGameService {
             getChampionGg(championInfoRestOut, url);
         }
         return championInfoRestOut;
+    }
+
+    public RecommendedItemRestOut setRecommendedItemRestOut(String summoerName) {
+        RecommendedItemRestOut recommendedItemRestOut = new RecommendedItemRestOut();
+        ChampionDAO championDAO;
+        return null;
     }
 }

@@ -3,8 +3,17 @@ package koreatech.cse.domain.rest;
 import java.util.ArrayList;
 
 public class RecommendedItemRestOut {
+    Boolean isProgress;
     String championName;
     ArrayList<String> recommendedItems;
+
+    public Boolean getIsProgress() {
+        return isProgress;
+    }
+
+    public void setIsProgress(Boolean progress) {
+        isProgress = progress;
+    }
 
     public void addItemNames(String item) {
         recommendedItems.add(item);
