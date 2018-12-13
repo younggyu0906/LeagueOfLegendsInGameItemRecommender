@@ -23,45 +23,56 @@ public class CurrentGameService {
     @Value("${champion.gg.apikey}")
     private String championGgApiKey;
 
-    // 챔피언정보를 해쉬맵에 넣는 함수, championdao를 받아 해쉬맵형태로 반환
+    // return the champion tag hash map
     private HashMap<String, ArrayList<String>> championTagsIntoHashMap(ChampionDAO championDAO) {
         HashMap<String, ArrayList<String>> championInfo = new HashMap<>();
         ArrayList<String> tags = new ArrayList<>();
 
-        if (championDAO.isAssassin()) tags.add("Assassin");     // 가끔 여기서 nullpoint exception
+        // add to ArrayList
+        if (championDAO.isAssassin()) tags.add("Assassin");
         if (championDAO.isFighter()) tags.add("Fighter");
         if (championDAO.isMage()) tags.add("Mage");
         if (championDAO.isMarksman()) tags.add("Marksman");
         if (championDAO.isSupport()) tags.add("Support");
         if (championDAO.isTank()) tags.add("Tank");
 
+        // put tags into hash map
         championInfo.put(championDAO.getName(), tags);
         return championInfo;
     }
 
-    // return to json
+    // return MatchInfoRestOut object to return to json
     public MatchInfoRestOut setMatchInfoRestOut(String summoerName) {
         MatchInfoRestOut matchInfoRestOut = new MatchInfoRestOut();
         ArrayList<ChampionDAO> championDAOS;
 
+        // get current game information by summoerName.
         CurrentMatch currentMatch = riotApiService.getCurrentMatchBySummonerName(summoerName);
 
+        // if the game is not progress
         if (currentMatch == null) matchInfoRestOut.setIsProgress(false);
 
+        // if the game is progress
         else {
             matchInfoRestOut.setIsProgress(true);
 
+            // get ally champions
             championDAOS = currentMatch.getTeamChampions();
             championDAOS.stream().forEach(e -> {
+                // add ally champions tag hash map to ArrayList
                 matchInfoRestOut.addAllyChampions(championTagsIntoHashMap(e));
+                // add ally champions stats to ArrayList
                 matchInfoRestOut.addAndPutAllyStats("attack", e.getAttack());
                 matchInfoRestOut.addAndPutAllyStats("defense", e.getDefense());
                 matchInfoRestOut.addAndPutAllyStats("magic", e.getMagic());
             });
 
+            // get enemy champions
             championDAOS = currentMatch.getEnemyChampions();
             championDAOS.stream().forEach(e -> {
+                // add enemy champions tag hash map to ArrayList
                 matchInfoRestOut.addEnemyChmapions(championTagsIntoHashMap(e));
+                // add enemy champions stats to ArrayList
                 matchInfoRestOut.addAndPutEnemyStats("attack", e.getAttack());
                 matchInfoRestOut.addAndPutEnemyStats("defense", e.getDefense());
                 matchInfoRestOut.addAndPutEnemyStats("magic", e.getMagic());
@@ -70,6 +81,7 @@ public class CurrentGameService {
         return matchInfoRestOut;
     }
 
+    // get champion information by champion.gg api. return championInfoRestOut object
     public ChampionInfoRestOut getChampionGg(ChampionInfoRestOut championInfoRestOut, String url) {
         RestTemplate restTemplate = new RestTemplate();
         try {
@@ -77,10 +89,6 @@ public class CurrentGameService {
                     url, ChampionInfo[].class
             );
             ChampionInfo[] championInfo = championNormalizedResponseEntity.getBody();
-
-            System.out.println("가즈아" + championInfo[0]);
-            // 해당 elo에서 정보를 받아오지 못하면 에러? 플레까진 받아와짐
-            // api에서 다이아 이상부터는 안받아와지는것 같은데..
 
             // put rates
             championInfoRestOut.putWinRate(championInfo[0].getElo(), championInfo[0].getWinRate());
@@ -95,12 +103,14 @@ public class CurrentGameService {
         return championInfoRestOut;
     }
 
+    // return ChampionInfoRestOut object to return to json
     public ChampionInfoRestOut setChampionInfoRestOut(String summoerName) {
         ChampionInfoRestOut championInfoRestOut = new ChampionInfoRestOut();
         ChampionDAO championDAO;
 
         String[] eloList = {"BRONZE", "SILVER", "GOLD", "PLATINUM"};
 
+        // get current game information by summoerName.
         CurrentMatch currentMatch = riotApiService.getCurrentMatchBySummonerName(summoerName);
 
         // if the game is not progress
@@ -126,16 +136,17 @@ public class CurrentGameService {
             championInfoRestOut.putStats("magic", championDAO.getMagic());
             championInfoRestOut.putStats("difficulty", championDAO.getDifficulty());
 
+            // get champion information by champion.gg api.
+            // elo = "BRONZE", "SILVER", "GOLD", "PLATINUM"
             for (String elo : eloList) {
                 String url = "http://api.champion.gg/v2/champions/" + id +
                         "?elo=" + elo + "&limit=1&champData=normalized&api_key=" + championGgApiKey;
-
                 getChampionGg(championInfoRestOut, url);
             }
 
+            // elo = "PLATINUM,DIAMOND,MASTER,CHALLENGER" default value.
             String url = "http://api.champion.gg/v2/champions/" + id +
                     "?limit=1&champData=normalized&api_key=" + championGgApiKey;
-
             getChampionGg(championInfoRestOut, url);
         }
         return championInfoRestOut;
