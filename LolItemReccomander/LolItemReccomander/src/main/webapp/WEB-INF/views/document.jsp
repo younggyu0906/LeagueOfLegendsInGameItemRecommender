@@ -25,13 +25,13 @@
 <div class="container">
     <h2>Current game</h2>
     <p>You can get progressing "League of Legends" match information through our public api.</p>
-    <p>Game patch version is Korea, ${riot.version}.</p>
+    <p>Game patch version is ${riot.version}, Korea.</p>
 
     </br></br>
     <h2>Match Information</h2>
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
-    <h3>URL</h3>
+    <h3>Request URL</h3>
     <p>http://localhost:8080/currentGame/matchInformation?summonerName={summonerName}</p>
 
     <h3>Parameter</h3>
@@ -43,7 +43,7 @@
         </thead>
         <tbody>
         <tr>
-            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server. Required values</td>
+            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server.</td>
         </tr>
         </tbody>
     </table>
@@ -59,15 +59,15 @@
         <tbody>
         <tr>
             <td>isProgress</td> <td>Boolean</td>
-            <td>설명</td>
+            <td>Whether the game is in progress. True if in progress, or False.</td>
         </tr>
         <tr>
             <td>allyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
+            <td>Ally champions name and tags.</td>
         </tr>
         <tr>
             <td>allyStats</td> <td>HashMap</td>
-            <td>설명</td>
+            <td>Sta</td>
         </tr>
         <tr>
             <td>enemyChampions</td> <td>ArrayList</td>
@@ -82,7 +82,9 @@
 
     <h3>Example Response</h3>
     <div class="panel panel-default">
-        <div class="panel-body">결과 예시</div>
+        <div class="panel-body">
+            {"isProgress":true,"allyChampions":[{"Cassiopeia":["Mage"]},{"Ezreal":["Mage","Marksman"]},{"Elise":["Fighter","Mage"]},{"Morgana":["Mage","Support"]},{"Vladimir":["Mage","Tank"]}],"allyStats":{"magic":38,"defense":22,"attack":18},"enemyChampions":[{"Syndra":["Mage","Support"]},{"Pyke":["Assassin","Support"]},{"Kai'Sa":["Marksman"]},{"Kha'Zix":["Assassin","Fighter"]},{"Viktor":["Mage"]}],"enemyStats":{"magic":26,"defense":19,"attack":30}}
+        </div>
     </div>
 
     <h3>Execute Request</h3>
@@ -99,7 +101,7 @@
     <h2>Champion Information</h2>
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
-    <h3>URL</h3>
+    <h3>Request URL</h3>
     <p>http://localhost:8080/currentGame/championInformation?summonerName={summonerName}</p>
 
     <h3>Parameter</h3>
@@ -167,7 +169,7 @@
     <h2>Recommended Items</h2>
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
-    <h3>URL</h3>
+    <h3>Request URL</h3>
     <p>http://localhost:8080/currentGame/recommendedItem?summonerName={summonerName}</p>
 
     <h3>Parameter</h3>
