@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.inject.Inject;
 
@@ -28,8 +29,8 @@ public class CurrentGameController {
 
     // The method that returns the value of rest for the current game
     @Transactional
-    @RequestMapping(value="/information/{summonerName}", method= RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<MatchInfoRestOut> currentGameInformation(@PathVariable("summonerName") String summoerName) {
+    @RequestMapping(value="/teamInformation", method= RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<MatchInfoRestOut> currentGameInformation(@RequestParam String summoerName) {
         // return information :
         // ally champions, ally champions tag, ally champions stats
         // enemy champions, enemy champions tag, enemy champions stats
@@ -46,8 +47,8 @@ public class CurrentGameController {
     }
 
     @Transactional
-    @RequestMapping(value="statistics/{summonerName}", method= RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ChampionInfoRestOut> CurrentGameStatistics(@PathVariable("summonerName") String summoerName) {
+    @RequestMapping(value="myChampionInformation", method= RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ChampionInfoRestOut> currentGameMyChampion(@RequestParam String summoerName) {
         // return information :
         // my champion name, my champion tag, my champion stat
         // my champion statistics
@@ -64,8 +65,8 @@ public class CurrentGameController {
     }
 
     @Transactional
-    @RequestMapping(value="ItemRecommendation/{summonerName}", method= RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<RecommendedItemRestOut> CurrentGameItemRec(@PathVariable("summonerName") String summoerName) {
+    @RequestMapping(value="recommendedItem", method= RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<RecommendedItemRestOut> currentGameRecItem(@RequestParam String summoerName) {
 //        아이템 추천
         RecommendedItemRestOut recommendedItemRestOut = currentGameService.setRecommendedItemRestOut(summoerName);
 
