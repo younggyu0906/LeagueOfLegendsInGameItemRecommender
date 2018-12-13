@@ -28,8 +28,10 @@ public class CurrentGameController {
     // The method that returns the value of rest for the current game
     @Transactional
     @RequestMapping(value="/information/{summonerName}", method= RequestMethod.GET, produces = "application/json")
-//    아군팀, 적군팀 챔피언, 챔피언 태그, 팀 별 ad ap 수치
     public ResponseEntity<MatchInfoRestOut> currentGameInformation(@PathVariable("summonerName") String summoerName) {
+        // return information :
+        // ally champions, ally champions tag, ally champions stats
+        // enemy champions, enemy champions tag, enemy champions stats
         MatchInfoRestOut matchInfoRestOut = currentGameService.setMatchInfoRestOut(summoerName);
         if (matchInfoRestOut.getIsProgress()) {
             System.out.println("ok");
@@ -45,7 +47,9 @@ public class CurrentGameController {
     @Transactional
     @RequestMapping(value="statistics/{summonerName}", method= RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ChampionInfoRestOut> CurrentGameStatistics(@PathVariable("summonerName") String summoerName) {
-        //        챔피언 승률, 아이템 빈도수
+        // return information :
+        // my champion name, my champion tag, my champion stat
+        // my champion statistics
         ChampionInfoRestOut championInfoRestOut = currentGameService.setChampionInfoRestOut(summoerName);
         if (championInfoRestOut.getIsProgress()) {
             System.out.println("ok");
