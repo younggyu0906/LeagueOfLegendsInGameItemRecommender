@@ -70,11 +70,36 @@ public class CurrentGameService {
         return matchInfoRestOut;
     }
 
+    public ChampionInfoRestOut getChampionGg(ChampionInfoRestOut championInfoRestOut, String url) {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<ChampionInfo[]> championNormalizedResponseEntity = restTemplate.getForEntity(
+                    url, ChampionInfo[].class
+            );
+            ChampionInfo[] championInfo = championNormalizedResponseEntity.getBody();
+
+            System.out.println("가즈아" + championInfo[0]);
+            // 해당 elo에서 정보를 받아오지 못하면 에러? 플레까진 받아와짐
+            // api에서 다이아 이상부터는 안받아와지는것 같은데..
+
+            // put rates
+            championInfoRestOut.putWinRate(championInfo[0].getElo(), championInfo[0].getWinRate());
+            championInfoRestOut.putPlayRate(championInfo[0].getElo(), championInfo[0].getPlayRate());
+            championInfoRestOut.putBanRate(championInfo[0].getElo(), championInfo[0].getBanRate());
+        } catch (HttpClientErrorException e) {
+            System.out.println(e.getStatusCode() + ": " + e.getStatusText());
+            championInfoRestOut.putWinRate("error", 0);
+            championInfoRestOut.putPlayRate("error", 0);
+            championInfoRestOut.putBanRate("error", 0);
+        }
+        return championInfoRestOut;
+    }
+
     public ChampionInfoRestOut setChampionInfoRestOut(String summoerName) {
         ChampionInfoRestOut championInfoRestOut = new ChampionInfoRestOut();
-        RestTemplate restTemplate = new RestTemplate();
         ChampionDAO championDAO;
-        String[] eloList = championInfoRestOut.getEloList();
+
+        String[] eloList = {"BRONZE", "SILVER", "GOLD", "PLATINUM"};
 
         CurrentMatch currentMatch = riotApiService.getCurrentMatchBySummonerName(summoerName);
 
@@ -102,26 +127,16 @@ public class CurrentGameService {
             championInfoRestOut.putStats("difficulty", championDAO.getDifficulty());
 
             for (String elo : eloList) {
-                try {
-                    ResponseEntity<ChampionInfo[]> championNormalizedResponseEntity = restTemplate.getForEntity(
-                            "http://api.champion.gg/v2/champions/" + id +
-                                    "?elo=" + elo + "&limit=1&champData=normalized&api_key=" + championGgApiKey,
-                            ChampionInfo[].class
-                    );
-                    ChampionInfo[] championInfo = championNormalizedResponseEntity.getBody();
+                String url = "http://api.champion.gg/v2/champions/" + id +
+                        "?elo=" + elo + "&limit=1&champData=normalized&api_key=" + championGgApiKey;
 
-                    System.out.println("가즈아" + championInfo[0]);
-                    // 해당 elo에서 정보를 받아오지 못하면 에러? 플레까진 받아와짐
-                    // api에서 다이아 이상부터는 안받아와지는것 같은데..
-
-                    // put rates
-                    championInfoRestOut.putWinRate(elo, championInfo[0].getWinRate());
-                    championInfoRestOut.putPlayRate(elo, championInfo[0].getPlayRate());
-                    championInfoRestOut.putBanRate(elo, championInfo[0].getBanRate());
-                } catch (HttpClientErrorException e) {
-                    System.out.println(e.getStatusCode() + ": " + e.getStatusText());
-                }
+                getChampionGg(championInfoRestOut, url);
             }
+
+            String url = "http://api.champion.gg/v2/champions/" + id +
+                    "?limit=1&champData=normalized&api_key=" + championGgApiKey;
+
+            getChampionGg(championInfoRestOut, url);
         }
         return championInfoRestOut;
     }

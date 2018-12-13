@@ -84,13 +84,4 @@ public class ChampionInfoRestOut {
     public void putBanRate(String elo, double rate) {
         this.banRate.put(elo, rate);
     }
-
-    // elo list
-    public String[] getEloList() {
-        return Elo.eloList;
-    }
-}
-
-class Elo {
-    public static final String[] eloList = {"BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "MASTER", "CHALLENGER"};
 }
