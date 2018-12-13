@@ -30,45 +30,45 @@ public class CurrentGameController {
     // The method that returns the value of rest for the current game
     @Transactional
     @RequestMapping(value="/teamInformation", method= RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<MatchInfoRestOut> currentGameInformation(@RequestParam String summoerName) {
+    public ResponseEntity<MatchInfoRestOut> currentGameInformation(@RequestParam String summonerName) {
         // return information :
         // ally champions, ally champions tag, ally champions stats
         // enemy champions, enemy champions tag, enemy champions stats
-        MatchInfoRestOut matchInfoRestOut = currentGameService.setMatchInfoRestOut(summoerName);
+        MatchInfoRestOut matchInfoRestOut = currentGameService.setMatchInfoRestOut(summonerName);
         if (matchInfoRestOut.getIsProgress()) {
             System.out.println("ok");
             return new ResponseEntity<MatchInfoRestOut>(matchInfoRestOut, HttpStatus.OK);
         }
 
         else {
-            System.out.println("\"" + summoerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
+            System.out.println("\"" + summonerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
             return new ResponseEntity<MatchInfoRestOut>(HttpStatus.NOT_FOUND);
         }
     }
 
     @Transactional
     @RequestMapping(value="myChampionInformation", method= RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ChampionInfoRestOut> currentGameMyChampion(@RequestParam String summoerName) {
+    public ResponseEntity<ChampionInfoRestOut> currentGameMyChampion(@RequestParam String summonerName) {
         // return information :
         // my champion name, my champion tag, my champion stat
         // my champion statistics
-        ChampionInfoRestOut championInfoRestOut = currentGameService.setChampionInfoRestOut(summoerName);
+        ChampionInfoRestOut championInfoRestOut = currentGameService.setChampionInfoRestOut(summonerName);
         if (championInfoRestOut.getIsProgress()) {
             System.out.println("ok");
             return new ResponseEntity<ChampionInfoRestOut>(championInfoRestOut, HttpStatus.OK);
         }
 
         else {
-            System.out.println("\"" + summoerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
+            System.out.println("\"" + summonerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
             return new ResponseEntity<ChampionInfoRestOut>(HttpStatus.NOT_FOUND);
         }
     }
 
     @Transactional
     @RequestMapping(value="recommendedItem", method= RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<RecommendedItemRestOut> currentGameRecItem(@RequestParam String summoerName) {
+    public ResponseEntity<RecommendedItemRestOut> currentGameRecItem(@RequestParam String summonerName) {
 //        아이템 추천
-        RecommendedItemRestOut recommendedItemRestOut = currentGameService.setRecommendedItemRestOut(summoerName);
+        RecommendedItemRestOut recommendedItemRestOut = currentGameService.setRecommendedItemRestOut(summonerName);
 
         if (recommendedItemRestOut.getIsProgress()) {
             System.out.println("ok");
@@ -76,7 +76,7 @@ public class CurrentGameController {
         }
 
         else {
-            System.out.println("\"" + summoerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
+            System.out.println("\"" + summonerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
             return new ResponseEntity<RecommendedItemRestOut>(HttpStatus.NOT_FOUND);
         }
     }
