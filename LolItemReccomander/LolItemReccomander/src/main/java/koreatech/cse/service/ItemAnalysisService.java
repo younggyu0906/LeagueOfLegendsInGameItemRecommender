@@ -206,9 +206,5 @@ public class ItemAnalysisService {
     //
     private enum ItemClass {
         PHYSICAL_ATTACK, MAGIC_ATTACK, PHYSICAL_DEFENCE, MAGIC_DEFENCE
-        @Override
-        public String toString() {
-            return this.name();
-        }
     }
 }
