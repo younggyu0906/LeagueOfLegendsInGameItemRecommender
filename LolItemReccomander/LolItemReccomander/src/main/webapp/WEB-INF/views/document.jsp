@@ -18,9 +18,10 @@
 </head>
 
 <body>
-<div class="jumbotron text-center">
-    <h1>ironGG Public API Document</h1>
-    <p>Service-Oriented Computing & Practice, CSE, KoreaTech</p>
+<div class="jumbotron text-center" style="background-image: url(https://4.bp.blogspot.com/-tuGhY7q8LVw/W6wOujB78XI/AAAAAAABIJc/2h0uDwU6fcE9MASeTXM-kHNeYOwnrG_UACLcBGAs/s1600/Dn4NDQFU0AAntFZ.jpg);
+         background-size: 100%; height:100vh; background-blend-mode:hard-light;">
+    <h1 style="color: white;">ironGG Public API Document</h1>
+    <p style="color: white;">Service-Oriented Computing & Practice, CSE, KoreaTech</p>
 </div>
 
 <div class="container">
@@ -178,7 +179,19 @@
 
     <h3>Example Response</h3>
     <div class="panel panel-default">
-        <div class="panel-body">{"isProgress":true,"championName":"Yasuo","tag":["Assassin","Fighter"],"stats":{"magic":4,"difficulty":10,"defense":4,"attack":8},"winRate":{"GOLD":0.47959591918383676,"BRONZE":0.5018973437187937,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.47825206908960055,"SILVER":0.491381144924452,"PLATINUM":0.4802727715538237},"playRate":{"GOLD":0.06319928191253998,"BRONZE":0.07510589188246611,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.059033078429971124,"SILVER":0.06715971274775624,"PLATINUM":0.06031166680761853},"banRate":{"GOLD":0.0551603054400182,"BRONZE":0.054520910088027674,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.04977950995722945,"SILVER":0.05558648921136646,"PLATINUM":0.053164072410677325}}</div>
+        <div class="panel-body">{"isProgress":true,"championName":"Yasuo","tag":["Assassin","Fighter"],"stats":{"magic":4,"difficulty":10,"defense":4,"attack":8},"
+            </br>
+            winRate":{"GOLD":0.47959591918383676,"BRONZE":0.5018973437187937,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.47825206908960055,
+            </br>
+            "SILVER":0.491381144924452,"PLATINUM":0.4802727715538237},
+            </br>
+            "playRate":{"GOLD":0.06319928191253998,"BRONZE":0.07510589188246611,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.059033078429971124,
+            </br>
+            "SILVER":0.06715971274775624,"PLATINUM":0.06031166680761853},
+            </br>
+            "banRate":{"GOLD":0.0551603054400182,"BRONZE":0.054520910088027674,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.04977950995722945,
+            </br>
+            "SILVER":0.05558648921136646,"PLATINUM":0.053164072410677325}}</div>
     </div>
 
     <h3>Execute Request</h3>
