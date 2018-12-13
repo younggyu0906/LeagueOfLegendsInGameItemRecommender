@@ -33,7 +33,9 @@
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
     <h3>Request URL</h3>
-    <p>http://localhost:8080/currentGame/matchInformation?summonerName={summonerName}</p>
+    <div class="panel panel-default">
+        <div class="panel-body">http://localhost:8080/currentGame/matchInformation?summonerName={summonerName}</div>
+    </div>
 
     <h3>Parameter</h3>
     <table class="table table-hover">
@@ -116,7 +118,9 @@
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
     <h3>Request URL</h3>
-    <p>http://localhost:8080/currentGame/championInformation?summonerName={summonerName}</p>
+    <div class="panel panel-default">
+        <div class="panel-body">http://localhost:8080/currentGame/championInformation?summonerName={summonerName}</div>
+    </div>
 
     <h3>Parameter</h3>
     <table class="table table-hover">
@@ -147,7 +151,7 @@
         </tr>
         <tr>
             <td>championName</td> <td>String</td>
-            <td>The champion name that the summoner are playing.</td>
+            <td>The champion name that the summoner is playing.</td>
         </tr>
         <tr>
             <td>tag</td> <td>ArrayList&lt;String&gt;</td>
@@ -159,22 +163,22 @@
         </tr>
         <tr>
             <td>winRate</td> <td>HashMap&lt;String, Double&gt;</td>
-            <td>설명</td>
+            <td>The win rate of the champion that the summoner is playing. The key is elo, the value is rate.</td>
         </tr>
         <tr>
             <td>playRate</td> <td>HashMap&lt;String, Double&gt;</td>
-            <td>설명</td>
+            <td>The play rate of the champion that the summoner is playing. The key is elo, the value is rate.</td>
         </tr>
         <tr>
             <td>banRate</td> <td>HashMap&lt;String, Double&gt;</td>
-            <td>설명</td>
+            <td>The ban rate of the champion that the summoner is playing. The key is elo, the value is rate.</td>
         </tr>
         </tbody>
     </table>
 
     <h3>Example Response</h3>
     <div class="panel panel-default">
-        <div class="panel-body">결과 예시</div>
+        <div class="panel-body">{"isProgress":true,"championName":"Yasuo","tag":["Assassin","Fighter"],"stats":{"magic":4,"difficulty":10,"defense":4,"attack":8},"winRate":{"GOLD":0.47959591918383676,"BRONZE":0.5018973437187937,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.47825206908960055,"SILVER":0.491381144924452,"PLATINUM":0.4802727715538237},"playRate":{"GOLD":0.06319928191253998,"BRONZE":0.07510589188246611,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.059033078429971124,"SILVER":0.06715971274775624,"PLATINUM":0.06031166680761853},"banRate":{"GOLD":0.0551603054400182,"BRONZE":0.054520910088027674,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.04977950995722945,"SILVER":0.05558648921136646,"PLATINUM":0.053164072410677325}}</div>
     </div>
 
     <h3>Execute Request</h3>
@@ -191,7 +195,9 @@
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
     <h3>Request URL</h3>
-    <p>http://localhost:8080/currentGame/recommendedItem?summonerName={summonerName}</p>
+    <div class="panel panel-default">
+        <div class="panel-body">http://localhost:8080/currentGame/recommendedItem?summonerName={summonerName}</div>
+    </div>
 
     <h3>Parameter</h3>
     <table class="table table-hover">
@@ -222,18 +228,18 @@
         </tr>
         <tr>
             <td>championName</td> <td>String</td>
-            <td>설명</td>
+            <td>The champion name that the summoner is playing.</td>
         </tr>
         <tr>
-            <td>recommendedItems</td> <td>ArrayListString</td>
-            <td>설명</td>
+            <td>recommendedItems</td> <td>ArrayList&lt;String&gt;</td>
+            <td>ArrayList of recommended items.</td>
         </tr>
         </tbody>
     </table>
 
     <h3>Example Response</h3>
     <div class="panel panel-default">
-        <div class="panel-body">결과 예시</div>
+        <div class="panel-body">{"isProgress":true,"championName":"Kha'Zix","recommendedItems":["Duskblade of Draktharr","Enchantment: Warrior","Youmuu's Ghostblade","Enchantment: Warrior","Maw of Malmortius","Mercury's Treads"]}</div>
     </div>
 
     <h3>Execute Request</h3>
