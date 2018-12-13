@@ -77,9 +77,9 @@ public class ItemAnalysisService {
 
     //아이템 추천 하자.. ArrayList로 추천 아이템들을 반환한다.
     //currentMatch를 매개변수로 받자.
-    public ArrayList<ItemDAO> recommendItemCurrentMatch(CurrentMatch currentMatch) {
+    public HashMap<ItemDAO, Double> recommendItemCurrentMatch(CurrentMatch currentMatch) {
         //반환할때 사용할 빈 ArrayList
-        ArrayList<ItemDAO> returnVal = new ArrayList<>();
+        HashMap<ItemDAO, Double> returnVal = new HashMap<>();
         //일단 내 챔피언이 갔던 아이템 목록을 반환받아 온다.
         HashMap<Integer, Integer> itemFreq = getItemsFromCurrentMatch(currentMatch);
 
@@ -99,8 +99,7 @@ public class ItemAnalysisService {
             HashMap<String,Integer> enemyStat = calcEnemyStats(currentMatch);
 
             //팀 스텟, 나의 태그 등 비교해서 참이면 returnVal에 넣는다.
-            judgeItem(maxFreqItemDAO, currentMatch.getMyChampion(),elloStat,enemyStat);
-
+            returnVal.put(maxFreqItemDAO,maxFreqItem * judgeItem(maxFreqItemDAO, currentMatch.getMyChampion(),elloStat,enemyStat));
         }
         System.out.println(returnVal);
         return returnVal;
@@ -122,6 +121,7 @@ public class ItemAnalysisService {
         updateHashMap(maps,"Defense",championDAO.getDefense());
         updateHashMap(maps,"Difficulty",championDAO.getDifficulty());
 
+        //일단 디폴트 0으로 넣어준다.
         maps.put("Assassin",0);
         maps.put("Fighter",0);
         maps.put("Mage",0);
@@ -171,7 +171,6 @@ public class ItemAnalysisService {
     //아이템이 적팀, 우리팀 상황에 지금 적절한지를 판단한다. 추추추추추천하는 알고리즘이 여기
     private double judgeItem(ItemDAO item, ChampionDAO myChampion, HashMap<String, Integer> teamStats, HashMap<String,Integer> enemyStats) {
         double weight = 0;
-
         System.out.println("init : " + weight);
 
         // my champion stat and enemy team stat
@@ -248,14 +247,34 @@ public class ItemAnalysisService {
     }
 
     //아이템의 가중치계산
-    private Integer calcWeight(ItemDAO item, ItemClass itemClass) {
-        //ex
-        if (itemClass == ItemClass.MAGIC_ATTACK) {
+    private Double calcWeight(ItemDAO item, ItemClass itemClass) {
+        double weight = 0;
 
+        //itemClass에 맞게 가중치를 계산합니다.
+        if (itemClass == ItemClass.PHYSICAL_ATTACK) {
+            weight += 100*item.getAttackSpeed(); // 공속 소수점이라서 100곱함.
+            weight += 100*item.getCritChance(); // 크리티컬
+            weight += 1*item.getPhysicalDamage(); // 공격력
         }
-        return 1;
+        else if (itemClass == ItemClass.MAGIC_ATTACK) {
+            weight += 1*item.getMagicDamage();  //AP
+        }
+        else if (itemClass == ItemClass.PHYSICAL_DEFENCE) {
+            weight += 0.7*item.getHealth(); //체력
+            weight += 1*item.getArmor();    //방어력
+        }
+        else if (itemClass == ItemClass.MAGIC_DEFENCE) {
+            weight += 0.7*item.getHealth();
+            weight += 1*item.getSpellBlock();
+        }
+        //print log
+        System.out.println(itemClass);
+        System.out.println(item);
+        System.out.println(" ");
+        return weight;
     }
 
+    //
     private enum ItemClass {
         PHYSICAL_ATTACK, MAGIC_ATTACK, PHYSICAL_DEFENCE, MAGIC_DEFENCE
     }
