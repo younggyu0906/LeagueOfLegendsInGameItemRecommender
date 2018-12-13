@@ -2,6 +2,7 @@ package koreatech.cse.service;
 
 import koreatech.cse.domain.match.CurrentMatch;
 import koreatech.cse.domain.match.FinishedMatch;
+import koreatech.cse.domain.staticData.ChampionDAO;
 import koreatech.cse.domain.staticData.ItemDAO;
 import org.springframework.stereotype.Service;
 
@@ -62,11 +63,23 @@ public class ItemAnalysisService {
         }
     }
 
+    //스탯 업데이트 함수.
+    private void updateHashMap(HashMap<String,Integer> stats, String statName, int stat) {
+
+        if (stats.get(statName) == null) {
+            stats.put(statName,stat);
+        }
+        else if(stats.get(statName) != null) {
+            stats.replace(statName,stats.get(statName)+stat);
+        }
+    }
+
+
     //아이템 추천 하자.. ArrayList로 추천 아이템들을 반환한다.
     //currentMatch를 매개변수로 받자.
-    public ArrayList<String> recommendItemCurrentMatch(CurrentMatch currentMatch) {
+    public ArrayList<ItemDAO> recommendItemCurrentMatch(CurrentMatch currentMatch) {
         //반환할때 사용할 빈 ArrayList
-        ArrayList<String> returnVal = new ArrayList<>();
+        ArrayList<ItemDAO> returnVal = new ArrayList<>();
         //일단 내 챔피언이 갔던 아이템 목록을 반환받아 온다.
         HashMap<Integer, Integer> itemFreq = getItemsFromCurrentMatch(currentMatch);
 
@@ -79,13 +92,59 @@ public class ItemAnalysisService {
             maxFreqItem = returnMaxValue(itemFreq);
             maxFreqItemDAO = daoService.getItemDAO(maxFreqItem);
 
-//        *****************************************************************
-//        빼 온 아이템이 현재 상황에 적절한지 검사할 코드를 만들어야 합니다.
-//        *****************************************************************
+//          빼 온 아이템이 현재 상황에 적절한지 검사할 코드를
+
+            //팀 스탯, 적 팀 스탯 전부 더함.
+            HashMap<String,Integer> elloStat = calcTeamStats(currentMatch);
+            HashMap<String,Integer> enemyStat = calcEnemyStats(currentMatch);
+
+            //팀 스텟, 나의 태그 등 비교해서 참이면 returnVal에 넣는다.
+            judgeItem(maxFreqItemDAO, currentMatch.getMyChampion(),elloStat,enemyStat);
 
         }
         System.out.println(returnVal);
         return returnVal;
+    }
+
+    //팀 스탯을 전부 더하여 HashMap으로 반환해주는 함수
+    private HashMap<String,Integer> calcTeamStats(CurrentMatch currentMatch) {
+        HashMap<String,Integer> teamStats = new HashMap<>();
+        for (ChampionDAO e : currentMatch.getTeamChampions()) {
+            calcStats(teamStats, e);
+        }
+        return teamStats;
+    }
+
+    //안에 for문 함수로 내뺌
+    private void calcStats(HashMap<String,Integer> maps, ChampionDAO championDAO) {
+        updateHashMap(maps,"Attack",championDAO.getAttack());
+        updateHashMap(maps,"Magic",championDAO.getMagic());
+        updateHashMap(maps,"Defense",championDAO.getDefense());
+        updateHashMap(maps,"Difficulty",championDAO.getDifficulty());
+
+        maps.put("Assassin",0);
+        maps.put("Fighter",0);
+        maps.put("Mage",0);
+        maps.put("Marksman",0);
+        maps.put("Support",0);
+        maps.put("Tank",0);
+
+        //태그 빈도 수 체크
+        if (championDAO.isAssassin()) updateHashMap(maps,"Assassin",1);
+        if (championDAO.isFighter())  updateHashMap(maps,"Fighter",1);
+        if (championDAO.isMage())     updateHashMap(maps,"Mage",1);
+        if (championDAO.isMarksman()) updateHashMap(maps,"Marksman",1);
+        if (championDAO.isSupport())  updateHashMap(maps,"Support",1);
+        if (championDAO.isTank())     updateHashMap(maps,"Tank",1);
+    }
+
+    //적팀 스탯을 전부 더하여 HashMap으로 반환해주는 함수
+    private HashMap<String,Integer> calcEnemyStats(CurrentMatch currentMatch) {
+        HashMap<String,Integer> enemyStats = new HashMap<>();
+        for (ChampionDAO e : currentMatch.getEnemyChampions()) {
+            calcStats(enemyStats, e);
+        }
+        return enemyStats;
     }
 
     //HashMap에서 Value중에 제일 큰 아이템(KEY) 빼오는 함수
@@ -106,5 +165,26 @@ public class ItemAnalysisService {
         //제일 많았던 아이템 Map에서 빼버림 그리고 반환
         hashMap.remove(maxValKey);
         return maxValKey;
+    }
+
+    //**************************************************************************************************************
+    //아이템이 적팀, 우리팀 상황에 지금 적절한지를 판단한다. 추추추추추천하는 알고리즘이 여기
+    private Integer judgeItem(ItemDAO item, ChampionDAO myChampion, HashMap<String, Integer> teamStats, HashMap<String,Integer> enemyStats) {
+
+
+        return 1;
+    }
+
+    //아이템의 가중치계산
+    private Integer calcWeight(ItemDAO item, ItemClass itemClass ) {
+        //ex
+        if (itemClass == ItemClass.MAGIC_ATTACK) {
+
+        }
+        return 1;
+    }
+
+    private enum ItemClass {
+        PHYSICAL_ATTACK, MAGIC_ATTACK, PHYSICAL_DEFENCE, MAGIC_DEFENCE
     }
 }

@@ -110,9 +110,10 @@ public class CurrentGameService {
                     );
                     ChampionInfo[] championInfo = championNormalizedResponseEntity.getBody();
 
+
                     System.out.println("가즈아" + championInfo[0]);
-                    // 해당 elo에서 정보를 받아오지 못하면 에러? 플레까진 받아와짐
-                    // api에서 다이아 이상부터는 안받아와지는것 같은데..
+//                    // 해당 elo에서 정보를 받아오지 못하면 에러? 플레까진 받아와짐
+//                    // api에서 다이아 이상부터는 안받아와지는것 같은데..
 
                     // put rates
                     championInfoRestOut.putWinRate(elo, championInfo[0].getWinRate());
