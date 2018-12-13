@@ -27,11 +27,11 @@
 <div class="container">
     <h2>Current game</h2>
     <p>You can get progressing "League of Legends" match information through our public api.</p>
-    <p>Game patch version is ${riot.version}, Korea.</p>
+    <p>Game patch version is "${riot.version}", Korea.</p>
 
     </br></br>
     <h2>Match Information</h2>
-    <p>Request information on ally and enemy teams in the match in progress.</p>
+    <p>Request information about the match that the summoner is currently playing.</p>
 
     <h3>Request URL</h3>
     <div class="panel panel-default">
@@ -53,7 +53,6 @@
     </table>
 
     <h3>MatchInformationDTO</h3>
-    <p>This object contains information about the game that the summoner is currently playing.</p>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -116,7 +115,7 @@
 
     </br></br>
     <h2>Champion Information</h2>
-    <p>Request information on ally and enemy teams in the match in progress.</p>
+    <p>Request information about the champion that the summoner is currently playing.</p>
 
     <h3>Request URL</h3>
     <div class="panel panel-default">
@@ -138,7 +137,6 @@
     </table>
 
     <h3>ChampionInformationDTO</h3>
-    <p>This object contains </p>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -205,7 +203,7 @@
 
     </br></br>
     <h2>Recommended Items</h2>
-    <p>Request information on ally and enemy teams in the match in progress.</p>
+    <p>Request recommended item about the champion that the summoner is currently playing.</p>
 
     <h3>Request URL</h3>
     <div class="panel panel-default">
@@ -227,7 +225,6 @@
     </table>
 
     <h3>RecommendedItemDTO</h3>
-    <p>This object contains </p>
     <table class="table table-hover">
         <thead>
         <tr>
