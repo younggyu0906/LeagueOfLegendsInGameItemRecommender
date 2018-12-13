@@ -49,7 +49,7 @@
     </table>
 
     <h3>MatchInformationDTO</h3>
-    <p>This object contains </p>
+    <p>This object contains information about the game that the summoner is currently playing.</p>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -62,20 +62,34 @@
             <td>Whether the game is in progress. True if in progress, or False.</td>
         </tr>
         <tr>
-            <td>allyChampions</td> <td>ArrayList</td>
+            <td>allyChampions</td> <td>ArrayList&lt;championTags&gt;</td>
             <td>Ally champions name and tags.</td>
         </tr>
         <tr>
-            <td>allyStats</td> <td>HashMap</td>
-            <td>Sta</td>
+            <td>allyStats</td> <td>HashMap&lt;String,Intager&gt;</td>
+            <td>Stats of ally team. The key is stat name, the value is stat value.</td>
         </tr>
         <tr>
-            <td>enemyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
+            <td>enemyChampions</td> <td>ArrayList&lt;championTags&gt;</td>
+            <td>Enemy champions name and tags.</td>
         </tr>
         <tr>
-            <td>enemyStats</td> <td>HashMap</td>
-            <td>설명</td>
+            <td>enemyStats</td> <td>HashMap&lt;String,Intager&gt;</td>
+            <td>Stats of enemy team. The key is stat name, the value is stat value.</td>
+        </tr>
+        </tbody>
+    </table>
+    <h4>championTags</h4>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th> <th>Type</th> <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>championTags</td> <td>HashMap&lt;String, ArrayList&lt;String&gt;&gt;</td>
+            <td>The key is champion name, the value is ArrayList of champion tags.</td>
         </tr>
         </tbody>
     </table>
@@ -113,12 +127,12 @@
         </thead>
         <tbody>
         <tr>
-            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server. Required values</td>
+            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server.</td>
         </tr>
         </tbody>
     </table>
 
-    <h3>MatchInformationDTO</h3>
+    <h3>ChampionInformationDTO</h3>
     <p>This object contains </p>
     <table class="table table-hover">
         <thead>
@@ -129,22 +143,30 @@
         <tbody>
         <tr>
             <td>isProgress</td> <td>Boolean</td>
+            <td>Whether the game is in progress. True if in progress, or False.</td>
+        </tr>
+        <tr>
+            <td>championName</td> <td>String</td>
+            <td>The champion name that the summoner are playing.</td>
+        </tr>
+        <tr>
+            <td>tag</td> <td>ArrayList&lt;String&gt;</td>
+            <td>ArrayList of the champion Classification.</td>
+        </tr>
+        <tr>
+            <td>stats</td> <td>HashMap&lt;String, Intager&gt;</td>
+            <td>Stats of the champion. The key is stat name, the value is stat value.</td>
+        </tr>
+        <tr>
+            <td>winRate</td> <td>HashMap&lt;String, Double&gt;</td>
             <td>설명</td>
         </tr>
         <tr>
-            <td>allyChampions</td> <td>ArrayList</td>
+            <td>playRate</td> <td>HashMap&lt;String, Double&gt;</td>
             <td>설명</td>
         </tr>
         <tr>
-            <td>allyStats</td> <td>HashMap</td>
-            <td>설명</td>
-        </tr>
-        <tr>
-            <td>enemyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
-        </tr>
-        <tr>
-            <td>enemyStats</td> <td>HashMap</td>
+            <td>banRate</td> <td>HashMap&lt;String, Double&gt;</td>
             <td>설명</td>
         </tr>
         </tbody>
@@ -181,12 +203,12 @@
         </thead>
         <tbody>
         <tr>
-            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server. Required values</td>
+            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server.</td>
         </tr>
         </tbody>
     </table>
 
-    <h3>MatchInformationDTO</h3>
+    <h3>RecommendedItemDTO</h3>
     <p>This object contains </p>
     <table class="table table-hover">
         <thead>
@@ -197,22 +219,14 @@
         <tbody>
         <tr>
             <td>isProgress</td> <td>Boolean</td>
+            <td>Whether the game is in progress. True if in progress, or False.</td>
+        </tr>
+        <tr>
+            <td>championName</td> <td>String</td>
             <td>설명</td>
         </tr>
         <tr>
-            <td>allyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
-        </tr>
-        <tr>
-            <td>allyStats</td> <td>HashMap</td>
-            <td>설명</td>
-        </tr>
-        <tr>
-            <td>enemyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
-        </tr>
-        <tr>
-            <td>enemyStats</td> <td>HashMap</td>
+            <td>recommendedItems</td> <td>ArrayListString</td>
             <td>설명</td>
         </tr>
         </tbody>
