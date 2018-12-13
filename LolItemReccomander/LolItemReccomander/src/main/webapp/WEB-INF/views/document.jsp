@@ -33,7 +33,9 @@
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
     <h3>Request URL</h3>
-    <p>http://localhost:8080/currentGame/matchInformation?summonerName={summonerName}</p>
+    <div class="panel panel-default">
+        <div class="panel-body">http://localhost:8080/currentGame/matchInformation?summonerName={summonerName}</div>
+    </div>
 
     <h3>Parameter</h3>
     <table class="table table-hover">
@@ -50,7 +52,7 @@
     </table>
 
     <h3>MatchInformationDTO</h3>
-    <p>This object contains </p>
+    <p>This object contains information about the game that the summoner is currently playing.</p>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -63,20 +65,34 @@
             <td>Whether the game is in progress. True if in progress, or False.</td>
         </tr>
         <tr>
-            <td>allyChampions</td> <td>ArrayList</td>
+            <td>allyChampions</td> <td>ArrayList&lt;championTags&gt;</td>
             <td>Ally champions name and tags.</td>
         </tr>
         <tr>
-            <td>allyStats</td> <td>HashMap</td>
-            <td>Sta</td>
+            <td>allyStats</td> <td>HashMap&lt;String,Intager&gt;</td>
+            <td>Stats of ally team. The key is stat name, the value is stat value.</td>
         </tr>
         <tr>
-            <td>enemyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
+            <td>enemyChampions</td> <td>ArrayList&lt;championTags&gt;</td>
+            <td>Enemy champions name and tags.</td>
         </tr>
         <tr>
-            <td>enemyStats</td> <td>HashMap</td>
-            <td>설명</td>
+            <td>enemyStats</td> <td>HashMap&lt;String,Intager&gt;</td>
+            <td>Stats of enemy team. The key is stat name, the value is stat value.</td>
+        </tr>
+        </tbody>
+    </table>
+    <h4>championTags</h4>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th> <th>Type</th> <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>championTags</td> <td>HashMap&lt;String, ArrayList&lt;String&gt;&gt;</td>
+            <td>The key is champion name, the value is ArrayList of champion tags.</td>
         </tr>
         </tbody>
     </table>
@@ -102,7 +118,9 @@
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
     <h3>Request URL</h3>
-    <p>http://localhost:8080/currentGame/championInformation?summonerName={summonerName}</p>
+    <div class="panel panel-default">
+        <div class="panel-body">http://localhost:8080/currentGame/championInformation?summonerName={summonerName}</div>
+    </div>
 
     <h3>Parameter</h3>
     <table class="table table-hover">
@@ -113,12 +131,12 @@
         </thead>
         <tbody>
         <tr>
-            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server. Required values</td>
+            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server.</td>
         </tr>
         </tbody>
     </table>
 
-    <h3>MatchInformationDTO</h3>
+    <h3>ChampionInformationDTO</h3>
     <p>This object contains </p>
     <table class="table table-hover">
         <thead>
@@ -129,30 +147,38 @@
         <tbody>
         <tr>
             <td>isProgress</td> <td>Boolean</td>
-            <td>설명</td>
+            <td>Whether the game is in progress. True if in progress, or False.</td>
         </tr>
         <tr>
-            <td>allyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
+            <td>championName</td> <td>String</td>
+            <td>The champion name that the summoner is playing.</td>
         </tr>
         <tr>
-            <td>allyStats</td> <td>HashMap</td>
-            <td>설명</td>
+            <td>tag</td> <td>ArrayList&lt;String&gt;</td>
+            <td>ArrayList of the champion Classification.</td>
         </tr>
         <tr>
-            <td>enemyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
+            <td>stats</td> <td>HashMap&lt;String, Intager&gt;</td>
+            <td>Stats of the champion. The key is stat name, the value is stat value.</td>
         </tr>
         <tr>
-            <td>enemyStats</td> <td>HashMap</td>
-            <td>설명</td>
+            <td>winRate</td> <td>HashMap&lt;String, Double&gt;</td>
+            <td>The win rate of the champion that the summoner is playing. The key is elo, the value is rate.</td>
+        </tr>
+        <tr>
+            <td>playRate</td> <td>HashMap&lt;String, Double&gt;</td>
+            <td>The play rate of the champion that the summoner is playing. The key is elo, the value is rate.</td>
+        </tr>
+        <tr>
+            <td>banRate</td> <td>HashMap&lt;String, Double&gt;</td>
+            <td>The ban rate of the champion that the summoner is playing. The key is elo, the value is rate.</td>
         </tr>
         </tbody>
     </table>
 
     <h3>Example Response</h3>
     <div class="panel panel-default">
-        <div class="panel-body">결과 예시</div>
+        <div class="panel-body">{"isProgress":true,"championName":"Yasuo","tag":["Assassin","Fighter"],"stats":{"magic":4,"difficulty":10,"defense":4,"attack":8},"winRate":{"GOLD":0.47959591918383676,"BRONZE":0.5018973437187937,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.47825206908960055,"SILVER":0.491381144924452,"PLATINUM":0.4802727715538237},"playRate":{"GOLD":0.06319928191253998,"BRONZE":0.07510589188246611,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.059033078429971124,"SILVER":0.06715971274775624,"PLATINUM":0.06031166680761853},"banRate":{"GOLD":0.0551603054400182,"BRONZE":0.054520910088027674,"PLATINUM,DIAMOND,MASTER,CHALLENGER":0.04977950995722945,"SILVER":0.05558648921136646,"PLATINUM":0.053164072410677325}}</div>
     </div>
 
     <h3>Execute Request</h3>
@@ -169,7 +195,9 @@
     <p>Request information on ally and enemy teams in the match in progress.</p>
 
     <h3>Request URL</h3>
-    <p>http://localhost:8080/currentGame/recommendedItem?summonerName={summonerName}</p>
+    <div class="panel panel-default">
+        <div class="panel-body">http://localhost:8080/currentGame/recommendedItem?summonerName={summonerName}</div>
+    </div>
 
     <h3>Parameter</h3>
     <table class="table table-hover">
@@ -180,12 +208,12 @@
         </thead>
         <tbody>
         <tr>
-            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server. Required values</td>
+            <td>summonerName</td> <td>String</td> <td>Summoner name of Korean server.</td>
         </tr>
         </tbody>
     </table>
 
-    <h3>MatchInformationDTO</h3>
+    <h3>RecommendedItemDTO</h3>
     <p>This object contains </p>
     <table class="table table-hover">
         <thead>
@@ -196,30 +224,22 @@
         <tbody>
         <tr>
             <td>isProgress</td> <td>Boolean</td>
-            <td>설명</td>
+            <td>Whether the game is in progress. True if in progress, or False.</td>
         </tr>
         <tr>
-            <td>allyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
+            <td>championName</td> <td>String</td>
+            <td>The champion name that the summoner is playing.</td>
         </tr>
         <tr>
-            <td>allyStats</td> <td>HashMap</td>
-            <td>설명</td>
-        </tr>
-        <tr>
-            <td>enemyChampions</td> <td>ArrayList</td>
-            <td>설명</td>
-        </tr>
-        <tr>
-            <td>enemyStats</td> <td>HashMap</td>
-            <td>설명</td>
+            <td>recommendedItems</td> <td>ArrayList&lt;String&gt;</td>
+            <td>ArrayList of recommended items.</td>
         </tr>
         </tbody>
     </table>
 
     <h3>Example Response</h3>
     <div class="panel panel-default">
-        <div class="panel-body">결과 예시</div>
+        <div class="panel-body">{"isProgress":true,"championName":"Kha'Zix","recommendedItems":["Duskblade of Draktharr","Enchantment: Warrior","Youmuu's Ghostblade","Enchantment: Warrior","Maw of Malmortius","Mercury's Treads"]}</div>
     </div>
 
     <h3>Execute Request</h3>
