@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>ironGG Public API Document</title>
@@ -88,14 +89,13 @@
     </div>
 
     <h3>Execute Request</h3>
-    <form>
+    <form action="/requestMatchInfo" method="get">
         <div class="form-group">
-            <label for="usr">summonerName:</label>
-            <input type="text" class="form-control" id="usr">
+            <label for="summonerName">summonerName:</label>
+            <input type="text" class="form-control" id="summonerName" name="summonerName">
         </div>
+        <button type="submit" class="btn btn-danger">Execute Request</button>
     </form>
-    <button type="button" class="btn btn-danger">Execute Request</button>
-    <p>이곳에 요청 실행하는 부분을 추가하여라. 어떻게 사용하는진 모르겠어. 틀만 만들어봤어</p>
 
     </br></br>
     <h2>Champion Information</h2>
@@ -156,14 +156,13 @@
     </div>
 
     <h3>Execute Request</h3>
-    <form>
+    <form action="/requestChampionInformation" method="get">
         <div class="form-group">
-            <label for="usr">summonerName:</label>
-            <input type="text" class="form-control" id="usr2">
+            <label for="summonerName2">summonerName:</label>
+            <input type="text" class="form-control" id="summonerName2" name="summonerName">
         </div>
+        <button type="submit" class="btn btn-danger">Execute Request</button>
     </form>
-    <button type="button" class="btn btn-danger">Execute Request</button>
-    <p>이곳에 요청 실행하는 부분을 추가하여라. 어떻게 사용하는진 모르겠어. 틀만 만들어봤어</p>
 
     </br></br>
     <h2>Recommended Items</h2>
@@ -224,14 +223,13 @@
     </div>
 
     <h3>Execute Request</h3>
-    <form>
+    <form action="/requestRecommendedItem" method="get">
         <div class="form-group">
-            <label for="usr">summonerName:</label>
-            <input type="text" class="form-control" id="usr3">
+            <label for="summonerName3">summonerName:</label>
+            <input type="text" class="form-control" id="summonerName3" name="summonerName">
         </div>
+        <button type="submit" class="btn btn-danger">Execute Request</button>
     </form>
-    <button type="button" class="btn btn-danger">Execute Request</button>
-    <p>이곳에 요청 실행하는 부분을 추가하여라. 어떻게 사용하는진 모르겠어. 틀만 만들어봤어</p>
 
 
     </br></br></br></br>
@@ -239,7 +237,7 @@
     <p>https://github.com/younggyu0906/LeagueOfLegendsInGameItemRecommender</p>
     </br>
     <h4>E-mail</h4>
-    <p>이곳에 너의 이메일을 입력하는건 어때? 이런것도 추가해도 괜찮을듯</p>
+    <p>vkv6581@gmail.com</p>
     <p>younggyu0906@gmail.com</p>
 </div>
 </body>

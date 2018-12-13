@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<form action="/request" method="get">
+<form action="/requestRecommendedItem" method="get">
     <div class="form-group">
         <label for="summonerName">소환사명으로 진행 중인 게임 추천 아이템 검색하기</label>
         <input class="form-control input-lg" id="summonerName" name="summonerName" type="text">
