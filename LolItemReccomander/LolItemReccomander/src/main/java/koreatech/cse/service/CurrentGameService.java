@@ -6,6 +6,7 @@ import koreatech.cse.domain.rest.ChampionInfoRestOut;
 import koreatech.cse.domain.rest.MatchInfoRestOut;
 import koreatech.cse.domain.rest.RecommendedItemRestOut;
 import koreatech.cse.domain.staticData.ChampionDAO;
+import koreatech.cse.domain.staticData.ItemDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ import java.util.HashMap;
 public class CurrentGameService {
     @Inject
     RiotApiService riotApiService;
+
+    @Inject
+    ItemAnalysisService itemAnalysisService;
 
     @Value("${champion.gg.apikey}")
     private String championGgApiKey;
@@ -154,9 +158,38 @@ public class CurrentGameService {
         return championInfoRestOut;
     }
 
+    //RecommendedItemREstOut클래스 세팅.
     public RecommendedItemRestOut setRecommendedItemRestOut(String summoerName) {
         RecommendedItemRestOut recommendedItemRestOut = new RecommendedItemRestOut();
-        ChampionDAO championDAO;
-        return null;
+
+        // get current game information by summoerName.
+        CurrentMatch currentMatch = riotApiService.getCurrentMatchBySummonerName(summoerName);
+
+        // if the game is not progress
+        if (currentMatch == null) recommendedItemRestOut.setIsProgress(false);
+        else {
+            HashMap<ItemDAO,Double> recedItem = itemAnalysisService.recommendItemCurrentMatch(currentMatch);
+
+            ItemDAO maxItemDAO = null;
+            //recedItem이 빌 때 까지
+            while(recedItem.isEmpty()) {
+                //제일 가중치가 높은 것일 maxItemDAO에 저장.
+                for (ItemDAO e : recedItem.keySet()) {
+                    if (maxItemDAO == null) {
+                        maxItemDAO = e;
+                    }
+                    if (recedItem.get(e) > recedItem.get(maxItemDAO)) {
+                        maxItemDAO = e;
+                    }
+                }
+                //가장 추천도가 높은 것 add한다.
+                recommendedItemRestOut.addItemNames(maxItemDAO.getName());
+                //추천된 아이템이 5개가 넘어가면 break한다.
+                if (recommendedItemRestOut.getRecommendedItems().size()>5) break;
+                recedItem.remove(maxItemDAO);
+                maxItemDAO = null;
+            }
+        }
+        return recommendedItemRestOut;
     }
 }

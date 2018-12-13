@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class ItemAnalysisService {
 
     @Inject
-    DaoService daoService;
+    private DaoService daoService;
 
     public HashMap<Integer,Integer> getItemsFromCurrentMatch(CurrentMatch currentMatch) {
         // map to save the frequency of items. key is itemCode and value is frequency.
