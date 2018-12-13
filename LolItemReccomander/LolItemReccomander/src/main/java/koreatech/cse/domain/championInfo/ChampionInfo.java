@@ -171,4 +171,21 @@ public class ChampionInfo {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "ChampionInfo{" +
+                "id=" + id +
+                ", elo='" + elo + '\'' +
+                ", patch='" + patch + '\'' +
+                ", championId=" + championId +
+                ", normalized=" + normalized +
+                ", winRate=" + winRate +
+                ", playRate=" + playRate +
+                ", gamesPlayed=" + gamesPlayed +
+                ", percentRolePlayed=" + percentRolePlayed +
+                ", banRate=" + banRate +
+                ", role='" + role + '\'' +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
