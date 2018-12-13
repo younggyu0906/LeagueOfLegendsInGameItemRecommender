@@ -3,60 +3,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title></title>
+    <title>IRON.GG</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-Hello, ${textFromController}<br/>
-${name}<br/>
-<img src="/resources/images/spring.png"/><br/>
-<c:set var="user" value="${SPRING_SECURITY_CONTEXT.authentication.principal}"/>
-
-
-<sec:authorize access="isAnonymous()">
-<a href="/user/signin">로그인</a>
-<a href="/user/signup">회원가입</a>
-</sec:authorize>
-
-<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
-    이 문장은 ROLE_USER 혹은 ROLE_ADMIN 권한을 가진 사람에게만 보입니다.<br/>
-    <br/>
-    현재 로그인된 유저: ${user}<br/>
-    <br/>
-    부여된 권한:
-    <c:forEach var="authority" items="${user.authorities}">
-        ${authority}
-    </c:forEach>
-    <br/>
-    <br/>
-
-    <c:choose>
-        <c:when test="${user.age == -1}">
-            <a href="/kakao/kakao_book_request?userId=${user.email}">카카오 책 검색</a>
-            <br/>
-        </c:when>
-        <c:when test="${user.age == -2}">
-            <a href="/facebook/facebookLikes_request?userId=${user.email}">페이스북 좋아요 검색</a>
-            <br/>
-        </c:when>
-    </c:choose>
-
-    <br/>
-
-    <c:url var="logoutUrl" value="/j_spring_security_logout"/>
-    <form action="${logoutUrl}" method="post">
-        <input type="submit" value="로그 아웃" />
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    </form>
-    <br/><br/>
-</sec:authorize>
-
-<sec:authorize access="hasRole('ROLE_USER')">
-    이 문장은 ROLE_USER 권한을 가진 사람에게만 보입니다.<br/>
-</sec:authorize>
-
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-    이 문장은 ROLE_ADMIN 권한을 가진 사람에게만 보입니다.<br/>
-</sec:authorize>
-
+<div class="container">
+    <div class="jumbotron"
+         style="background-image: url(https://4.bp.blogspot.com/-tuGhY7q8LVw/W6wOujB78XI/AAAAAAABIJc/2h0uDwU6fcE9MASeTXM-kHNeYOwnrG_UACLcBGAs/s1600/Dn4NDQFU0AAntFZ.jpg);
+         background-size: 100%; height:100vh; background-blend-mode:color-burn;">
+        <h1>Bootstrap Tutorial</h1>
+        <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing
+            responsive, mobile-first projects on the web.</p>
+    </div>
+    <p>This is some text.</p>
+    <p>This is another text.</p>
+</div>
 </body>
 </html>
