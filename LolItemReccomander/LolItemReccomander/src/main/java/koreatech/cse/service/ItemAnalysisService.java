@@ -86,20 +86,26 @@ public class ItemAnalysisService {
         //아이템 코드를 빼 오고 해당 코드에 대한 DAO 를 가져와서 저장할 코드
         int maxFreqItem;
         ItemDAO maxFreqItemDAO;
+        int maxFreq;
         //추천할 아이템이 6개가 넘었거나 itemFreq가 빌 때까지 while문 돌린다.
         while(returnVal.size() < 7 && !itemFreq.isEmpty()) {
-            //일단 가장 많이 갔던 아이템을 하나 빼 온다.
+            //일단 가장 많이 갔던 아이템을 하나 빼 온다. 그리고 빈도수가 얼마였는지 저장하고 맵에서 제거한다.
             maxFreqItem = returnMaxValue(itemFreq);
             maxFreqItemDAO = daoService.getItemDAO(maxFreqItem);
+            maxFreq = itemFreq.get(maxFreqItem);
+            itemFreq.remove(maxFreqItem);
 
 //          빼 온 아이템이 현재 상황에 적절한지 검사할 코드를
-
+            if (!maxFreqItemDAO.isFinished()) continue;
             //팀 스탯, 적 팀 스탯 전부 더함.
             HashMap<String,Integer> elloStat = calcTeamStats(currentMatch);
             HashMap<String,Integer> enemyStat = calcEnemyStats(currentMatch);
 
             //팀 스텟, 나의 태그 등 비교해서 참이면 returnVal에 넣는다.
-            returnVal.put(maxFreqItemDAO,maxFreqItem * judgeItem(maxFreqItemDAO, currentMatch.getMyChampion(),elloStat,enemyStat));
+            //10*빈도수 + 0.2*빈도수*가중치 로 일단 테스트
+            returnVal.put(maxFreqItemDAO,10 * maxFreq + ((0.2 * maxFreq)
+                    * judgeItem(maxFreqItemDAO, currentMatch.getMyChampion(),elloStat,enemyStat)));
+            System.out.println(maxFreqItemDAO.getName() + " Freq : " + maxFreq + " weight : " + judgeItem(maxFreqItemDAO, currentMatch.getMyChampion(),elloStat,enemyStat));
         }
         System.out.println(returnVal);
         return returnVal;
@@ -162,8 +168,6 @@ public class ItemAnalysisService {
                 maxValue = hashMap.get(e);
             }
         }
-        //제일 많았던 아이템 Map에서 빼버림 그리고 반환
-        hashMap.remove(maxValKey);
         return maxValKey;
     }
 
@@ -260,17 +264,13 @@ public class ItemAnalysisService {
             weight += 1*item.getMagicDamage();  //AP
         }
         else if (itemClass == ItemClass.PHYSICAL_DEFENCE) {
-            weight += 0.7*item.getHealth(); //체력
-            weight += 1*item.getArmor();    //방어력
+            weight += 0.2*item.getHealth(); //체력
+            weight += 0.7*item.getArmor();    //방어력
         }
         else if (itemClass == ItemClass.MAGIC_DEFENCE) {
-            weight += 0.7*item.getHealth();
-            weight += 1*item.getSpellBlock();
+            weight += 0.2*item.getHealth();
+            weight += 0.7*item.getSpellBlock();
         }
-        //print log
-        System.out.println(itemClass);
-        System.out.println(item);
-        System.out.println(" ");
         return weight;
     }
 
