@@ -177,9 +177,9 @@ public class ItemAnalysisService {
         // stat maximum value is 10
         double myStatRate = 2.0;
         double enemyStatRate = 5.0;
-        weight += (myChampion.getAttack() / myStatRate + enemyStats.get("Defence") / enemyStatRate)
+        weight += (myChampion.getAttack() / myStatRate + enemyStats.get("Defense") / enemyStatRate)
                 * calcWeight(item, ItemClass.PHYSICAL_ATTACK);
-        weight += (myChampion.getMagic() / myStatRate + enemyStats.get("Defence") / enemyStatRate)
+        weight += (myChampion.getMagic() / myStatRate + enemyStats.get("Defense") / enemyStatRate)
                 * calcWeight(item, ItemClass.MAGIC_ATTACK);
         weight += (myChampion.getDefense() / myStatRate + enemyStats.get("Attack") / enemyStatRate)
                 * calcWeight(item, ItemClass.PHYSICAL_DEFENCE);
