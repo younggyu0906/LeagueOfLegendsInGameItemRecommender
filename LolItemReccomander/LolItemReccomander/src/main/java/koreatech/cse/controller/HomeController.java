@@ -1,17 +1,14 @@
 package koreatech.cse.controller;
 
-import koreatech.cse.service.ItemAnalysisService;
-import koreatech.cse.service.RiotApiService;
-import net.rithms.riot.api.ApiConfig;
-import net.rithms.riot.api.RiotApi;
-import net.rithms.riot.api.RiotApiException;
-import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
-import net.rithms.riot.constant.Platform;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,16 +18,16 @@ import java.util.Map;
 @RequestMapping("/")
 public class HomeController {
 
-    @Inject
-    ItemAnalysisService itemAnalysisService;
+    @RequestMapping(value="home")
+    public String exPage1() {
+        return "currentGameExPage";
+    }
 
-    @Inject
-    RiotApiService riotApiService;
-
-    @ResponseBody
-    @RequestMapping(value="recItem/{summonerName}", method= RequestMethod.GET)
-    public String recItemTest(@PathVariable("summonerName") String summoerName) {
-        return itemAnalysisService.recommendItemCurrentMatch(riotApiService.getCurrentMatchBySummonerName(summoerName)).toString();
+    @RequestMapping(value="request")
+    public String request(HttpServletRequest request) {
+        String summonerName = request.getParameter("summonerName");
+        System.out.println(summonerName);
+        return "redirect:/currentGame/recommendedItem?summonerName="+summonerName;
     }
 
     @ModelAttribute("name")
