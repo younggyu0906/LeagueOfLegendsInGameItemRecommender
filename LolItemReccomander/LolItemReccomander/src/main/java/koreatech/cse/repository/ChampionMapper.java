@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface ChampionMapper {
     // Insert champion information into DB
     @Insert(
-                "INSERT INTO LEAGUEOFLEGENDS.CHAMPIONS (" +
+                "INSERT INTO leagueOfLegends.champions (" +
                 "ID, NAME, ATTACK, MAGIC, DEFENSE, DIFFICULTY, ASSASSIN, FIGHTER, MAGE, SUPPORT, TANK, MARKSMAN" +
                 ")" +
                 "VALUES (" +
@@ -21,7 +21,7 @@ public interface ChampionMapper {
 
     // Ubdata champion information in DB
     @Update(
-                "UPDATE LEAGUEOFLEGENDS.CHAMPIONS SET " +
+                "UPDATE leagueOfLegends.champions SET " +
                 "NAME = #{name}, " +
                 "ATTACK = #{attack}, MAGIC = #{magic}, DEFENSE = #{defense}, DIFFICULTY = #{difficulty}, " +
                 "ASSASSIN = #{assassin}, FIGHTER = #{fighter}, MAGE = #{mage}, " +
@@ -31,10 +31,10 @@ public interface ChampionMapper {
     void update(ChampionDAO champion);
 
     // Search by champion id.
-    @Select("SELECT * FROM LEAGUEOFLEGENDS.CHAMPIONS WHERE ID = #{id}")
+    @Select("SELECT * FROM leagueOfLegends.champions WHERE ID = #{id}")
     ChampionDAO findChampionById(@Param("id") int id);
 
     // Delete
-    @Delete("DELETE FROM LEAGUEOFLEGENDS.CHAMPIONS WHERE ID = #{id}")
+    @Delete("DELETE FROM leagueOfLegends.champions WHERE ID = #{id}")
     void delete(@Param("id") int id);
 }
