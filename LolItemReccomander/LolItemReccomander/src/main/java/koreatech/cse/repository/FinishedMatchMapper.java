@@ -21,7 +21,7 @@ public interface FinishedMatchMapper {
 
     //키를 MatchId로 할때.
     @Insert(
-            "INSERT INTO LEAGUEOFLEGENDS.FINISHEDMATCH " +
+            "INSERT INTO leagueOfLegends.finishedmatch " +
                     "(ID, CHAMPIONID, ITEM0ID, ITEM1ID, ITEM2ID, ITEM3ID, ITEM4ID, ITEM5ID, ITEM6ID) " +
                     "VALUES " +
                     "(#{id}, #{championId}, #{item0Id}, #{item1Id}, #{item2Id}, #{item3Id}, #{item4Id}, #{item5Id}, #{item6Id})"
@@ -30,7 +30,7 @@ public interface FinishedMatchMapper {
 
     // Update the finished game information in db.
     @Update(
-                "UPDATE LEAGUEOFLEGENDS.FINISHEDMATCH " +
+                "UPDATE leagueOfLegends.finishedmatch " +
                 "SET CHAMPIONID = #{championId}, " +
                 "ITEM0ID = #{item0Id}, ITEM1ID = #{item1Id}, ITEM2ID = #{item2Id}, ITEM3ID = #{item3Id}, " +
                 "ITEM4ID = #{item4Id}, ITEM5ID = #{item5Id}, ITEM6ID = #{item6Id} WHERE ID = #{id}"
@@ -38,14 +38,10 @@ public interface FinishedMatchMapper {
     void update(FinishedMatch finishedMatch);
 
     // Search by finished match id.
-    @Select("SELECT * FROM LEAGUEOFLEGENDS.FINISHEDMATCH WHERE ID = #{id}")
+    @Select("SELECT * FROM leagueOfLegends.finishedmatch WHERE ID = #{id}")
     FinishedMatch findFinishedMatchById(@Param("id") int id);
 
     // Search by champion id.
-    @Select("SELECT * FROM LEAGUEOFLEGENDS.FINISHEDMATCH WHERE CHAMPIONID = #{championId}")
+    @Select("SELECT * FROM leagueOfLegends.finishedmatch WHERE CHAMPIONID = #{championId}")
     ArrayList<FinishedMatch> findFinishedMatchByChampionId(@Param("championId") int championId);
-
-    // delete
-    @Delete("DELETE FROM WSC.USERS WHERE ID = #{id}")
-    void delete(@Param("id") int id);
 }
