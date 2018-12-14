@@ -51,9 +51,6 @@ public class StaticDataService {
 
             // Append the set champion DAO into the DAOS list.
             championDAOS.add(championDAO);
-
-            // print log
-            System.out.println(championDAO);
         });
     }
     // Insert champion information into DB.
@@ -124,9 +121,6 @@ public class StaticDataService {
 
             // Insert itemDAO into itemDAOS list.
             itemDAOS.add(itemDAO);
-
-            // print log
-            System.out.println(itemDAO);
         });
     }
 

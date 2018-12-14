@@ -40,7 +40,7 @@ public class CurrentGameController {
 
         else {
             System.out.println("\"" + summonerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
-            return new ResponseEntity<MatchInformationDTO>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<MatchInformationDTO>(matchInformationDTO, HttpStatus.OK);
         }
     }
 
@@ -58,7 +58,7 @@ public class CurrentGameController {
 
         else {
             System.out.println("\"" + summonerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
-            return new ResponseEntity<ChampionInformationDTO>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<ChampionInformationDTO>(championInformationDTO, HttpStatus.OK);
         }
     }
 
@@ -75,7 +75,7 @@ public class CurrentGameController {
 
         else {
             System.out.println("\"" + summonerName + "\"소환사 님은 현재 게임 진행 중이 아닙니다.");
-            return new ResponseEntity<RecommendedItemDTO>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<RecommendedItemDTO>(recommendedItemDTO, HttpStatus.OK);
         }
     }
 }

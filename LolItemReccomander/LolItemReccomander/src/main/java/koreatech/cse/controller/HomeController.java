@@ -21,7 +21,7 @@ public class HomeController {
     @RequestMapping(value="requestRecommendedItem")
     public String requestRecommendedItem(HttpServletRequest request) {
         String summonerName = request.getParameter("summonerName");
-        System.out.println(summonerName);
+
         String encodedSummonerName=summonerName;
         try {
             encodedSummonerName = URLEncoder.encode(summonerName, "UTF-8");
@@ -35,7 +35,7 @@ public class HomeController {
     @RequestMapping(value="requestChampionInformation")
     public String requestChampionInformation(HttpServletRequest request) {
         String summonerName = request.getParameter("summonerName");
-        System.out.println(summonerName);
+
         String encodedSummonerName=summonerName;
         try {
             encodedSummonerName = URLEncoder.encode(summonerName, "UTF-8");
@@ -49,7 +49,7 @@ public class HomeController {
     @RequestMapping(value="requestMatchInfo")
     public String requestMatchInfo(HttpServletRequest request) {
         String summonerName = request.getParameter("summonerName");
-        System.out.println(summonerName);
+
         String encodedSummonerName=summonerName;
         try {
             encodedSummonerName = URLEncoder.encode(summonerName, "UTF-8");

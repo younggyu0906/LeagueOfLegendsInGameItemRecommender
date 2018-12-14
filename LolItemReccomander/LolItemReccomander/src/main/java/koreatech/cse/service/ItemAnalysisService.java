@@ -45,8 +45,6 @@ public class ItemAnalysisService {
 //            itemCode = e.getItem6Id();
 //            updateHashMap(itemFreq,itemCode);
         });
-        //print log
-        System.out.println(itemFreq);
 
         return itemFreq;
     }
@@ -175,7 +173,6 @@ public class ItemAnalysisService {
     //아이템이 적팀, 우리팀 상황에 지금 적절한지를 판단한다. 추추추추추천하는 알고리즘이 여기
     private double judgeItem(ItemDAO item, ChampionDAO myChampion, HashMap<String, Integer> teamStats, HashMap<String,Integer> enemyStats) {
         double weight = 0;
-        System.out.println("init : " + weight);
 
         // my champion stat and enemy team stat
         // stat maximum value is 10
@@ -189,8 +186,6 @@ public class ItemAnalysisService {
                 * calcWeight(item, ItemClass.PHYSICAL_DEFENSE);
         weight += (myChampion.getDefense() / myStatRate + enemyStats.get("Magic") / enemyStatRate)
                 * calcWeight(item, ItemClass.MAGIC_DEFENSE);
-
-        System.out.println("calc stats(my, enemy) : " + weight);
 
         // my champion tag
         double myTagRate = 5.0;
@@ -222,8 +217,6 @@ public class ItemAnalysisService {
             weight += myTagRate/2 * myChampion.getDefense() * calcWeight(item, ItemClass.MAGIC_DEFENSE);
         }
 
-        System.out.println("calc my tag : " + weight);
-
         // enemy team tag
         double enemyTagRate = 10.0;
         if (enemyStats.get("Assassin") > 2) {
@@ -243,8 +236,6 @@ public class ItemAnalysisService {
             weight += enemyTagRate * myChampion.getAttack() * calcWeight(item, ItemClass.PHYSICAL_ATTACK);
             weight += enemyTagRate * myChampion.getMagic() * calcWeight(item, ItemClass.MAGIC_ATTACK);
         }
-
-        System.out.println("return : " + weight);
 
         // return weight
         return weight;

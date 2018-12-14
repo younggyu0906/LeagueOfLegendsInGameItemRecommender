@@ -26,20 +26,17 @@ public class DaoService {
 
     public ChampionDAO getChampionDAO(int id) {
         ChampionDAO championDAO = championMapper.findChampionById(id);
-        System.out.println("get champion:" + championDAO);
         return championDAO;
     }
 
     public ItemDAO getItemDAO(int id) {
         ItemDAO itemDAO = itemMapper.findItemById(id);
-        System.out.println("get item:" + itemDAO);
         return itemDAO;
     }
 
     //finishedMatch를 챔피언 아이디로 검색해서 리스트로 가져오는 함수.
     public ArrayList<FinishedMatch> getFinishedMatches(int championId){
         ArrayList<FinishedMatch> finishedMatches = finishedMatchMapper.findFinishedMatchByChampionId(championId);
-//        System.out.println(finishedMatches);
         return finishedMatches;
     }
 }

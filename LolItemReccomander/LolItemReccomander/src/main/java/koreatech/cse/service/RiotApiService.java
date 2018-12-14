@@ -52,7 +52,6 @@ public class RiotApiService {
         System.out.println("init RiotApiService");
     }
 
-
     //get Match data and input DB
     @Transactional
     public void getMatchList() {
@@ -106,7 +105,6 @@ public class RiotApiService {
                 finishedMatch.setItem5Id(match.getParticipants().get(i).getStats().getItem5());
                 finishedMatch.setItem6Id(match.getParticipants().get(i).getStats().getItem6());
 
-                System.out.println(finishedMatch);
                 // insert into DB.
                 finishedMatchMapper.insert(finishedMatch);
             }
@@ -139,8 +137,7 @@ public class RiotApiService {
         CurrentGameInfo currentGameInfo = null;
         try {
             summoner = apiYG.getSummonerByName(Platform.KR,summonerName);
-            System.out.println(summoner);
-            // 여기서 진행중이 아니면 오류 발생 체크할것
+
             currentGameInfo = apiYG.getActiveGameBySummoner(Platform.KR,summoner.getId());
 
         } catch (RiotApiException e) {
@@ -184,11 +181,5 @@ public class RiotApiService {
         });
 
         return currentMatch;
-    }
-
-    // currentGameInfo test
-    public String testPrintCurrentGameInfo (String summonerName) {
-        itemAnalysisService.getItemsFromCurrentMatch(getCurrentMatchBySummonerName(summonerName));
-        return "DONE";
     }
 }

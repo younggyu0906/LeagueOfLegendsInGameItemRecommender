@@ -155,7 +155,7 @@ public class CurrentGameService {
                     "?limit=1&champData=normalized&api_key=" + championGgApiKey;
             getChampionGg(championInformationDTO, url);
         }
-        System.out.println(championInformationDTO.getWinRate().toString());
+
         return championInformationDTO;
     }
 
