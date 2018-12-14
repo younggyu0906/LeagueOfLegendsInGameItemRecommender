@@ -17,11 +17,6 @@ import java.util.Map;
 @RequestMapping("/")
 public class HomeController {
 
-    @RequestMapping(value="home")
-    public String exPage1() {
-        return "currentGameExPage";
-    }
-
     //RecommendedItem보여주기 위해 사용
     @RequestMapping(value="requestRecommendedItem")
     public String requestRecommendedItem(HttpServletRequest request) {

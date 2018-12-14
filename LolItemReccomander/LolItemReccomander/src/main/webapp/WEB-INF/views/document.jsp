@@ -18,8 +18,7 @@
 </head>
 
 <body>
-<div class="jumbotron text-center" style="background-image: url(https://4.bp.blogspot.com/-tuGhY7q8LVw/W6wOujB78XI/AAAAAAABIJc/2h0uDwU6fcE9MASeTXM-kHNeYOwnrG_UACLcBGAs/s1600/Dn4NDQFU0AAntFZ.jpg);
-         background-size: 100%; height:100vh; background-blend-mode:hard-light;">
+<div class="jumbotron text-center" style="background-color: gray;">
     <h1 style="color: white;">ironGG Public API Document</h1>
     <p style="color: white;">Service-Oriented Computing & Practice, CSE, KoreaTech</p>
 </div>
@@ -27,7 +26,7 @@
 <div class="container">
     <h2>Current game</h2>
     <p>You can get progressing "League of Legends" match information through our public api.</p>
-    <p>Game patch version is "${riot.version}", Korea.</p>
+    <p>Game patch version is 8.24, Korea.</p>
 
     </br></br>
     <h2>Match Information</h2>
