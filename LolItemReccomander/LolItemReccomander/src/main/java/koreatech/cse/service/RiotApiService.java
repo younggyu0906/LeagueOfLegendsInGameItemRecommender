@@ -52,14 +52,13 @@ public class RiotApiService {
         System.out.println("init RiotApiService");
     }
 
-
     //get Match data and input DB
     @Transactional
     public void getMatchList() {
 
         //매치 검색의 대상이 될 소환사 이름들
         ArrayList<String> summonerName = new ArrayList<>();
-        summonerName.add("망고링고망");
+        summonerName.add("트라이이이");
 
         summonerName.stream().forEach(e->{
             Summoner summoner = null;
@@ -89,6 +88,14 @@ public class RiotApiService {
         for(int i = 0 ; i < 10 ; i++){
             // Only save match information for game version 8.24 because of the foreign key.
             if(match.getGameVersion().contains(version)) {
+
+                //matchid에 i를 붙인후 id로 설정
+                finishedMatch.setId(
+                        Long.parseLong(
+                                Long.toString(
+                                        match.getGameId()) + Integer.toString(i)
+                        )
+                );
                 finishedMatch.setChampionId(match.getParticipants().get(i).getChampionId());
                 finishedMatch.setItem0Id(match.getParticipants().get(i).getStats().getItem0());
                 finishedMatch.setItem1Id(match.getParticipants().get(i).getStats().getItem1());
@@ -98,7 +105,6 @@ public class RiotApiService {
                 finishedMatch.setItem5Id(match.getParticipants().get(i).getStats().getItem5());
                 finishedMatch.setItem6Id(match.getParticipants().get(i).getStats().getItem6());
 
-                System.out.println(finishedMatch);
                 // insert into DB.
                 finishedMatchMapper.insert(finishedMatch);
             }
@@ -131,8 +137,7 @@ public class RiotApiService {
         CurrentGameInfo currentGameInfo = null;
         try {
             summoner = apiYG.getSummonerByName(Platform.KR,summonerName);
-            System.out.println(summoner);
-            // 여기서 진행중이 아니면 오류 발생 체크할것
+
             currentGameInfo = apiYG.getActiveGameBySummoner(Platform.KR,summoner.getId());
 
         } catch (RiotApiException e) {
@@ -176,11 +181,5 @@ public class RiotApiService {
         });
 
         return currentMatch;
-    }
-
-    // currentGameInfo test
-    public String testPrintCurrentGameInfo (String summonerName) {
-        itemAnalysisService.getItemsFromCurrentMatch(getCurrentMatchBySummonerName(summonerName));
-        return "DONE";
     }
 }

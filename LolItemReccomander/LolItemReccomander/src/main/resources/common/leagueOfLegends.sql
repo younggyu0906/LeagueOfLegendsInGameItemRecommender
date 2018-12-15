@@ -26,7 +26,7 @@ COMMENT='riot league of legends champion information';
 LOCK TABLES `champions` WRITE;
 UNLOCK TABLES;
 
-CREATE TABLE `leagueoflegends`.`items` (
+CREATE TABLE `leagueOflegends`.`items` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `health` INT NULL,
@@ -48,8 +48,8 @@ COMMENT = 'riot league of legends item information';
 LOCK TABLES `items` WRITE;
 UNLOCK TABLES;
 
-CREATE TABLE `leagueoflegends`.`finishedmatch` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `leagueOflegends`.`finishedmatch` (
+  `id` BIGINT NOT NULL,
   `championId` INT NULL,
   `item0Id` INT NULL,
   `item1Id` INT NULL,

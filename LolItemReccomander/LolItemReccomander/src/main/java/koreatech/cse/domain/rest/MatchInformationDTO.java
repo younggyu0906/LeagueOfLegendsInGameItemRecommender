@@ -3,14 +3,14 @@ package koreatech.cse.domain.rest;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RestOutMatch {
+public class MatchInformationDTO {
     boolean isProgress;
     ArrayList<HashMap<String, ArrayList<String>>> allyChampions = new ArrayList<>();
     HashMap<String, Integer> allyStats = new HashMap<>();
     ArrayList<HashMap<String, ArrayList<String>>> enemyChampions = new ArrayList<>();
-    HashMap<String, Integer> enemyStats = new HashMap<>();;
+    HashMap<String, Integer> enemyStats = new HashMap<>();
 
-    public RestOutMatch() {
+    public MatchInformationDTO() {
         isProgress = false;
         allyStats.put("attack", 0);
         allyStats.put("defense", 0);
@@ -20,11 +20,11 @@ public class RestOutMatch {
         enemyStats.put("magic", 0);
     }
 
-    public boolean isProgress() {
+    public boolean getIsProgress() {
         return isProgress;
     }
 
-    public void setProgress(boolean progress) {
+    public void setIsProgress(boolean progress) {
         isProgress = progress;
     }
 
@@ -76,15 +76,7 @@ public class RestOutMatch {
         this.allyChampions.add(champion);
     }
 
-    public void addAllyStats() {
-        return;
-    }
-
     public void addEnemyChmapions(HashMap<String, ArrayList<String>> champion) {
         this.enemyChampions.add(champion);
-    }
-
-    public void addEnemyStats() {
-        return;
     }
 }

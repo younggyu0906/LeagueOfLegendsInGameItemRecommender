@@ -17,8 +17,8 @@ import javax.inject.Inject;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/")
-public class LolStaticController {
+@RequestMapping("/updateToDB")
+public class UpdateController {
     @Inject
     private StaticDataService staticDataService;
 
@@ -28,7 +28,7 @@ public class LolStaticController {
 
     // Update Champions Information
     @Transactional
-    @RequestMapping("/championUpdate")
+    @RequestMapping("/champion")
     public String championStaticLoad(Model model) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -51,12 +51,12 @@ public class LolStaticController {
             System.out.println(e.getStatusCode() + ": " + e.getStatusText());
         }
 
-        return "lolStaticTest";
+        return "updateResult";
     }
 
     //Item Information Update
     @Transactional
-    @RequestMapping("/itemUpdate")
+    @RequestMapping("/item")
     public String itemStaticLoad(Model model) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -79,6 +79,6 @@ public class LolStaticController {
             System.out.println(e.getStatusCode() + ": " + e.getStatusText());
         }
 
-        return "lolStaticTest";
+        return "updateResult";
     }
 }
