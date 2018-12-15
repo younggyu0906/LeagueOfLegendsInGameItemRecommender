@@ -187,7 +187,7 @@ public class CurrentGameService {
                     }
                 }
                 //가장 추천도가 높은 것 add한다.
-                recommendedItemDTO.addItemNames(maxItemDAO.getName());
+                recommendedItemDTO.addItemNames(maxItemDAO.getId(),maxItemDAO.getName());
                 //추천된 아이템이 5개가 넘어가면 break한다.
                 if (recommendedItemDTO.getRecommendedItems().size()>5) break;
                 recedItem.remove(maxItemDAO);

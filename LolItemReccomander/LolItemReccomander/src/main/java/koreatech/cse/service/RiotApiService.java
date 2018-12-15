@@ -58,7 +58,7 @@ public class RiotApiService {
 
         //매치 검색의 대상이 될 소환사 이름들
         ArrayList<String> summonerName = new ArrayList<>();
-        summonerName.add("트라이이이");
+        summonerName.add("Dutch Coffee");
 
         summonerName.stream().forEach(e->{
             Summoner summoner = null;

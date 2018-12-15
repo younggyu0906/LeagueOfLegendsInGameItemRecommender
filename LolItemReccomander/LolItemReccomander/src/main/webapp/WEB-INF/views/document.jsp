@@ -34,7 +34,7 @@
 
     <h3>Request URL</h3>
     <div class="panel panel-default">
-        <div class="panel-body">http://localhost:8080/currentGame/matchInformation?summonerName={summonerName}</div>
+        <div class="panel-body">http://iron.gg/currentGame/matchInformation?summonerName={summonerName}</div>
     </div>
 
     <h3>Parameter</h3>
@@ -118,7 +118,7 @@
 
     <h3>Request URL</h3>
     <div class="panel panel-default">
-        <div class="panel-body">http://localhost:8080/currentGame/championInformation?summonerName={summonerName}</div>
+        <div class="panel-body">http://iron.gg/currentGame/championInformation?summonerName={summonerName}</div>
     </div>
 
     <h3>Parameter</h3>
@@ -206,7 +206,7 @@
 
     <h3>Request URL</h3>
     <div class="panel panel-default">
-        <div class="panel-body">http://localhost:8080/currentGame/recommendedItem?summonerName={summonerName}</div>
+        <div class="panel-body">http://iron.gg/currentGame/recommendedItem?summonerName={summonerName}</div>
     </div>
 
     <h3>Parameter</h3>
@@ -240,15 +240,15 @@
             <td>The champion name that the summoner is playing.</td>
         </tr>
         <tr>
-            <td>recommendedItems</td> <td>ArrayList&lt;String&gt;</td>
-            <td>ArrayList of recommended items.</td>
+            <td>recommendedItems</td> <td>HashMap&lt;Integer,String&gt;</td>
+            <td>HashMap of recommended items name and code.</td>
         </tr>
         </tbody>
     </table>
 
     <h3>Example Response</h3>
     <div class="panel panel-default">
-        <div class="panel-body">{"isProgress":true,"championName":"Kha'Zix","recommendedItems":["Duskblade of Draktharr","Enchantment: Warrior","Youmuu's Ghostblade","Enchantment: Warrior","Maw of Malmortius","Mercury's Treads"]}</div>
+        <div class="panel-body">{"isProgress":true,"championName":"Nidalee","recommendedItems":{"3285":"Luden's Echo","1414":"Enchantment: Runic Echoes","3047":"Ninja Tabi","3100":"Lich Bane","3020":"Sorcerer's Shoes","3165":"Morellonomicon"}}</div>
     </div>
 
     <h3>Execute Request</h3>

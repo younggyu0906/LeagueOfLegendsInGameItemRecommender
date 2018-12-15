@@ -101,7 +101,7 @@ public class ItemAnalysisService {
 
             //팀 스텟, 나의 태그 등 비교해서 참이면 returnVal에 넣는다.
             //10*빈도수 + 0.2*빈도수*가중치 로 일단 테스트
-            returnVal.put(maxFreqItemDAO,10 * maxFreq + ((0.2 * maxFreq)
+            returnVal.put(maxFreqItemDAO,10*maxFreq + ((100+(0.1 * maxFreq))
                     * judgeItem(maxFreqItemDAO, currentMatch.getMyChampion(),elloStat,enemyStat)));
             System.out.println(maxFreqItemDAO.getName() + " Freq : " + maxFreq + " weight : " + judgeItem(maxFreqItemDAO, currentMatch.getMyChampion(),elloStat,enemyStat));
         }
