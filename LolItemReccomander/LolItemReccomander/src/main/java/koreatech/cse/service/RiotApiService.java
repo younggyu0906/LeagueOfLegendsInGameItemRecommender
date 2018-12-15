@@ -127,7 +127,7 @@ public class RiotApiService {
     // Get the current game information to the summoner name.
     private CurrentGameInfo findCurrentGameInfoBySummonerName(String summonerName) {
 
-        Summoner summoner = null;
+        Summoner summoner;
         CurrentGameInfo currentGameInfo = null;
         try {
             summoner = apiYG.getSummonerByName(Platform.KR,summonerName);

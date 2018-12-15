@@ -38,7 +38,6 @@ public class CurrentGameController {
     @RequestMapping(value="/information/{summonerName}", method= RequestMethod.GET, produces = "application/json")
 //    아군팀, 적군팀 챔피언, 챔피언 태그, 팀 별 ad ap 수치
     public ResponseEntity<RestOutMatch> CurrentGameInformation(@PathVariable("summonerName") String summoerName) {
-        CurrentGameService currentGameService = new CurrentGameService();
         System.out.println(summoerName);
         RestOutMatch restOutMatch = currentGameService.setRestOutMatch(summoerName);
         System.out.println("2");
