@@ -176,8 +176,8 @@ public class ItemAnalysisService {
 
         // my champion stat and enemy team stat
         // stat maximum value is 10
-        double myStatRate = 2.0;
-        double enemyStatRate = 5.0;
+        double myStatRate = 1.0;
+        double enemyStatRate = 1.0;
         weight += (myChampion.getAttack() / myStatRate + enemyStats.get("Defense") / enemyStatRate)
                 * calcWeight(item, ItemClass.PHYSICAL_ATTACK);
         weight += (myChampion.getMagic() / myStatRate + enemyStats.get("Defense") / enemyStatRate)
@@ -247,20 +247,20 @@ public class ItemAnalysisService {
 
         //itemClass에 맞게 가중치를 계산합니다.
         if (itemClass == ItemClass.PHYSICAL_ATTACK) {
-            weight += 100*item.getAttackSpeed(); // 공속 소수점이라서 100곱함.
-            weight += 100*item.getCritChance(); // 크리티컬
+            weight += 200*item.getAttackSpeed(); // 공속 소수점이라서 100곱함.
+            weight += 200*item.getCritChance(); // 크리티컬
             weight += 1*item.getPhysicalDamage(); // 공격력
         }
         else if (itemClass == ItemClass.MAGIC_ATTACK) {
             weight += 1*item.getMagicDamage();  //AP
         }
         else if (itemClass == ItemClass.PHYSICAL_DEFENSE) {
-            weight += 0.2*item.getHealth(); //체력
-            weight += 0.7*item.getArmor();    //방어력
+            weight += 0.1*item.getHealth(); //체력
+            weight += 0.4*item.getArmor();    //방어력
         }
         else if (itemClass == ItemClass.MAGIC_DEFENSE) {
-            weight += 0.2*item.getHealth();
-            weight += 0.7*item.getSpellBlock();
+            weight += 0.1*item.getHealth();
+            weight += 0.4*item.getSpellBlock();
 
         }
         return weight;

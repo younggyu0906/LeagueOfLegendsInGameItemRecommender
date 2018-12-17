@@ -116,7 +116,7 @@ public class RiotApiService {
 
         //게임 아이디 하나 랜덤하게 가져온다 이말이야.
         try {
-            Summoner summoner = apiYG.getSummonerByName(Platform.KR,"망고링고망");
+            Summoner summoner = apiYG.getSummonerByName(Platform.KR,"CrazzyKkat");
             MatchList matchList = apiYG.getMatchListByAccountId(Platform.KR, summoner.getAccountId());
             if (matchList.getMatches() != null) {
                 MatchReference match = matchList.getMatches().get(1);
